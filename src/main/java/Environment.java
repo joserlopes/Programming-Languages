@@ -32,6 +32,4 @@ public class Environment<E> {
   E find(String id) throws InterpreterError {
     return this.bindings.get(id);
   }
-
-  void crawl() {}
 }

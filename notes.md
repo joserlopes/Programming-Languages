@@ -1,0 +1,1 @@
+- Does it make sense that there are two different nodes for boolean values? One AstTrue and another AstFalse? Or can I just make an AstBool with a value inside it?

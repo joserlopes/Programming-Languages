@@ -313,11 +313,11 @@ public class Parser implements ParserConstants {
       break;
     case TRUE:
       n = jj_consume_token(TRUE);
-                 /* missing AST for true */; t = null;
+                 t = new ASTBool(Boolean.parseBoolean(n.image));
       break;
     case FALSE:
       n = jj_consume_token(FALSE);
-                   /* missing AST for false */; t = null;
+                  t = new ASTBool(Boolean.parseBoolean(n.image));
       break;
     case Id:
       n = jj_consume_token(Id);
