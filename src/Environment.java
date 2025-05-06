@@ -30,6 +30,8 @@ public class Environment<E> {
   }
 
   E find(String id) throws InterpreterError {
-    // code missing
+    return this.bindings.get(id);
   }
+
+  void crawl() {}
 }
