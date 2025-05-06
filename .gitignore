@@ -1,2 +1,37 @@
-.idea
-src/**/*.class
+# Maven output directories
+/target/
+
+# IntelliJ IDEA
+.idea/
+/*.iml
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VS Code
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Generated files (e.g., by JavaCC or other tools)
+generated-sources/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
