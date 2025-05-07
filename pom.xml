@@ -67,7 +67,7 @@
                 <version>3.1.0</version>
                 <configuration>
                     <!-- Replace with your main class name -->
-                    <mainClass>L0int</mainClass>
+                    <mainClass>L0.L0int</mainClass>
                 </configuration>
             </plugin>
         </plugins>

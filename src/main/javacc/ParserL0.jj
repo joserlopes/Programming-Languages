@@ -1,5 +1,8 @@
 PARSER_BEGIN(Parser)
 
+package L0;
+
+import L0.AST.*;
 import java.util.*;
 
 public class Parser {

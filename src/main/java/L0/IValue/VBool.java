@@ -1,11 +1,13 @@
-class VBool implements IValue {
+package L0.IValue;
+
+public class VBool implements IValue {
   boolean v;
 
-  VBool(boolean v0) {
+  public VBool(boolean v0) {
     this.v = v0;
   }
 
-  boolean getVal() {
+  public boolean getVal() {
     return this.v;
   }
 
