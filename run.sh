@@ -1,3 +1,3 @@
 #!/bin/sh
 
-mvn clean compile exec:java
+mvn -q clean compile exec:java

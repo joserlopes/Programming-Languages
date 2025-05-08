@@ -1,6 +1,6 @@
 #!/bin/sh
 
-mvn compile
+mvn -q compile
 # mvn exec:java
 
 # rm ./src/main/*.class

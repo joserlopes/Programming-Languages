@@ -49,7 +49,7 @@ public class TestArithmetic {
     StringReader reader = new StringReader(input);
     parser.ReInit(reader);
     try {
-      ASTNode exp = parser.Start();
+      exp = parser.Start();
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, result);
     } catch (Exception e) {
@@ -62,7 +62,7 @@ public class TestArithmetic {
     StringReader reader = new StringReader(input);
     parser.ReInit(reader);
     try {
-      ASTNode exp = parser.Start();
+      exp = parser.Start();
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, result);
     } catch (Exception e) {
@@ -75,7 +75,7 @@ public class TestArithmetic {
     StringReader reader = new StringReader(input);
     parser.ReInit(reader);
     try {
-      ASTNode exp = parser.Start();
+      exp = parser.Start();
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, result);
     } catch (Exception e) {

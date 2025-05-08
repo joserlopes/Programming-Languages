@@ -28,7 +28,7 @@ public class TestLet {
     parser.ReInit(reader);
 
     try {
-      ASTNode exp = parser.Start();
+      exp = parser.Start();
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, result);
     } catch (Exception e) {
@@ -41,7 +41,7 @@ public class TestLet {
 
     try {
       parser.ReInit(new FileReader(path));
-      ASTNode exp = parser.Start();
+      exp = parser.Start();
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "72");
     } catch (Exception e) {

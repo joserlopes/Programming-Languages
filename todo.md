@@ -1,2 +1,9 @@
-- [x] Relational operators: <, <=, >, >=, ==, !=
-- [ ] Automated testing with testng
+- [x] Arithmetic expressions
+- [x] Relational operators
+- [x] Let bindings
+- [x] Automated testing with testng
+- [ ] Control flow - if then else, while...
+- [ ] I/O - print, println
+- [ ] Functions
+- [ ] Boxes and stack allocated variables
+- [ ] Regular Lists and lazy lists
