@@ -1,1 +1,2 @@
-- [ ] Relational operators: <, <=, >, >=, ==, !=
+- [x] Relational operators: <, <=, >, >=, ==, !=
+- [ ] Automated testing with testng

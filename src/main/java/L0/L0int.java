@@ -4,7 +4,6 @@ import L0.AST.*;
 import L0.IValue.*;
 
 public class L0int {
-
   public static void main(String args[]) {
     Parser parser = new Parser(System.in);
     ASTNode exp;
