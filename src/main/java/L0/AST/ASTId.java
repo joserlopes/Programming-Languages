@@ -5,7 +5,6 @@ import L0.IValue.*;
 import L0.InterpreterError;
 
 public class ASTId implements ASTNode {
-
   String id;
 
   public ASTId(String id) {
@@ -13,7 +12,6 @@ public class ASTId implements ASTNode {
   }
 
   public IValue eval(Environment<IValue> env) throws InterpreterError {
-    System.out.println("Env " + env);
-    return env.find(id);
+    return env.find(this.id);
   }
 }

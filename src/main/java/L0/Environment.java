@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Environment<E> {
   Environment<E> anc;
-  Map<String, E> bindings;
+  public Map<String, E> bindings;
 
   public Environment() {
     anc = null;
@@ -12,7 +12,8 @@ public class Environment<E> {
   }
 
   public Environment(Environment<E> ancestor) {
-    // code missing
+    this.anc = ancestor;
+    this.bindings = new HashMap<String, E>();
   }
 
   public Environment<E> beginScope() {
@@ -24,14 +25,30 @@ public class Environment<E> {
   }
 
   public void assoc(String id, E bind) throws InterpreterError {
-    // code missing
+    // A binding for the same name cannot happen more that once in an environment
+    if (this.bindings.get(id) != null) {
+      throw new InterpreterError(
+          "Binding for " + id + " already exists in this the current environment");
+    } else {
+      this.bindings.put(id, bind);
+    }
   }
 
   public void update(String id, E bind) {
-    // code missing
+    // NOTE: Is it really just this?
+    this.bindings.replace(id, bind);
   }
 
   public E find(String id) throws InterpreterError {
-    return this.bindings.get(id);
+    Environment<E> current_env = this;
+    while (current_env != null) {
+      E binding = current_env.bindings.get(id);
+      if (binding != null) {
+        return binding;
+      }
+      current_env = current_env.anc;
+    }
+
+    throw new InterpreterError("Binding for " + id + " not found");
   }
 }

@@ -7,7 +7,7 @@ public class VInt implements IValue {
     v = v0;
   }
 
-  public int getval() {
+  public int getVal() {
     return v;
   }
 

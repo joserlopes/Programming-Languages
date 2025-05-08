@@ -1,0 +1,28 @@
+package L0.AST;
+
+import L0.Environment;
+import L0.IValue.*;
+import L0.InterpreterError;
+
+public class ASTOr implements ASTNode {
+  ASTNode lhs, rhs;
+
+  public ASTOr(ASTNode lhs, ASTNode rhs) {
+    this.lhs = lhs;
+    this.rhs = rhs;
+  }
+
+  public IValue eval(Environment<IValue> e) throws InterpreterError {
+    IValue v1 = this.lhs.eval(e);
+    if (v1 instanceof VBool) {
+      IValue v2 = this.rhs.eval(e);
+      if (v2 instanceof VBool) {
+        boolean b1 = ((VBool) v1).getVal();
+        boolean b2 = ((VBool) v2).getVal();
+        return new VBool(b1 || b2);
+      }
+    }
+
+    throw new InterpreterError("illegal types to || operator");
+  }
+}

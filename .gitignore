@@ -35,3 +35,5 @@ generated-sources/
 *.tmp
 *.bak
 *.swp
+
+*.xopp

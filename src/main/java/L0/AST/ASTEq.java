@@ -4,12 +4,12 @@ import L0.Environment;
 import L0.IValue.*;
 import L0.InterpreterError;
 
-public class ASTPlus implements ASTNode {
+public class ASTEq implements ASTNode {
   ASTNode lhs, rhs;
 
-  public ASTPlus(ASTNode l, ASTNode r) {
-    lhs = l;
-    rhs = r;
+  public ASTEq(ASTNode lhs, ASTNode rhs) {
+    this.lhs = lhs;
+    this.rhs = rhs;
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
@@ -19,10 +19,9 @@ public class ASTPlus implements ASTNode {
       if (v2 instanceof VInt) {
         int i1 = ((VInt) v1).getVal();
         int i2 = ((VInt) v2).getVal();
-        return new VInt(i1 + i2);
+        return new VBool(i1 == i2);
       }
     }
-
-    throw new InterpreterError("illegal types to + operator");
+    throw new InterpreterError("illegal types to == operator");
   }
 }
