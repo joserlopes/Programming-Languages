@@ -6,3 +6,6 @@
   argument ones, just make it so that each function can
   only have one argument, and then deal with the fact that
   that can return another function.
+- All functions have at least one argument. Functions
+  with no arguments only produce side effects, which is
+  something that our language doesn't have.
