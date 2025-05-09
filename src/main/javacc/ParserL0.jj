@@ -215,7 +215,8 @@ ASTNode Term() :
 		 |
 		 op=<DIV> t2 = Fact()  { t1 = new ASTDiv(t1,t2); }
 		 |
-		 op = <LPAR> t2 = Exp () <RPAR>  { /* TBC */ } 
+         // NOTE: Is this a function call?
+		 op = <LPAR> t2 = Exp () <RPAR>  { t1 = new ASTFunCall(t1, t2); } 
 		)*
      { return t1; } 
 }
@@ -224,7 +225,7 @@ ASTNode Term() :
 ASTNode Fact() :
 { Token n; 
   ASTNode t, e1, e2;
-  List<Bind> decls;
+  List<String> params  = new ArrayList<String>();;
   ASTNode  body, alt;
 }
 {
@@ -237,13 +238,15 @@ ASTNode Fact() :
     | <STAR> t=Fact() { /* missing AST for deref */; t = null; }
     | <MINUS> t=Fact() { t = new ASTNeg(t); }
     | <NOT> t=Fact() { t = new ASTNot(t);  }
-    | <IF> t=BA() <LBRA> e1=Let() <RBRA> <ELSE> <LBRA> e2=Let() <RBRA> {/* TBC */ t = null; }
+    | <IF> t=BA() <LBRA> e1=Let() <RBRA> <ELSE> <LBRA> e2=Let() <RBRA> { 
+        t = new ASTIf(t, e1, e2); 
+    }
     | <WHILE> t=BA() <LBRA> body=Let() <RBRA> { /* TBC */ t = null; }
-    | <FN> n=<Id> { t = null; }
-      	   	  (<COMMA> n = <Id>  {/* TBC */ })*
-		  <ARROW> <LBRA> e2 = Let() <RBRA> { /* TBC */ }
-    | <PRINT> t=Fact() { /* missing AST for print */; t = null;  }
-    | <PRINTLN> t=Fact() {/* missing AST for println */; t = null;  }
+    | <FN> n=<Id> { params.add(n.image); }
+      	   	  (<COMMA> n = <Id>  { params.add(n.image); })*
+		  <ARROW> <LBRA> e2 = Let() <RBRA> { t = new ASTFunDecl(params, e2); }
+    | <PRINT> t=Fact() { t = new ASTPrint(t);  }
+    | <PRINTLN> t=Fact() { t = new ASTPrint(t, true); }
     | <LPAR> t=Let() <RPAR> 
     )
    { return t; }

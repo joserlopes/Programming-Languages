@@ -10,9 +10,9 @@ public class ASTLet implements ASTNode {
   List<Bind> decls;
   ASTNode body;
 
-  public ASTLet(List<Bind> decls, ASTNode b) {
+  public ASTLet(List<Bind> decls, ASTNode body) {
     this.decls = decls;
-    this.body = b;
+    this.body = body;
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {

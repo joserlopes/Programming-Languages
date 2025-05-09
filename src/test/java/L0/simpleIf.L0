@@ -1,0 +1,6 @@
+let x = 1;
+let a = if x > 10 {
+    5
+} else {
+    4
+}; a;;
