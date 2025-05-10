@@ -27,6 +27,6 @@ public class ASTIf implements ASTNode {
         return this.falseBody.eval(e);
       }
     }
-    throw new InterpreterError("illegal types to < operator");
+    throw new InterpreterError("illegal types to the condition of if");
   }
 }
