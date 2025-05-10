@@ -28,11 +28,8 @@ public class VClos implements IValue {
   }
 
   public String toStr() {
-    String res = "";
-    for (String parameter : this.params) {
-      res += parameter + " ";
-    }
-    res += "\n" + this.body;
-    return res;
+    // This doesn't matter, since this never ends up going to the call at the end of in interpreter
+    // read
+    return "";
   }
 }

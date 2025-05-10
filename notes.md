@@ -9,3 +9,4 @@
 - All functions have at least one argument. Functions
   with no arguments only produce side effects, which is
   something that our language doesn't have.
+- Maybe VClos doesn't have to be an IValue, it can just be a "regular" Class, just like how we only use the Bind Class to create bindinds in the environment. Like, a value will only be evaluated to VInt or VBool anyways, those are the only values a function call can produce...
