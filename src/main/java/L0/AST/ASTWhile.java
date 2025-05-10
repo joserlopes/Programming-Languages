@@ -28,6 +28,6 @@ public class ASTWhile implements ASTNode {
       }
       return new VBool(false);
     }
-    throw new InterpreterError("illegal types to < operator");
+    throw new InterpreterError("illegal types for the codition of the while loop");
   }
 }

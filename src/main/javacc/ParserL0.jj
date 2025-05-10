@@ -241,7 +241,7 @@ ASTNode Fact() :
     | <IF> t=BA() <LBRA> e1=Let() <RBRA> <ELSE> <LBRA> e2=Let() <RBRA> { 
         t = new ASTIf(t, e1, e2); 
     }
-    | <WHILE> t=BA() <LBRA> body=Let() <RBRA> { /* TBC */ t = null; }
+    | <WHILE> t=BA() <LBRA> body=Let() <RBRA> { t = new ASTWhile(t, body); }
     | <FN> n=<Id> { params.add(n.image); }
       	   	  (<COMMA> n = <Id>  { params.add(n.image); })*
 		  <ARROW> <LBRA> e2 = Let() <RBRA> { t = new ASTFunDecl(params, e2); }
