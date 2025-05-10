@@ -341,12 +341,12 @@ public class Parser implements ParserConstants {
     case BOX:
       jj_consume_token(BOX);
       t = Fact();
-                       /* missing AST for box */; t = null;
+                       t = new ASTBox(t);
       break;
     case STAR:
       jj_consume_token(STAR);
       t = Fact();
-                        /* missing AST for deref */; t = null;
+                        t = new ASTDeref(t);
       break;
     case MINUS:
       jj_consume_token(MINUS);

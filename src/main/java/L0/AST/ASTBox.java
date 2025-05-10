@@ -4,14 +4,14 @@ import L0.Environment;
 import L0.IValue.*;
 import L0.InterpreterError;
 
-public class ASTInt implements ASTNode {
-  int v;
+public class ASTBox implements ASTNode {
+  ASTNode exp;
 
-  public ASTInt(int v) {
-    this.v = v;
+  public ASTBox(ASTNode exp) {
+    this.exp = exp;
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
-    return new VInt(this.v);
+    return new VBox(this.exp.eval(e));
   }
 }
