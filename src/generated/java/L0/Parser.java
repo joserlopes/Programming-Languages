@@ -69,7 +69,7 @@ public class Parser implements ParserConstants {
         jj_consume_token(EQUAL);
         e1 = BA();
         jj_consume_token(SEMIC);
-        decls.add(new Bind(n.image,e1));
+        decls.add(new Bind(n.image, e1));
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LET:
           ;
@@ -129,7 +129,7 @@ public class Parser implements ParserConstants {
       }
       op = jj_consume_token(ASSIGN);
       t2 = BA();
-
+                 t1 = new ASTAssign(t1, t2);
     }
        {if (true) return t1;}
     throw new Error("Missing return statement in function");

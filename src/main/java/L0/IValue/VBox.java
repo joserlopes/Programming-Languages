@@ -11,8 +11,11 @@ public class VBox implements IValue {
     return this.value;
   }
 
+  public void assign(IValue value) {
+    this.value = value;
+  }
+
   public String toStr() {
-    // NOTE: Is this it?
     return "Box(" + value.toStr() + ")";
   }
 }

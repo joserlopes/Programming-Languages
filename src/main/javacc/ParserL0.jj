@@ -113,7 +113,7 @@ ASTNode Let() :
     t = Seq()
     |
     ((<LET>  n=<Id>  <EQUAL> e1 = BA() <SEMIC>
-      { decls.add(new Bind(n.image,e1)); }
+      { decls.add(new Bind(n.image, e1)); }
      )+
         e2 = Seq() { t = new ASTLet(decls, e2); })
     )
@@ -139,7 +139,7 @@ ASTNode SeqExp() :
 {
      t1 = BA() ( ( op=<ASSIGN> ) t2 = BA() 
  		 {
-		 /* missing AST build */
+		 t1 = new ASTAssign(t1, t2);
      } 
 		)*
      { return t1; }  
