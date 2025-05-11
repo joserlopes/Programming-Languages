@@ -5,7 +5,6 @@ import L0.IValue.*;
 import L0.InterpreterError;
 
 public class ASTWhile implements ASTNode {
-
   ASTNode cond, body;
 
   public ASTWhile(ASTNode cond, ASTNode body) {

@@ -5,7 +5,6 @@ import L0.IValue.*;
 import L0.InterpreterError;
 
 public class ASTId implements ASTNode {
-
   String id;
 
   public ASTId(String id) {

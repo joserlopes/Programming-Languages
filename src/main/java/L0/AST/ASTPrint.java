@@ -5,7 +5,6 @@ import L0.IValue.*;
 import L0.InterpreterError;
 
 public class ASTPrint implements ASTNode {
-
   ASTNode exp;
   boolean insertNewLine = false;
 

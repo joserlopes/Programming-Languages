@@ -5,8 +5,7 @@ import L0.IValue.*;
 import L0.InterpreterError;
 
 public class ASTAssign implements ASTNode {
-  ASTNode lhs;
-  ASTNode rhs;
+  ASTNode lhs, rhs;
 
   public ASTAssign(ASTNode lhs, ASTNode rhs) {
     this.lhs = lhs;

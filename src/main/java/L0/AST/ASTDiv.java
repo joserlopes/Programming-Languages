@@ -7,9 +7,9 @@ import L0.InterpreterError;
 public class ASTDiv implements ASTNode {
   ASTNode lhs, rhs;
 
-  public ASTDiv(ASTNode l, ASTNode r) {
-    this.lhs = l;
-    this.rhs = r;
+  public ASTDiv(ASTNode lhs, ASTNode rhs) {
+    this.lhs = lhs;
+    this.rhs = rhs;
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {

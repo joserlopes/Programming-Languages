@@ -6,8 +6,7 @@ import L0.InterpreterError;
 import java.util.List;
 
 public class ASTFunCall implements ASTNode {
-  ASTNode func;
-  ASTNode arg;
+  ASTNode func, arg;
 
   public ASTFunCall(ASTNode func, ASTNode arg) {
     this.func = func;

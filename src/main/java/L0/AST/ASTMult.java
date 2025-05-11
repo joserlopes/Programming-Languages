@@ -7,9 +7,9 @@ import L0.InterpreterError;
 public class ASTMult implements ASTNode {
   ASTNode lhs, rhs;
 
-  public ASTMult(ASTNode l, ASTNode r) {
-    this.lhs = l;
-    this.rhs = r;
+  public ASTMult(ASTNode lhs, ASTNode rhs) {
+    this.lhs = lhs;
+    this.rhs = rhs;
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
