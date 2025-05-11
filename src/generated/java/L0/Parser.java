@@ -28,6 +28,7 @@ public class Parser implements ParserConstants {
     case FN:
     case NIL:
     case CONS:
+    case MATCH:
     case Id:
     case Num:
       t = Let();
@@ -61,6 +62,7 @@ public class Parser implements ParserConstants {
     case FN:
     case NIL:
     case CONS:
+    case MATCH:
     case Id:
     case Num:
       t = Seq();
@@ -326,7 +328,7 @@ public class Parser implements ParserConstants {
   }
 
   static final public ASTNode Fact() throws ParseException {
-  Token n;
+  Token n, n2;
   ASTNode t, e1, e2;
   List<String> params  = new ArrayList<String>();;
   ASTNode  body, alt;
@@ -405,11 +407,11 @@ public class Parser implements ParserConstants {
         n = jj_consume_token(Id);
                                        params.add(n.image);
       }
-      jj_consume_token(ARROW);
+      jj_consume_token(FAT_ARROW);
       jj_consume_token(LBRA);
       e2 = Let();
       jj_consume_token(RBRA);
-                                                     t = new ASTFunDecl(params, e2);
+                                                         t = new ASTFunDecl(params, e2);
       break;
     case PRINT:
       jj_consume_token(PRINT);
@@ -433,11 +435,29 @@ public class Parser implements ParserConstants {
     case CONS:
       jj_consume_token(CONS);
       jj_consume_token(LPAR);
-      t = Fact();
+      t = BA();
       jj_consume_token(COMMA);
-      e1 = Fact();
+      e1 = BA();
       jj_consume_token(RPAR);
-                                                            t = new ASTCons(t, e1);
+                                                        t = new ASTCons(t, e1);
+      break;
+    case MATCH:
+      jj_consume_token(MATCH);
+      t = Fact();
+      jj_consume_token(LBRA);
+      jj_consume_token(PIPE);
+      jj_consume_token(NIL);
+      jj_consume_token(ARROW);
+      e1 = Let();
+      jj_consume_token(PIPE);
+      n = jj_consume_token(Id);
+      jj_consume_token(COLON);
+      jj_consume_token(COLON);
+      n2 = jj_consume_token(Id);
+      jj_consume_token(ARROW);
+      e2 = Let();
+      jj_consume_token(RBRA);
+       t = new ASTMatch(t, e1, n.image, n2.image, e2);
       break;
     default:
       jj_la1[14] = jj_gen;
@@ -469,7 +489,7 @@ public class Parser implements ParserConstants {
       jj_la1_0 = new int[] {0xa00016e1,0x20,0xa00016e0,0x40000,0x40000000,0x400000,0x200000,0x1f800000,0x1f800000,0x300,0x300,0x1c00,0x1c00,0x100000,0xa00016c0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0xdbd,0x0,0xdbd,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xdbd,};
+      jj_la1_1 = new int[] {0x63bd,0x0,0x63bd,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x63bd,};
    }
 
   /** Constructor with InputStream. */
@@ -607,7 +627,7 @@ public class Parser implements ParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[44];
+    boolean[] la1tokens = new boolean[47];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -624,7 +644,7 @@ public class Parser implements ParserConstants {
         }
       }
     }
-    for (int i = 0; i < 44; i++) {
+    for (int i = 0; i < 47; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

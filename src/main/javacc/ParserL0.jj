@@ -87,11 +87,17 @@ TOKEN :
   |
   < FN : "fn" >
   |
-  <ARROW : "=>">
+  < FAT_ARROW : "=>">
   |
-  <NIL : "nil">
+  < NIL : "nil">
   |
-  <CONS : "cons">
+  < CONS : "cons">
+  |
+  < MATCH : "match">
+  |
+  < PIPE : "|">
+  |
+  < ARROW : "->">
   |
   < String: "\"" ( (~["\"","\\"]) | ("\\" ( ["n","t","b","r","f","\\","\""] ) ) )* "\"" >
   |
@@ -236,9 +242,8 @@ ASTNode Term() :
      { return t1; } 
 }
 
-
 ASTNode Fact() :
-{ Token n; 
+{ Token n, n2; 
   ASTNode t, e1, e2;
   List<String> params  = new ArrayList<String>();;
   ASTNode  body, alt;
@@ -259,12 +264,17 @@ ASTNode Fact() :
     | <WHILE> t=BA() <LBRA> body=Let() <RBRA> { t = new ASTWhile(t, body); }
     | <FN> n=<Id> { params.add(n.image); }
       	   	  (<COMMA> n = <Id>  { params.add(n.image); })*
-		  <ARROW> <LBRA> e2 = Let() <RBRA> { t = new ASTFunDecl(params, e2); }
+		  <FAT_ARROW> <LBRA> e2 = Let() <RBRA> { t = new ASTFunDecl(params, e2); }
     | <PRINT> t=Fact() { t = new ASTPrint(t);  }
     | <PRINTLN> t=Fact() { t = new ASTPrint(t, true); }
     | <LPAR> t=Let() <RPAR> 
     | <NIL> { t = new ASTNil(); }
-    | <CONS> <LPAR> t = Fact() <COMMA> e1 = Fact() <RPAR> { t = new ASTCons(t, e1); }
+    | <CONS> <LPAR> t = BA() <COMMA> e1 = BA() <RPAR> { t = new ASTCons(t, e1); }
+    | <MATCH> t = Fact() <LBRA>
+        <PIPE> <NIL> <ARROW> e1 = Let()
+        <PIPE> n=<Id> <COLON> <COLON> n2=<Id> <ARROW> e2 = Let()
+    <RBRA>
+     { t = new ASTMatch(t, e1, n.image, n2.image, e2); } 
     )
    { return t; }
 }

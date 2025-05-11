@@ -9,10 +9,14 @@ public class VCons implements IValue {
   }
 
   public IValue getHead() {
-    return this.getHead();
+    return this.head;
+  }
+
+  public IValue getTail() {
+    return this.tail;
   }
 
   public String toStr() {
-    return "cons(" + this.head.toStr() + "," + this.tail.toStr() + ")";
+    return "cons(" + this.head.toStr() + ", " + this.tail.toStr() + ")";
   }
 }
