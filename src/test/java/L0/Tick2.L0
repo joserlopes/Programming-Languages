@@ -1,0 +1,11 @@
+let tickgen = 
+fn step =>  
+let c = box(0); 
+fn => { 
+let v = *c; 
+c := *c + step; 
+v }; 
+  let t1 = tickgen (1); 
+  let t2 = tickgen (2); 
+  t1(); 
+  t2();t2()+t1();;

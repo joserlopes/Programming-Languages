@@ -1,0 +1,9 @@
+let c = box(0); 
+let tick = fn => { 
+let v = *c; 
+c := *c + 1; 
+v }; 
+  tick(); 
+tick(); 
+tick(); 
+tick();;

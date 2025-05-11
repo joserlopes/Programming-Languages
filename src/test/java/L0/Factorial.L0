@@ -1,0 +1,11 @@
+let fact =  
+fn n => {  
+let c = box (n); 
+  let f = box (1); 
+while (*c > 0) { 
+ f := *f * *c; 
+ c := *c - 1 
+     }; 
+     *f 
+  }; 
+fact (6);;
