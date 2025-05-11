@@ -19,18 +19,12 @@ public class ASTPrint implements ASTNode {
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
-    // Evaluate the condition
     IValue v1 = this.exp.eval(e);
-    if (v1 instanceof VInt) {
-      int i1 = ((VInt) v1).getVal();
-      // If it is true evaluate the trueBody
-      if (this.insertNewLine) {
-        System.out.println(i1);
-      } else {
-        System.out.print(i1);
-      }
-      return new VBool(true);
+    if (this.insertNewLine) {
+      System.out.println(v1.toStr());
+    } else {
+      System.out.print(v1.toStr());
     }
-    throw new InterpreterError("illegal types to print");
+    return new VBool(true);
   }
 }
