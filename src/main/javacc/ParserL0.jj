@@ -123,14 +123,26 @@ ASTNode Let() :
 
 ASTNode Seq() :
 {Token op;
-  ASTNode t1, t2;}
+  ASTNode t1, t2;
+  List<ASTNode> exps = new ArrayList<ASTNode>();
+  }
 {
-     t1 = SeqExp() ( ( op=<SEMIC> ) t2 = SeqExp() 
+     t1 = SeqExp()
+     {
+        exps.add(t1);
+     }
+     ( ( op=<SEMIC> ) t2 = SeqExp() 
  		 {
-		 /* missing AST build */
+		 exps.add(t2);
      } 
 		)*
-     { return t1; }  
+     { 
+         if (exps.size() == 1) {
+             return t1;
+         } else {
+             return new ASTSeq(exps);
+         }
+     }  
 }
 
 ASTNode SeqExp() :

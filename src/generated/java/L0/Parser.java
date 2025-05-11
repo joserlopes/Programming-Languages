@@ -94,7 +94,9 @@ public class Parser implements ParserConstants {
   static final public ASTNode Seq() throws ParseException {
  Token op;
   ASTNode t1, t2;
+  List<ASTNode> exps = new ArrayList<ASTNode>();
     t1 = SeqExp();
+        exps.add(t1);
     label_2:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -107,9 +109,13 @@ public class Parser implements ParserConstants {
       }
       op = jj_consume_token(SEMIC);
       t2 = SeqExp();
-
+                 exps.add(t2);
     }
-       {if (true) return t1;}
+         if (exps.size() == 1) {
+             {if (true) return t1;}
+         } else {
+             {if (true) return new ASTSeq(exps);}
+         }
     throw new Error("Missing return statement in function");
   }
 

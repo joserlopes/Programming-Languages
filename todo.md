@@ -2,8 +2,9 @@
 - [x] Relational operators
 - [x] Let bindings
 - [x] Automated testing with testng
-- [ ] Functions
-- [ ] Control flow - if then else, while...
-- [ ] I/O - print, println
+- [x] Functions
+- [x] Control flow - if then else, while...
+- [x] I/O - print, println
+- [ ] Check line 130 of .jj file. I think its sequences of expressions...
 - [ ] Boxes and stack allocated variables
 - [ ] Regular Lists and lazy lists
