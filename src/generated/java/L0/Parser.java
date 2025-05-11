@@ -26,6 +26,8 @@ public class Parser implements ParserConstants {
     case PRINT:
     case PRINTLN:
     case FN:
+    case NIL:
+    case CONS:
     case Id:
     case Num:
       t = Let();
@@ -57,6 +59,8 @@ public class Parser implements ParserConstants {
     case PRINT:
     case PRINTLN:
     case FN:
+    case NIL:
+    case CONS:
     case Id:
     case Num:
       t = Seq();
@@ -306,11 +310,10 @@ public class Parser implements ParserConstants {
                                          t1 = new ASTDiv(t1,t2);
         break;
       case LPAR:
-        // NOTE: Is this a function call?
-                         op = jj_consume_token(LPAR);
+        op = jj_consume_token(LPAR);
         t2 = Exp();
         jj_consume_token(RPAR);
-                                                   t1 = new ASTFunCall(t1, t2);
+                                                  t1 = new ASTFunCall(t1, t2);
         break;
       default:
         jj_la1[12] = jj_gen;
@@ -423,6 +426,19 @@ public class Parser implements ParserConstants {
       t = Let();
       jj_consume_token(RPAR);
       break;
+    case NIL:
+      jj_consume_token(NIL);
+              t = new ASTNil();
+      break;
+    case CONS:
+      jj_consume_token(CONS);
+      jj_consume_token(LPAR);
+      t = Fact();
+      jj_consume_token(COMMA);
+      e1 = Fact();
+      jj_consume_token(RPAR);
+                                                            t = new ASTCons(t, e1);
+      break;
     default:
       jj_la1[14] = jj_gen;
       jj_consume_token(-1);
@@ -453,7 +469,7 @@ public class Parser implements ParserConstants {
       jj_la1_0 = new int[] {0xa00016e1,0x20,0xa00016e0,0x40000,0x40000000,0x400000,0x200000,0x1f800000,0x1f800000,0x300,0x300,0x1c00,0x1c00,0x100000,0xa00016c0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x33d,0x0,0x33d,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x33d,};
+      jj_la1_1 = new int[] {0xdbd,0x0,0xdbd,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xdbd,};
    }
 
   /** Constructor with InputStream. */
@@ -591,7 +607,7 @@ public class Parser implements ParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[42];
+    boolean[] la1tokens = new boolean[44];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -608,7 +624,7 @@ public class Parser implements ParserConstants {
         }
       }
     }
-    for (int i = 0; i < 42; i++) {
+    for (int i = 0; i < 44; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

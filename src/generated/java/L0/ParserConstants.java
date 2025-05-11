@@ -79,11 +79,15 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int ARROW = 38;
   /** RegularExpression Id. */
-  int String = 39;
+  int NIL = 39;
   /** RegularExpression Id. */
-  int Id = 40;
+  int CONS = 40;
   /** RegularExpression Id. */
-  int Num = 41;
+  int String = 41;
+  /** RegularExpression Id. */
+  int Id = 42;
+  /** RegularExpression Id. */
+  int Num = 43;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -129,6 +133,8 @@ public interface ParserConstants {
     "\"println\"",
     "\"fn\"",
     "\"=>\"",
+    "\"nil\"",
+    "\"cons\"",
     "<String>",
     "<Id>",
     "<Num>",

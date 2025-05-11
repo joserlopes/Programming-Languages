@@ -89,6 +89,10 @@ TOKEN :
   |
   <ARROW : "=>">
   |
+  <NIL : "nil">
+  |
+  <CONS : "cons">
+  |
   < String: "\"" ( (~["\"","\\"]) | ("\\" ( ["n","t","b","r","f","\\","\""] ) ) )* "\"" >
   |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
@@ -227,8 +231,7 @@ ASTNode Term() :
 		 |
 		 op=<DIV> t2 = Fact()  { t1 = new ASTDiv(t1,t2); }
 		 |
-         // NOTE: Is this a function call?
-		 op = <LPAR> t2 = Exp () <RPAR>  { t1 = new ASTFunCall(t1, t2); } 
+		 op = <LPAR> t2 = Exp() <RPAR>  { t1 = new ASTFunCall(t1, t2); } 
 		)*
      { return t1; } 
 }
@@ -260,6 +263,8 @@ ASTNode Fact() :
     | <PRINT> t=Fact() { t = new ASTPrint(t);  }
     | <PRINTLN> t=Fact() { t = new ASTPrint(t, true); }
     | <LPAR> t=Let() <RPAR> 
+    | <NIL> { t = new ASTNil(); }
+    | <CONS> <LPAR> t = Fact() <COMMA> e1 = Fact() <RPAR> { t = new ASTCons(t, e1); }
     )
    { return t; }
 }
