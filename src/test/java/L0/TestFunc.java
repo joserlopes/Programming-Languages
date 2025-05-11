@@ -104,4 +104,56 @@ public class TestFunc {
       // Ignore exception, it never fails
     }
   }
+
+  public void FibonacciFunc1() {
+    String path = "src/test/java/L0/FibonacciFunc1.L0";
+
+    try {
+      parser.ReInit(new FileReader(path));
+      exp = parser.Start();
+      String v_str = exp.eval(new Environment<IValue>()).toStr();
+      assertEquals(v_str, "0");
+    } catch (Exception e) {
+      // Ignore exception, it never fails
+    }
+  }
+
+  public void FibonacciFunc2() {
+    String path = "src/test/java/L0/FibonacciFunc2.L0";
+
+    try {
+      parser.ReInit(new FileReader(path));
+      exp = parser.Start();
+      String v_str = exp.eval(new Environment<IValue>()).toStr();
+      assertEquals(v_str, "1");
+    } catch (Exception e) {
+      // Ignore exception, it never fails
+    }
+  }
+
+  public void FibonacciFunc3() {
+    String path = "src/test/java/L0/FibonacciFunc3.L0";
+
+    try {
+      parser.ReInit(new FileReader(path));
+      exp = parser.Start();
+      String v_str = exp.eval(new Environment<IValue>()).toStr();
+      assertEquals(v_str, "5");
+    } catch (Exception e) {
+      // Ignore exception, it never fails
+    }
+  }
+
+  public void FibonacciFunc4() {
+    String path = "src/test/java/L0/FibonacciFunc4.L0";
+
+    try {
+      parser.ReInit(new FileReader(path));
+      exp = parser.Start();
+      String v_str = exp.eval(new Environment<IValue>()).toStr();
+      assertEquals(v_str, "55");
+    } catch (Exception e) {
+      // Ignore exception, it never fails
+    }
+  }
 }
