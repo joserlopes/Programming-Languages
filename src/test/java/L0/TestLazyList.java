@@ -19,8 +19,6 @@ public class TestLazyList {
   public void infiniteFibonnaci() {
     String path = "src/test/java/L0/LazyList1.L0";
 
-    PrintStream originalOur = System.out;
-
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     PrintStream capturedOutput = new PrintStream(outputStream);
 
@@ -36,6 +34,29 @@ public class TestLazyList {
       capturedOutput.flush();
       String capturedString = outputStream.toString().trim();
       assertEquals(capturedString, "0\n1\n1\n2\n3\n5\n8\n13\n21\n34");
+    } catch (Exception e) {
+      // Ignore exception, it never fails
+    }
+  }
+
+  public void infiniteFactorial() {
+    String path = "src/test/java/L0/LazyList2.L0";
+
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    PrintStream capturedOutput = new PrintStream(outputStream);
+
+    System.setOut(capturedOutput);
+
+    try {
+      parser.ReInit(new FileReader(path));
+      exp = parser.Start();
+      String v_str = exp.eval(new Environment<IValue>()).toStr();
+      // NOTE: How can I test what gets printed to stdout?
+      assertEquals(v_str, "true");
+
+      capturedOutput.flush();
+      String capturedString = outputStream.toString().trim();
+      assertEquals(capturedString, "1\n2\n6\n24\n120\n720\n5040\n40320\n362880\n3628800");
     } catch (Exception e) {
       // Ignore exception, it never fails
     }
