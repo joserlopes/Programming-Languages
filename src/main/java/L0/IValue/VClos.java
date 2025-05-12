@@ -28,7 +28,7 @@ public class VClos implements IValue {
   }
 
   public String toStr() {
-    // This doesn't matter, since this never ends up going to the call at the end of in interpreter
+    // This doesn't matter, since this never ends up going to the call at the end of the interpreter
     // read
     return "";
   }

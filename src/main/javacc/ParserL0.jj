@@ -93,6 +93,8 @@ TOKEN :
   |
   < CONS : "cons">
   |
+  < LCONS : "lcons">
+  |
   < MATCH : "match">
   |
   < PIPE : "|">
@@ -270,6 +272,7 @@ ASTNode Fact() :
     | <LPAR> t=Let() <RPAR> 
     | <NIL> { t = new ASTNil(); }
     | <CONS> <LPAR> t = BA() <COMMA> e1 = BA() <RPAR> { t = new ASTCons(t, e1); }
+    | <LCONS> <LPAR> t = BA() <COMMA> e1 = BA() <RPAR> { t = new ASTLCons(t, e1); }
     | <MATCH> t = Fact() <LBRA>
         <PIPE> <NIL> <ARROW> e1 = Let()
         <PIPE> n=<Id> <COLON> <COLON> n2=<Id> <ARROW> e2 = Let()

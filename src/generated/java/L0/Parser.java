@@ -28,6 +28,7 @@ public class Parser implements ParserConstants {
     case FN:
     case NIL:
     case CONS:
+    case LCONS:
     case MATCH:
     case Id:
     case Num:
@@ -62,6 +63,7 @@ public class Parser implements ParserConstants {
     case FN:
     case NIL:
     case CONS:
+    case LCONS:
     case MATCH:
     case Id:
     case Num:
@@ -441,6 +443,15 @@ public class Parser implements ParserConstants {
       jj_consume_token(RPAR);
                                                         t = new ASTCons(t, e1);
       break;
+    case LCONS:
+      jj_consume_token(LCONS);
+      jj_consume_token(LPAR);
+      t = BA();
+      jj_consume_token(COMMA);
+      e1 = BA();
+      jj_consume_token(RPAR);
+                                                         t = new ASTLCons(t, e1);
+      break;
     case MATCH:
       jj_consume_token(MATCH);
       t = Fact();
@@ -489,7 +500,7 @@ public class Parser implements ParserConstants {
       jj_la1_0 = new int[] {0xa00016e1,0x20,0xa00016e0,0x40000,0x40000000,0x400000,0x200000,0x1f800000,0x1f800000,0x300,0x300,0x1c00,0x1c00,0x100000,0xa00016c0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x63bd,0x0,0x63bd,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x63bd,};
+      jj_la1_1 = new int[] {0xc7bd,0x0,0xc7bd,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xc7bd,};
    }
 
   /** Constructor with InputStream. */
@@ -627,7 +638,7 @@ public class Parser implements ParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[47];
+    boolean[] la1tokens = new boolean[48];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -644,7 +655,7 @@ public class Parser implements ParserConstants {
         }
       }
     }
-    for (int i = 0; i < 47; i++) {
+    for (int i = 0; i < 48; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
