@@ -1,0 +1,13 @@
+let filter = fn pred =>
+        { fn list =>
+        { match list {
+                | nil -> nil
+                | v :: tail -> if (pred(v)) {
+                    cons(v, filter(pred)(tail))
+                } else {
+                    filter(pred)(tail)
+                }
+        }
+}};
+let myList = cons(1, cons(2, cons(3, cons(2, cons(2, nil)))));
+filter(fn x => { x == 2 })(myList);;

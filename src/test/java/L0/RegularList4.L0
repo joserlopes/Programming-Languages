@@ -1,0 +1,7 @@
+let length = fn list => {
+        match list {
+        | nil -> 0
+        | v :: tail -> 1 + length(tail)
+}};
+let myList = nil;
+length(myList);;
