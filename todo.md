@@ -3,8 +3,9 @@
 - [x] Let bindings
 - [x] Automated testing with testng
 - [x] Functions
-- [x] Control flow - if then else, while...
+- [x] Control flow - if then else, while
 - [x] I/O - print, println
-- [ ] Check line 130 of .jj file. I think its sequences of expressions...
-- [ ] Boxes and stack allocated variables
-- [ ] Regular Lists and lazy lists
+- [x] Sequences of expressions
+- [x] Boxes and dereferencing
+- [x] Regular lists
+- [x] Lazy lists

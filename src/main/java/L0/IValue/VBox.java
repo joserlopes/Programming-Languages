@@ -16,6 +16,6 @@ public class VBox implements IValue {
   }
 
   public String toStr() {
-    return "Box(" + value.toStr() + ")";
+    return "box(" + value.toStr() + ")";
   }
 }

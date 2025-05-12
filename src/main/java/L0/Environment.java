@@ -35,11 +35,7 @@ public class Environment<E> {
   }
 
   public void update(String id, E bind) {
-    if (this.bindings.containsKey(id)) {
-      this.bindings.replace(id, bind);
-    }
-    // NOTE: Is it really just this?
-    // this.bindings.replace(id, bind);
+    this.bindings.replace(id, bind);
   }
 
   public E find(String id) throws InterpreterError {
