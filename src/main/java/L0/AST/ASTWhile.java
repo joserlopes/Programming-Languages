@@ -25,7 +25,8 @@ public class ASTWhile implements ASTNode {
         v1 = this.cond.eval(e);
         b1 = ((VBool) v1).getVal();
       }
-      return new VBool(false);
+
+      return new VBool(true);
     }
     throw new InterpreterError("illegal types for the codition of the while loop");
   }
