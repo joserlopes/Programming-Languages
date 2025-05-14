@@ -27,14 +27,14 @@ public class ASTFunCall implements ASTNode {
         String firstParam = c1.getParameters().get(0);
         List<String> remainingParams = c1.getParameters().subList(1, nArgs);
 
-        Environment<IValue> en = new Environment<>(c1.getEnvironment());
+        Environment<IValue> en = new Environment<IValue>(c1.getEnvironment());
         en.assoc(firstParam, a1);
 
         return new VClos(remainingParams, c1.getBody(), en);
       } else {
         String param = c1.getParameters().get(0);
 
-        Environment<IValue> en = new Environment<>(c1.getEnvironment());
+        Environment<IValue> en = new Environment<IValue>(c1.getEnvironment());
         en.assoc(param, a1);
 
         return c1.getBody().eval(en);

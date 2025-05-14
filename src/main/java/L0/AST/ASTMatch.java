@@ -26,7 +26,7 @@ public class ASTMatch implements ASTNode {
       IValue v2 = c1.getHead();
       IValue v3 = c1.getTail();
 
-      Environment<IValue> en = new Environment<>(e);
+      Environment<IValue> en = new Environment<IValue>(e);
       en.assoc(headName, v2);
       en.assoc(tailName, v3);
 
@@ -36,7 +36,7 @@ public class ASTMatch implements ASTNode {
 
       IValue v2 = lc1.getHead();
       IValue v3 = lc1.getTail();
-      Environment<IValue> en = new Environment<>(e);
+      Environment<IValue> en = new Environment<IValue>(e);
       en.assoc(headName, v2);
       en.assoc(tailName, v3);
 

@@ -48,6 +48,6 @@ public class Environment<E> {
       current_env = current_env.anc;
     }
 
-    throw new InterpreterError("Binding for " + id + " not found");
+    throw new InterpreterError("Binding for " + "\"" + id + "\"" + " not found");
   }
 }
