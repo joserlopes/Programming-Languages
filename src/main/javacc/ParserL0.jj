@@ -161,11 +161,11 @@ ASTNode SeqExp() :
 {Token op;
   ASTNode t1, t2;}
 {
-     t1 = BA() ( ( op=<ASSIGN> ) t2 = BA() 
+     t1 = BA() ( ( op=<ASSIGN> ) t2 = SeqExp() 
  		 {
 		 t1 = new ASTAssign(t1, t2);
      } 
-		)*
+		)?
      { return t1; }  
 }
 
@@ -253,6 +253,7 @@ ASTNode Fact() :
 {
    (
       n=<Num> { t = new ASTInt(Integer.parseInt(n.image)); } 
+    | n=<String> { t = new ASTString(n.image); }
     | n=<TRUE> { t = new ASTBool(Boolean.parseBoolean(n.image)); }
     | n=<FALSE> { t = new ASTBool(Boolean.parseBoolean(n.image)); }
     | n=<Id> { t = new ASTId(n.image); } 

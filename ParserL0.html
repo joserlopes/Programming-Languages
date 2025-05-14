@@ -564,6 +564,13 @@
    </PRE>
   </TD>
  </TR>
+ <!-- Token -->
+ <TR>
+  <TD>
+   <PRE>
+   </PRE>
+  </TD>
+ </TR>
 </TABLE>
 <H2 ALIGN=CENTER>NON-TERMINALS</H2>
 <TABLE>
@@ -590,7 +597,7 @@
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod5">SeqExp</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod4">BA</A> ( ( &lt;ASSIGN&gt; ) <A HREF="#prod4">BA</A> )*</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod4">BA</A> ( ( &lt;ASSIGN&gt; ) <A HREF="#prod5">SeqExp</A> )?</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod4">BA</A></TD>
@@ -620,7 +627,7 @@
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod10">Fact</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( &lt;Num&gt; | &lt;TRUE&gt; | &lt;FALSE&gt; | &lt;Id&gt; | &lt;BOX&gt; <A HREF="#prod10">Fact</A> | &lt;STAR&gt; <A HREF="#prod10">Fact</A> | &lt;MINUS&gt; <A HREF="#prod10">Fact</A> | &lt;NOT&gt; <A HREF="#prod10">Fact</A> | &lt;IF&gt; <A HREF="#prod4">BA</A> &lt;LBRA&gt; <A HREF="#prod2">Let</A> &lt;RBRA&gt; &lt;ELSE&gt; &lt;LBRA&gt; <A HREF="#prod2">Let</A> &lt;RBRA&gt; | &lt;WHILE&gt; <A HREF="#prod4">BA</A> &lt;LBRA&gt; <A HREF="#prod2">Let</A> &lt;RBRA&gt; | &lt;FN&gt; &lt;Id&gt; ( &lt;COMMA&gt; &lt;Id&gt; )* &lt;FAT_ARROW&gt; &lt;LBRA&gt; <A HREF="#prod2">Let</A> &lt;RBRA&gt; | &lt;PRINT&gt; <A HREF="#prod10">Fact</A> | &lt;PRINTLN&gt; <A HREF="#prod10">Fact</A> | &lt;LPAR&gt; <A HREF="#prod2">Let</A> &lt;RPAR&gt; | &lt;NIL&gt; | &lt;CONS&gt; &lt;LPAR&gt; <A HREF="#prod4">BA</A> &lt;COMMA&gt; <A HREF="#prod4">BA</A> &lt;RPAR&gt; | &lt;LCONS&gt; &lt;LPAR&gt; <A HREF="#prod4">BA</A> &lt;COMMA&gt; <A HREF="#prod4">BA</A> &lt;RPAR&gt; | &lt;MATCH&gt; <A HREF="#prod10">Fact</A> &lt;LBRA&gt; &lt;PIPE&gt; &lt;NIL&gt; &lt;ARROW&gt; <A HREF="#prod2">Let</A> &lt;PIPE&gt; &lt;Id&gt; &lt;COLON&gt; &lt;COLON&gt; &lt;Id&gt; &lt;ARROW&gt; <A HREF="#prod2">Let</A> &lt;RBRA&gt; )</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( &lt;Num&gt; | &lt;String&gt; | &lt;TRUE&gt; | &lt;FALSE&gt; | &lt;Id&gt; | &lt;BOX&gt; <A HREF="#prod10">Fact</A> | &lt;STAR&gt; <A HREF="#prod10">Fact</A> | &lt;MINUS&gt; <A HREF="#prod10">Fact</A> | &lt;NOT&gt; <A HREF="#prod10">Fact</A> | &lt;IF&gt; <A HREF="#prod4">BA</A> &lt;LBRA&gt; <A HREF="#prod2">Let</A> &lt;RBRA&gt; &lt;ELSE&gt; &lt;LBRA&gt; <A HREF="#prod2">Let</A> &lt;RBRA&gt; | &lt;WHILE&gt; <A HREF="#prod4">BA</A> &lt;LBRA&gt; <A HREF="#prod2">Let</A> &lt;RBRA&gt; | &lt;FN&gt; &lt;Id&gt; ( &lt;COMMA&gt; &lt;Id&gt; )* &lt;FAT_ARROW&gt; &lt;LBRA&gt; <A HREF="#prod2">Let</A> &lt;RBRA&gt; | &lt;PRINT&gt; <A HREF="#prod10">Fact</A> | &lt;PRINTLN&gt; <A HREF="#prod10">Fact</A> | &lt;LPAR&gt; <A HREF="#prod2">Let</A> &lt;RPAR&gt; | &lt;NIL&gt; | &lt;CONS&gt; &lt;LPAR&gt; <A HREF="#prod4">BA</A> &lt;COMMA&gt; <A HREF="#prod4">BA</A> &lt;RPAR&gt; | &lt;LCONS&gt; &lt;LPAR&gt; <A HREF="#prod4">BA</A> &lt;COMMA&gt; <A HREF="#prod4">BA</A> &lt;RPAR&gt; | &lt;MATCH&gt; <A HREF="#prod10">Fact</A> &lt;LBRA&gt; &lt;PIPE&gt; &lt;NIL&gt; &lt;ARROW&gt; <A HREF="#prod2">Let</A> &lt;PIPE&gt; &lt;Id&gt; &lt;COLON&gt; &lt;COLON&gt; &lt;Id&gt; &lt;ARROW&gt; <A HREF="#prod2">Let</A> &lt;RBRA&gt; )</TD>
 </TR>
 </TABLE>
 </BODY>

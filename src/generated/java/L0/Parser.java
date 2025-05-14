@@ -30,6 +30,7 @@ public class Parser implements ParserConstants {
     case CONS:
     case LCONS:
     case MATCH:
+    case String:
     case Id:
     case Num:
       t = Let();
@@ -65,6 +66,7 @@ public class Parser implements ParserConstants {
     case CONS:
     case LCONS:
     case MATCH:
+    case String:
     case Id:
     case Num:
       t = Seq();
@@ -131,19 +133,15 @@ public class Parser implements ParserConstants {
  Token op;
   ASTNode t1, t2;
     t1 = BA();
-    label_3:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case ASSIGN:
-        ;
-        break;
-      default:
-        jj_la1[4] = jj_gen;
-        break label_3;
-      }
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case ASSIGN:
       op = jj_consume_token(ASSIGN);
-      t2 = BA();
+      t2 = SeqExp();
                  t1 = new ASTAssign(t1, t2);
+      break;
+    default:
+      jj_la1[4] = jj_gen;
+      ;
     }
        {if (true) return t1;}
     throw new Error("Missing return statement in function");
@@ -153,7 +151,7 @@ public class Parser implements ParserConstants {
  Token op;
   ASTNode t1, t2;
     t1 = BM();
-    label_4:
+    label_3:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case OR:
@@ -161,7 +159,7 @@ public class Parser implements ParserConstants {
         break;
       default:
         jj_la1[5] = jj_gen;
-        break label_4;
+        break label_3;
       }
       op = jj_consume_token(OR);
       t2 = BM();
@@ -175,7 +173,7 @@ public class Parser implements ParserConstants {
  Token op;
   ASTNode t1, t2;
     t1 = Rel();
-    label_5:
+    label_4:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case AND:
@@ -183,7 +181,7 @@ public class Parser implements ParserConstants {
         break;
       default:
         jj_la1[6] = jj_gen;
-        break label_5;
+        break label_4;
       }
       op = jj_consume_token(AND);
       t2 = Rel();
@@ -254,7 +252,7 @@ public class Parser implements ParserConstants {
   Token op;
   ASTNode t1, t2;
     t1 = Term();
-    label_6:
+    label_5:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PLUS:
@@ -263,7 +261,7 @@ public class Parser implements ParserConstants {
         break;
       default:
         jj_la1[9] = jj_gen;
-        break label_6;
+        break label_5;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PLUS:
@@ -290,7 +288,7 @@ public class Parser implements ParserConstants {
  Token op;
   ASTNode t1, t2;
     t1 = Fact();
-    label_7:
+    label_6:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case STAR:
@@ -300,7 +298,7 @@ public class Parser implements ParserConstants {
         break;
       default:
         jj_la1[11] = jj_gen;
-        break label_7;
+        break label_6;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case STAR:
@@ -338,6 +336,10 @@ public class Parser implements ParserConstants {
     case Num:
       n = jj_consume_token(Num);
                 t = new ASTInt(Integer.parseInt(n.image));
+      break;
+    case String:
+      n = jj_consume_token(String);
+                   t = new ASTString(n.image);
       break;
     case TRUE:
       n = jj_consume_token(TRUE);
@@ -395,7 +397,7 @@ public class Parser implements ParserConstants {
       jj_consume_token(FN);
       n = jj_consume_token(Id);
                     params.add(n.image);
-      label_8:
+      label_7:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case COMMA:
@@ -403,7 +405,7 @@ public class Parser implements ParserConstants {
           break;
         default:
           jj_la1[13] = jj_gen;
-          break label_8;
+          break label_7;
         }
         jj_consume_token(COMMA);
         n = jj_consume_token(Id);
@@ -500,7 +502,7 @@ public class Parser implements ParserConstants {
       jj_la1_0 = new int[] {0xa00016e1,0x20,0xa00016e0,0x40000,0x40000000,0x400000,0x200000,0x1f800000,0x1f800000,0x300,0x300,0x1c00,0x1c00,0x100000,0xa00016c0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0xc7bd,0x0,0xc7bd,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xc7bd,};
+      jj_la1_1 = new int[] {0xe7bd,0x0,0xe7bd,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xe7bd,};
    }
 
   /** Constructor with InputStream. */
