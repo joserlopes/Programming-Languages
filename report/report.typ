@@ -51,8 +51,7 @@
 
 = Programming Languages
 
-== Project First Phase Report
-
+== First Phase Report - Lazy Lists
 
 \
 #align(center)[
