@@ -3,7 +3,7 @@ let lv = box(factorials(1)(1));
 let count = box(10);
 while (*count ~= 0) {
         match *lv {
-                | nil -> println(1000)
+                | nil -> println("never happens") 
                 | v :: tail -> println(v); lv := tail
 };
 count := *count - 1

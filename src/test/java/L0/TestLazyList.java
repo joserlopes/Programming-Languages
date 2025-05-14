@@ -61,4 +61,27 @@ public class TestLazyList {
       // Ignore exception, it never fails
     }
   }
+
+  public void infinitePrimes() {
+    String path = "src/test/java/L0/LazyList3.L0";
+
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    PrintStream capturedOutput = new PrintStream(outputStream);
+
+    System.setOut(capturedOutput);
+
+    try {
+      parser.ReInit(new FileReader(path));
+      exp = parser.Start();
+      String v_str = exp.eval(new Environment<IValue>()).toStr();
+      // NOTE: How can I test what gets printed to stdout?
+      assertEquals(v_str, "true");
+
+      capturedOutput.flush();
+      String capturedString = outputStream.toString().trim();
+      assertEquals(capturedString, "2\n3\n5\n7\n11\n13\n17\n19\n23\n29");
+    } catch (Exception e) {
+      // Ignore exception, it never fails
+    }
+  }
 }
