@@ -38,9 +38,21 @@
 
 #set list(indent: 1em)
 
+#let rule(premises, conclusion, length) = {
+  box(grid(
+    columns: 1fr,
+    row-gutter: (6pt, 6pt),
+    gutter: 0pt,
+    align(center, premises),
+    align(center, line(length: length)),
+    align(center, conclusion)
+  ))
+}
+
 = Programming Languages
 
 == Project First Phase Report
+
 
 \
 #align(center)[
@@ -51,7 +63,28 @@
 
 === Big Step Evaluation rules
 
-\
+#rule($$, $ℰ; "lcons("N, M) arrow.b.double "lcons("N, M, ℰ)$, 33%)
+
+#v(1em)
+
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 24pt,
+  rule(
+    $ℰ; M arrow.b.double "nil" #h(1em) ℰ; N arrow.b.double U$,
+    $ℰ; "match" M { "nil" -> N | y :: z -> K } arrow.b.double U$,
+    87%,
+  ),
+  rule(
+    $ℰ; M arrow.b.double "lcons("I, J, ℰ) #h(1em) ℰ[y -> I; z -> J]; K arrow.b.double U$,
+    $ℰ; "match" M { "nil" -> N | y :: z -> K } arrow.b.double U$,
+    100%,
+  ),
+)
+
+#v(1em)
+
+
 === Implementation
 \
 
@@ -122,7 +155,7 @@ VLCons lc1 = (VLCons) v1;
 
 IValue v2 = lc1.getHead();
 IValue v3 = lc1.getTail();
-Environment<IValue> en = new Environment<>(e);
+Environment<IValue> en = new Environment<IValue>(e);
 en.assoc(headName, v2);
 en.assoc(tailName, v3);
 

@@ -9,3 +9,4 @@
 - [x] Boxes and dereferencing
 - [x] Regular lists
 - [x] Lazy lists
+- [x] Strings??
