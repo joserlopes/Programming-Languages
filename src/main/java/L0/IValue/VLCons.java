@@ -6,7 +6,8 @@ import L0.InterpreterError;
 
 public class VLCons implements IValue {
   // Contrary to what happens in a Regular List, the values of head and tail
-  // need to be ASTNode, because they are not yet evaluated.
+  // need to be ASTNode, because they are not yet evaluated and it needs to have
+  // an environment for when they are evaluated.
   ASTNode head, tail;
   Environment<IValue> e;
 

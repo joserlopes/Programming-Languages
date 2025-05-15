@@ -71,12 +71,12 @@
   column-gutter: 24pt,
   rule(
     $ℰ; M arrow.b.double "nil" #h(1em) ℰ; N arrow.b.double U$,
-    $ℰ; "match" M { "nil" -> N | y :: z -> K } arrow.b.double U$,
+    $ℰ; "match" M { " | nil" -> N | y :: z -> K } arrow.b.double U$,
     87%,
   ),
   rule(
     $ℰ; M arrow.b.double "lcons("I, J, ℰ) #h(1em) ℰ[y -> I; z -> J]; K arrow.b.double U$,
-    $ℰ; "match" M { "nil" -> N | y :: z -> K } arrow.b.double U$,
+    $ℰ; "match" M { " | nil" -> N | y :: z -> K } arrow.b.double U$,
     100%,
   ),
 )
