@@ -3,5 +3,5 @@ let length = fn list => {
         | nil -> 0
         | v :: tail -> 1 + length(tail)
 }};
-let myList = nil;
+let myList = cons(1, cons(2, cons(3, cons(2, cons(2, nil)))));
 length(myList);;
