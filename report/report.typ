@@ -1,4 +1,5 @@
-#set text(lang: "en", size: 10.5pt)
+#set text(lang: "en", size: 9pt)
+#set page(margin: (x: 2.2cm))
 #show heading: it => {
   if it.level == 1 {
     set text(17pt, navy)
@@ -62,21 +63,21 @@
 
 === Big Step Evaluation rules
 
-#rule($$, $ℰ; "lcons("N, M) arrow.b.double "lcons("N, M, ℰ)$, 33%)
+#rule($$, $ℰ; "lcons("N, M) arrow.b.double "lcons("N, M, ℰ); S$, 37%)
 
 #v(1em)
 
 #grid(
   columns: (1fr, 1fr),
-  column-gutter: 24pt,
+  column-gutter: 5pt,
   rule(
-    $ℰ; M arrow.b.double "nil" #h(1em) ℰ; N arrow.b.double U$,
-    $ℰ; "match" M { " | nil" -> N | y :: z -> K } arrow.b.double U$,
-    87%,
+    $ℰ; S; M arrow.b.double "nil"; S' #h(1em) ℰ; S' N arrow.b.double U; S''$,
+    $ℰ; S; "match" M { " | nil" -> N | y :: z -> K } arrow.b.double U; S''$,
+    95%,
   ),
   rule(
-    $ℰ; M arrow.b.double "lcons("I, J, ℰ) #h(1em) ℰ[y -> I; z -> J]; K arrow.b.double U$,
-    $ℰ; "match" M { " | nil" -> N | y :: z -> K } arrow.b.double U$,
+    $ℰ; S; M arrow.b.double "lcons("I, J, ℰ); S' #h(1em) ℰ[y -> I; z -> J]; S'; K arrow.b.double U; S''$,
+    $ℰ; S; "match" M { " | nil" -> N | y :: z -> K } arrow.b.double U; S''$,
     100%,
   ),
 )
