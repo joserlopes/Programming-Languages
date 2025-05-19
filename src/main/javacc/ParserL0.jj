@@ -33,6 +33,8 @@ TOKEN :
   |
   < STAR : "*">
   |
+  < BANG : "!">
+  |
   < DIV : "/">
   |
   < LPAR : "(" >

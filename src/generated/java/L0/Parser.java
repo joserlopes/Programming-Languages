@@ -499,10 +499,10 @@ public class Parser implements ParserConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0xa00016e1,0x20,0xa00016e0,0x40000,0x40000000,0x400000,0x200000,0x1f800000,0x1f800000,0x300,0x300,0x1c00,0x1c00,0x100000,0xa00016c0,};
+      jj_la1_0 = new int[] {0x400026e1,0x20,0x400026e0,0x80000,0x80000000,0x800000,0x400000,0x3f000000,0x3f000000,0x300,0x300,0x3400,0x3400,0x200000,0x400026c0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0xe7bd,0x0,0xe7bd,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xe7bd,};
+      jj_la1_1 = new int[] {0x1cf7b,0x0,0x1cf7b,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1cf7b,};
    }
 
   /** Constructor with InputStream. */
@@ -640,7 +640,7 @@ public class Parser implements ParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[48];
+    boolean[] la1tokens = new boolean[49];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -657,7 +657,7 @@ public class Parser implements ParserConstants {
         }
       }
     }
-    for (int i = 0; i < 48; i++) {
+    for (int i = 0; i < 49; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

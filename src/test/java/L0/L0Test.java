@@ -11,7 +11,7 @@ import java.io.StringReader;
 import org.testng.annotations.*;
 
 @Test
-public class TestArithmetic {
+public class L0Test {
   StringReader reader;
   static Parser parser = new Parser(new StringReader(""));
   ASTNode exp;
@@ -66,7 +66,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, result);
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -79,7 +79,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, result);
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -92,7 +92,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, result);
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -108,7 +108,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, result);
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -121,7 +121,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "72");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -136,7 +136,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "4");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -149,7 +149,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "5");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -162,7 +162,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "14");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -175,7 +175,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "49");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -188,7 +188,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "49");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -201,7 +201,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "14");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -214,7 +214,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "199");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -227,7 +227,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "0");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -240,7 +240,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "1");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -253,7 +253,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "5");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -266,7 +266,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "55");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -281,7 +281,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "720");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!!");
     }
   }
 
@@ -294,7 +294,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "3");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -307,7 +307,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "3");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -322,7 +322,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "15");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -335,7 +335,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "cons(2, cons(4, cons(6, cons(8, cons(10, nil)))))");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -348,7 +348,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "cons(2, cons(2, cons(2, nil)))");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -361,7 +361,7 @@ public class TestArithmetic {
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "5");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -385,7 +385,7 @@ public class TestArithmetic {
       String capturedString = outputStream.toString().trim();
       assertEquals(capturedString, "0\n1\n1\n2\n3\n5\n8\n13\n21\n34");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -407,7 +407,7 @@ public class TestArithmetic {
       String capturedString = outputStream.toString().trim();
       assertEquals(capturedString, "1\n2\n6\n24\n120\n720\n5040\n40320\n362880\n3628800");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 
@@ -429,7 +429,7 @@ public class TestArithmetic {
       String capturedString = outputStream.toString().trim();
       assertEquals(capturedString, "2\n3\n5\n7\n11\n13\n17\n19\n23\n29");
     } catch (Exception e) {
-      // Ignore exception, it never fails
+      fail("It should never fail!");
     }
   }
 }
