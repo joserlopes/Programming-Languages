@@ -17,9 +17,8 @@ public class ASTAssign implements ASTNode {
     if (v1 instanceof VBox) {
       // v2 is the new value that is to be assigned to the left-hand side.
       IValue v2 = this.rhs.eval(e);
-      VBox b1 = ((VBox) v1);
+      VBox b1 = (VBox) v1;
       b1.assign(v2);
-      e.update(b1.toStr(), v2);
 
       // Do we return the boxed value, or the inner value?
       return v2;

@@ -67,19 +67,18 @@
 
 #v(1em)
 
-#grid(
-  columns: (1fr, 1fr),
-  column-gutter: 5pt,
-  rule(
-    $ℰ; S; M arrow.b.double "nil"; S' #h(1em) ℰ; S' N arrow.b.double U; S''$,
-    $ℰ; S; "match" M { " | nil" -> N | y :: z -> K } arrow.b.double U; S''$,
-    95%,
-  ),
-  rule(
-    $ℰ; S; M arrow.b.double "lcons("I, J, ℰ); S' #h(1em) ℰ[y -> I; z -> J]; S'; K arrow.b.double U; S''$,
-    $ℰ; S; "match" M { " | nil" -> N | y :: z -> K } arrow.b.double U; S''$,
-    100%,
-  ),
+#rule(
+  $ℰ; S; M arrow.b.double "nil"; S' #h(1em) ℰ; S' N arrow.b.double U; S''$,
+  $ℰ; S; "match" M { " | nil" -> N | y :: z -> K } arrow.b.double U; S''$,
+  42%,
+)
+
+#v(1em)
+
+#rule(
+  $ℰ; S; M arrow.b.double "lcons("I, J, ℰ); S' #h(1em) I arrow.b.double R #h(1em) J arrow.b.double T #h(1em) ℰ[y -> R; z -> T]; S'; K arrow.b.double U; S''$,
+  $ℰ; S; "match" M { " | nil" -> N | y :: z -> K } arrow.b.double U; S''$,
+  65%,
 )
 
 #v(1em)
