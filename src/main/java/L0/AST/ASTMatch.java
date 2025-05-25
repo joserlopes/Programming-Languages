@@ -40,7 +40,7 @@ public class ASTMatch implements ASTNode {
       en.assoc(headName, v2);
       en.assoc(tailName, v3);
 
-      return consCase.eval(en);
+      return this.consCase.eval(en);
     } else if (v1 instanceof VNil) {
       return this.nilCase.eval(e);
     }
