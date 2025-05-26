@@ -42,7 +42,7 @@ public class VLCons implements IValue {
     if (this.headWasEvaluated && this.tailWasEvaluated) {
       return "cons(" + this.evaluatedHead.toStr() + ", " + this.evaluatedTail.toStr() + ")";
     } else {
-      return "lcons(unknown, unknown)";
+      return "lcons(<unknown>, <unknown>)";
     }
   }
 }

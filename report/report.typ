@@ -63,12 +63,12 @@
 
 === Big Step Evaluation rules
 
-#rule($$, $ℰ; "lcons("N, M) arrow.b.double "lcons("N, M, ℰ); S$, 37%)
+#rule($$, $ℰ; S; "lcons("M, N) arrow.b.double "lcons("M, N, ℰ); S$, 37%)
 
 #v(1em)
 
 #rule(
-  $ℰ; S; M arrow.b.double "nil"; S' #h(1em) ℰ; S' N arrow.b.double U; S''$,
+  $ℰ; S; M arrow.b.double "nil"; S' #h(1em) ℰ; S'; N arrow.b.double U; S''$,
   $ℰ; S; "match" M { " | nil" -> N | y :: z -> K } arrow.b.double U; S''$,
   42%,
 )
@@ -76,9 +76,9 @@
 #v(1em)
 
 #rule(
-  $ℰ; S; M arrow.b.double "lcons("I, J, ℰ); S' #h(1em) I arrow.b.double R #h(1em) J arrow.b.double T #h(1em) ℰ[y -> R; z -> T]; S'; K arrow.b.double U; S''$,
-  $ℰ; S; "match" M { " | nil" -> N | y :: z -> K } arrow.b.double U; S''$,
-  65%,
+  $ℰ; S; M arrow.b.double "lcons("I, J, ℰ_l); S' #h(1em) ℰ_l; S'; I arrow.b.double R; S'' #h(1em) ℰ_l; S''; J arrow.b.double T; S''' #h(1em) ℰ[y -> R; z -> T]; S'''; K arrow.b.double U; S''''$,
+  $ℰ; S; "match" M { " | nil" -> N | y :: z -> K } arrow.b.double U; S''''$,
+  85%,
 )
 
 #v(1em)
