@@ -1,5 +1,6 @@
 package L0;
 
+import L0.Errors.InterpreterError;
 import java.util.*;
 
 public class Environment<E> {

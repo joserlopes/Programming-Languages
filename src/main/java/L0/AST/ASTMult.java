@@ -1,8 +1,9 @@
 package L0.AST;
 
 import L0.Environment;
+import L0.Errors.InterpreterError;
 import L0.IValue.*;
-import L0.InterpreterError;
+import L0.TValue.*;
 
 public class ASTMult implements ASTNode {
   ASTNode lhs, rhs;
@@ -11,6 +12,20 @@ public class ASTMult implements ASTNode {
     this.lhs = lhs;
     this.rhs = rhs;
   }
+
+  // public TValue typecheck(Environment<TValue> e) throws TypeCheckError {
+  //   TValue t1 = lhs.typecheck(e);
+  //   if (t1 instanceof TInt) {
+  //     TValue t2 = rhs.typecheck(e);
+  //     if (t2 instanceof TInt) {
+  //       return t1;
+  //     } else {
+  //       throw new TypeCheckError("illegal type to * operator " + t2.toStr());
+  //     }
+  //   } else {
+  //     throw new TypeCheckError("illegal type to * operator " + t1.toStr());
+  //   }
+  // }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
     IValue v1 = this.lhs.eval(e);

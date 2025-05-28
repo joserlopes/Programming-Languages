@@ -2,7 +2,7 @@ package L0.IValue;
 
 import L0.AST.*;
 import L0.Environment;
-import L0.InterpreterError;
+import L0.Errors.InterpreterError;
 
 public class VLCons implements IValue {
   // Contrary to what happens in a Regular List, the values of head and tail

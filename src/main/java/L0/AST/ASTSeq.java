@@ -1,8 +1,8 @@
 package L0.AST;
 
 import L0.Environment;
+import L0.Errors.InterpreterError;
 import L0.IValue.*;
-import L0.InterpreterError;
 import java.util.List;
 
 public class ASTSeq implements ASTNode {
