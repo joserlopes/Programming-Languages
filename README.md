@@ -8,9 +8,9 @@
 
 ## Commands
 
-- `makeit.sh` - Builds the interpreter
-- `run.sh` - Starts the REPL
-- `test.sh` - Runs automatic tests
+- `makeit` - Builds the interpreter
+- `x++` - Starts the REPL. If a file ending in `.xpp` is passed as argument, that file is evaluated instead.
+- `test` - Runs automatic tests
 
 ## Notes
 
