@@ -6,6 +6,7 @@ import L0.Errors.InterpreterError;
 import L0.Errors.TypeCheckError;
 import L0.IValue.*;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ASTTypeDef implements ASTNode {
   HashMap<String, ASTType> ltd;
@@ -17,8 +18,13 @@ public class ASTTypeDef implements ASTNode {
   }
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-    // TODO
-    throw new UnsupportedOperationException("Unimplemented method 'typecheck'");
+    Environment<ASTType> en = e.beginScope();
+
+    for (Map.Entry<String, ASTType> entry : this.ltd.entrySet()) {
+      en.assoc(entry.getKey(), entry.getValue());
+    }
+
+    return this.body.typecheck(en);
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {

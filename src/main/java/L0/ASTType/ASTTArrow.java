@@ -9,6 +9,14 @@ public class ASTTArrow implements ASTType {
     this.codom = codom;
   }
 
+  public ASTType getDomain() {
+    return this.dom;
+  }
+
+  public ASTType getCoDomain() {
+    return this.codom;
+  }
+
   public String toStr() {
     return this.dom.toStr() + "->" + this.codom.toStr();
   }

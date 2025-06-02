@@ -8,4 +8,8 @@ public class TypeBindList {
   public TypeBindList(HashMap<String, ASTType> ll) {
     this.lbl = ll;
   }
+
+  public ASTType getType(String label) {
+    return this.lbl.get(label);
+  }
 }

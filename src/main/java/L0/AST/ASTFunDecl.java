@@ -5,15 +5,15 @@ import L0.Environment;
 import L0.Errors.InterpreterError;
 import L0.Errors.TypeCheckError;
 import L0.IValue.*;
-import java.util.List;
 
 public class ASTFunDecl implements ASTNode {
   String param;
-  List<ASTType> paramsTypes;
+  ASTType paramType;
   ASTNode body;
 
-  public ASTFunDecl(String param, ASTNode body) {
+  public ASTFunDecl(String param, ASTType paramType, ASTNode body) {
     this.param = param;
+    this.paramType = paramType;
     this.body = body;
   }
 
@@ -22,14 +22,11 @@ public class ASTFunDecl implements ASTNode {
   }
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-    // Environment<ASTType> en;
-    // en = e.beginScope();
-    // // NOTE: Do we need to check that params and paramsTypes have the same lenght?
-    // for (int i = 0; i < params.size(); i++) {
-    //   en.assoc(this.params.get(i), this.paramsTypes.get(i));
-    // }
-    // ASTType tb = this.body.typecheck(en);
-    return new ASTTArrow(null, null);
+    Environment<ASTType> en;
+    en = e.beginScope();
+    en.assoc(param, paramType);
+    ASTType tb = body.typecheck(en);
+    return new ASTTArrow(paramType, tb);
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {

@@ -3,6 +3,7 @@ package L0;
 import static org.testng.Assert.*;
 
 import L0.AST.*;
+import L0.ASTType.*;
 import L0.IValue.*;
 import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
@@ -63,6 +64,7 @@ public class L0Test {
     parser.ReInit(reader);
     try {
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, result);
     } catch (Exception e) {
@@ -76,6 +78,7 @@ public class L0Test {
     parser.ReInit(reader);
     try {
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, result);
     } catch (Exception e) {
@@ -89,6 +92,7 @@ public class L0Test {
     parser.ReInit(reader);
     try {
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, result);
     } catch (Exception e) {
@@ -105,6 +109,7 @@ public class L0Test {
 
     try {
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, result);
     } catch (Exception e) {
@@ -118,6 +123,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "72");
     } catch (Exception e) {
@@ -133,6 +139,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "4");
     } catch (Exception e) {
@@ -146,6 +153,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "5");
     } catch (Exception e) {
@@ -159,6 +167,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "14");
     } catch (Exception e) {
@@ -172,6 +181,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "49");
     } catch (Exception e) {
@@ -185,6 +195,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "49");
     } catch (Exception e) {
@@ -198,6 +209,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "14");
     } catch (Exception e) {
@@ -211,6 +223,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "199");
     } catch (Exception e) {
@@ -224,6 +237,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "0");
     } catch (Exception e) {
@@ -237,6 +251,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "1");
     } catch (Exception e) {
@@ -250,6 +265,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "5");
     } catch (Exception e) {
@@ -263,6 +279,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "55");
     } catch (Exception e) {
@@ -278,6 +295,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "720");
     } catch (Exception e) {
@@ -291,6 +309,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "3");
     } catch (Exception e) {
@@ -304,6 +323,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "3");
     } catch (Exception e) {
@@ -319,6 +339,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "15");
     } catch (Exception e) {
@@ -332,6 +353,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "cons(2, cons(4, cons(6, cons(8, cons(10, nil)))))");
     } catch (Exception e) {
@@ -345,6 +367,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "cons(2, cons(2, cons(2, nil)))");
     } catch (Exception e) {
@@ -358,6 +381,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "5");
     } catch (Exception e) {
@@ -378,6 +402,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "true");
 
@@ -400,6 +425,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "true");
 
@@ -422,6 +448,7 @@ public class L0Test {
     try {
       parser.ReInit(new FileReader(path));
       exp = parser.Start();
+      exp.typecheck(new Environment<ASTType>());
       String v_str = exp.eval(new Environment<IValue>()).toStr();
       assertEquals(v_str, "true");
 

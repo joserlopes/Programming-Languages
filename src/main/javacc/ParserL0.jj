@@ -126,7 +126,7 @@ TOKEN :
   |
   < String: "\"" ( (~["\"","\\"]) | ("\\" ( ["n","t","b","r","f","\\","\""] ) ) )* "\"" >
   |
-  < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
+  < Id: ["a"-"z","A"-"Z", "_"] ( ["_", "a"-"z","A"-"Z","0"-"9"] )* >
   |
   < Num: (["0"-"9"]) + >
 }
@@ -284,8 +284,8 @@ ASTType at;
 }
 {
       <FN> n=<Id> <COLON> at = Type()
-      { t = new ASTFunDecl(n.image, null); e1 = t;}
-      ( <COMMA> n = <Id> <COLON> at = Type() { e2 = new ASTFunDecl(n.image, null);
+      { t = new ASTFunDecl(n.image, at, null); e1 = t;}
+      ( <COMMA> n = <Id> <COLON> at = Type() { e2 = new ASTFunDecl(n.image, at, null);
 		  ((ASTFunDecl)e1).setBody(e2); e1 = e2; })*
 		  <FAT_ARROW> <LBRA> e2 = Let() <RBRA> { ((ASTFunDecl)e1).setBody(e2); }
       { return t; } 
@@ -382,7 +382,7 @@ ASTType TypeF() :
         | <STRING> { t = new ASTTString(); } 
         | <REF> <LT> t=Type() <GT> { t = new ASTTBox(t); }
         | <LIST> <LT> t=Type() <GT> { t = new ASTTList(t); }
-        | <STRUCT> <LBRA> ll = LabelList() <RBRA> { t = new ASTTStruct(ll); return t; }
+        | <STRUCT> <LBRA> ll = LabelList() <RBRA> { t = new ASTTRecord(ll); return t; }
     )
     { return t; }
 }

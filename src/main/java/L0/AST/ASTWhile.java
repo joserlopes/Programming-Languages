@@ -1,7 +1,9 @@
 package L0.AST;
 
+import L0.ASTType.*;
 import L0.Environment;
 import L0.Errors.InterpreterError;
+import L0.Errors.TypeCheckError;
 import L0.IValue.*;
 
 public class ASTWhile implements ASTNode {
@@ -10,6 +12,15 @@ public class ASTWhile implements ASTNode {
   public ASTWhile(ASTNode cond, ASTNode body) {
     this.cond = cond;
     this.body = body;
+  }
+
+  public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
+    ASTType t1 = this.cond.typecheck(e);
+    if (t1 instanceof ASTTBool) {
+      return this.body.typecheck(e);
+    } else {
+      throw new TypeCheckError("illegal type for the while condition " + t1.toStr());
+    }
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {

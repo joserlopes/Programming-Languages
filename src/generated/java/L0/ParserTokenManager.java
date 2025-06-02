@@ -510,7 +510,7 @@ static private int jjMoveNfa_0(int startState, int curPos)
             {
                case 0:
                case 6:
-                  if ((0x7fffffe07fffffeL & l) == 0L)
+                  if ((0x7fffffe87fffffeL & l) == 0L)
                      break;
                   if (kind > 57)
                      kind = 57;

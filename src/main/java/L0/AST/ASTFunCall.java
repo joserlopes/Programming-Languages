@@ -1,7 +1,9 @@
 package L0.AST;
 
+import L0.ASTType.*;
 import L0.Environment;
 import L0.Errors.InterpreterError;
+import L0.Errors.TypeCheckError;
 import L0.IValue.*;
 
 public class ASTFunCall implements ASTNode {
@@ -10,6 +12,25 @@ public class ASTFunCall implements ASTNode {
   public ASTFunCall(ASTNode func, ASTNode arg) {
     this.func = func;
     this.arg = arg;
+  }
+
+  @Override
+  public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
+    ASTType t1 = this.func.typecheck(e);
+
+    if (t1 instanceof ASTTArrow) {
+      ASTTArrow a1 = (ASTTArrow) t1;
+      ASTType t2 = this.arg.typecheck(e);
+      // TODO: Implement sub typing for this
+      if (t2.toStr().equals(a1.getDomain().toStr())) {
+        return a1.getCoDomain();
+      } else {
+        throw new TypeCheckError(
+            "illegal type to argument. Got " + t2.toStr() + ", expected " + a1.getDomain().toStr());
+      }
+    } else {
+      throw new TypeCheckError("illegal type for function call " + t1.toStr());
+    }
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {

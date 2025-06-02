@@ -368,7 +368,7 @@ ASTType at;
     n = jj_consume_token(Id);
     jj_consume_token(COLON);
     at = Type();
-        t = new ASTFunDecl(n.image, null); e1 = t;
+        t = new ASTFunDecl(n.image, at, null); e1 = t;
     label_8:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -383,7 +383,7 @@ ASTType at;
       n = jj_consume_token(Id);
       jj_consume_token(COLON);
       at = Type();
-                                               e2 = new ASTFunDecl(n.image, null);
+                                               e2 = new ASTFunDecl(n.image, at, null);
                   ((ASTFunDecl)e1).setBody(e2); e1 = e2;
     }
     jj_consume_token(FAT_ARROW);
@@ -658,7 +658,7 @@ List<Bind> fields = new ArrayList<Bind>();;
       jj_consume_token(LBRA);
       ll = LabelList();
       jj_consume_token(RBRA);
-                                                    t = new ASTTStruct(ll); {if (true) return t;}
+                                                    t = new ASTTRecord(ll); {if (true) return t;}
       break;
     default:
       jj_la1[20] = jj_gen;

@@ -1,13 +1,17 @@
 package L0.ASTType;
 
 public class ASTTList implements ASTType {
-  ASTType elt;
+  ASTType type;
 
-  public ASTTList(ASTType elt) {
-    this.elt = elt;
+  public ASTTList(ASTType type) {
+    this.type = type;
+  }
+
+  public ASTType getType() {
+    return this.type;
   }
 
   public String toStr() {
-    return "list<" + this.elt.toStr() + ">";
+    return "list<" + this.type.toStr() + ">";
   }
 }

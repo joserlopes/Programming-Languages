@@ -3,6 +3,7 @@ package L0.AST;
 import L0.ASTType.*;
 import L0.Environment;
 import L0.Errors.InterpreterError;
+import L0.Errors.TypeCheckError;
 import L0.IValue.*;
 
 public class ASTNeg implements ASTNode {
@@ -12,13 +13,15 @@ public class ASTNeg implements ASTNode {
     this.exp = e;
   }
 
-  // public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-  //   ASTType t1 = this.exp.typecheck(e);
-  //   if (t1 instanceof ASTTint) {
-  //     return t1;
-  //   }
-  //   throw new TypeCheckError("illegal type to neg operator");
-  // }
+  public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
+    ASTType t1 = this.exp.typecheck(e);
+
+    if (t1 instanceof ASTTInt) {
+      return t1;
+    }
+
+    throw new TypeCheckError("illegal type to neg operator");
+  }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
     IValue v0 = this.exp.eval(e);

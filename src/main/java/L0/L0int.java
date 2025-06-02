@@ -1,6 +1,8 @@
 package L0;
 
 import L0.AST.*;
+import L0.ASTType.ASTType;
+import L0.Errors.TypeCheckError;
 import L0.IValue.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,23 +17,25 @@ public class L0int {
         try {
           FileReader file = new FileReader(args[0]);
           Parser parser = new Parser(file);
-          // TODO: Type checking
           exp = parser.Start();
           if (exp == null) {
             file.close();
             System.exit(0);
           }
+          exp.typecheck(new Environment<ASTType>());
           IValue v = exp.eval(new Environment<IValue>());
           System.out.println(v.toStr());
         } catch (FileNotFoundException e) {
           System.out.println("File " + args[0] + "not found");
+        } catch (TypeCheckError e) {
+          System.out.println(e.getMessage());
         } catch (ParseException e) {
           System.out.println("Syntax Error.");
         } catch (Exception e) {
           e.printStackTrace();
         }
       } else {
-        System.out.println("File must end in .xpp");
+        System.out.println("Error: File must end in .xpp");
       }
     } else if (args.length == 0) {
       Parser parser = new Parser(System.in);
@@ -41,11 +45,14 @@ public class L0int {
           System.out.print("# ");
           exp = parser.Start();
           if (exp == null) System.exit(0);
-          // TODO: Type checking
+          exp.typecheck(new Environment<ASTType>());
           IValue v = exp.eval(new Environment<IValue>());
           System.out.println(v.toStr());
         } catch (ParseException e) {
           System.out.println("Syntax Error.");
+          parser.ReInit(System.in);
+        } catch (TypeCheckError e) {
+          System.out.println("Error: " + e.getMessage());
           parser.ReInit(System.in);
         } catch (Exception e) {
           e.printStackTrace();
