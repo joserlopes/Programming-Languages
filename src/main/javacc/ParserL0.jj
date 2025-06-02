@@ -265,11 +265,11 @@ ASTNode Term() :
   ASTNode t1, t2;}
 {
      t1 = Fact() (
-        op=<STAR> t2 = Fact()   { t1 = new ASTMult(t1,t2); }
+        op=<STAR> t2 = Fact()   { t1 = new ASTMult(t1, t2); }
 		|
-		op=<DIV> t2 = Fact()  { t1 = new ASTDiv(t1,t2); }
+		op=<DIV> t2 = Fact()  { t1 = new ASTDiv(t1, t2); }
         |
-		op=<DOT> op = <Id>  { /* to be done field selection */ ; }
+		op=<DOT> op=<Id>  { t1 = new ASTDot(t1, op.image); }
 		|
 		op = <LPAR> t2 = Exp() <RPAR>  { t1 = new ASTFunCall(t1, t2); } 
 		)*
@@ -294,13 +294,17 @@ ASTType at;
 ASTNode Record():
 {
 Token n;
-ASTNode e1, t;
+ASTNode e1;
 List<Bind> fields = new ArrayList<Bind>();;
 }
 {
-    <LBRA> n=<Id> <EQUAL> e1= BA() <RBRA>
-    { fields.add(new Bind(n.image, e1)); t = new ASTRecord(fields); }
-    { return t; }
+    <LBRA> n=<Id> <EQUAL> e1= BA()
+        { fields.add(new Bind(n.image, e1)); }
+        (<COMMA> n=<Id> <EQUAL> e1 = BA()
+        { fields.add(new Bind(n.image, e1)); }
+        )*
+    <RBRA>
+    { return new ASTRecord(fields); }
 }
 
 ASTNode Fact() :

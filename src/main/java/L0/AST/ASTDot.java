@@ -6,9 +6,10 @@ import L0.Errors.InterpreterError;
 import L0.IValue.*;
 
 public class ASTDot implements ASTNode {
-  ASTNode record, field;
+  ASTNode record;
+  String field;
 
-  public ASTDot(ASTNode record, ASTNode field) {
+  public ASTDot(ASTNode record, String field) {
     this.record = record;
     this.field = field;
   }
@@ -30,13 +31,8 @@ public class ASTDot implements ASTNode {
   public IValue eval(Environment<IValue> e) throws InterpreterError {
     IValue v1 = this.record.eval(e);
     if (v1 instanceof VRecord) {
-      IValue v2 = this.field.eval(e);
       VRecord r1 = (VRecord) v1;
-      if (v2 instanceof VBool) {
-        boolean b1 = ((VBool) v1).getVal();
-        boolean b2 = ((VBool) v2).getVal();
-        return new VBool(b1 && b2);
-      }
+      return r1.getValue(this.field);
     }
 
     throw new InterpreterError("illegal types to && operator");

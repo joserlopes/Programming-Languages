@@ -2,6 +2,7 @@ package L0.IValue;
 
 import L0.Environment;
 import java.util.HashMap;
+import java.util.Map;
 
 public class VRecord implements IValue {
   HashMap<String, IValue> fields;
@@ -12,13 +13,17 @@ public class VRecord implements IValue {
     this.e = e;
   }
 
+  public IValue getValue(String key) {
+    return this.fields.get(key);
+  }
+
   public String toStr() {
     String res = "record(";
-    System.out.println(this.fields);
-    this.fields.forEach(
-        (name, value) -> {
-          res.concat(name + "=" + value);
-        });
+    for (Map.Entry<String, IValue> entry : this.fields.entrySet()) {
+      res += entry.getKey() + " = " + entry.getValue().toStr() + ", ";
+    }
+    res = res.substring(0, res.length() - 2);
+    res += ")";
     return res;
   }
 }
