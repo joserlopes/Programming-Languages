@@ -2,21 +2,16 @@ package L0.IValue;
 
 import L0.AST.ASTNode;
 import L0.Environment;
-import java.util.List;
 
 public class VClos implements IValue {
-  List<String> params;
+  String param;
   ASTNode body;
   Environment<IValue> en;
 
-  public VClos(List<String> parameters, ASTNode body, Environment<IValue> en) {
-    this.params = parameters;
+  public VClos(String parameter, ASTNode body, Environment<IValue> en) {
+    this.param = parameter;
     this.body = body;
     this.en = en;
-  }
-
-  public List<String> getParameters() {
-    return this.params;
   }
 
   public ASTNode getBody() {
@@ -27,12 +22,11 @@ public class VClos implements IValue {
     return this.en;
   }
 
+  public String getParameter() {
+    return this.param;
+  }
+
   public String toStr() {
-    // This doesn't really matter, unless we want to evaluate the value of an actual function...
-    String res = "app(";
-    for (String param : this.params) {
-      res += param + " ";
-    }
-    return res.trim() + ")";
+    return "app(" + this.param + ")";
   }
 }

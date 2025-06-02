@@ -1,5 +1,5 @@
 let c = box(0); 
-let tick = fn x => { 
+let tick = fn x: int => { 
 let v = *c; 
 c := *c + 1; 
 v }; 

@@ -1,5 +1,5 @@
-let length = fn list => {
-        match list {
+let length = fn l: int => {
+        match l {
         | nil -> 0
         | v :: tail -> 1 + length(tail)
 }};

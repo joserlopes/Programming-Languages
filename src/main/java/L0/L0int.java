@@ -33,9 +33,9 @@ public class L0int {
       } else {
         System.out.println("File must end in .xpp");
       }
-    } else {
+    } else if (args.length == 0) {
       Parser parser = new Parser(System.in);
-      System.out.println("L0 interpreter PL MEIC 2024/25\n");
+      System.out.println("Xpp interpreter PL MEIC 2024/25\n");
       while (true) {
         try {
           System.out.print("# ");
@@ -52,6 +52,8 @@ public class L0int {
           parser.ReInit(System.in);
         }
       }
+    } else {
+      System.out.println("Usage: x++ <file.xpp>");
     }
   }
 }

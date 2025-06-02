@@ -3,7 +3,6 @@ package L0.AST;
 import L0.Environment;
 import L0.Errors.InterpreterError;
 import L0.IValue.*;
-import java.util.List;
 
 public class ASTFunCall implements ASTNode {
   ASTNode func, arg;
@@ -21,24 +20,10 @@ public class ASTFunCall implements ASTNode {
 
       IValue a1 = this.arg.eval(e);
 
-      int nArgs = c1.getParameters().size();
+      Environment<IValue> en = new Environment<IValue>(c1.getEnvironment());
+      en.assoc(c1.getParameter(), a1);
 
-      if (nArgs > 1) {
-        String firstParam = c1.getParameters().get(0);
-        List<String> remainingParams = c1.getParameters().subList(1, nArgs);
-
-        Environment<IValue> en = new Environment<IValue>(c1.getEnvironment());
-        en.assoc(firstParam, a1);
-
-        return new VClos(remainingParams, c1.getBody(), en);
-      } else {
-        String param = c1.getParameters().get(0);
-
-        Environment<IValue> en = new Environment<IValue>(c1.getEnvironment());
-        en.assoc(param, a1);
-
-        return c1.getBody().eval(en);
-      }
+      return c1.getBody().eval(en);
     }
     throw new InterpreterError("illegal types to function call");
   }

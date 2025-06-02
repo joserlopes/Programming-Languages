@@ -1,9 +1,9 @@
-let map = fn f =>
-        { fn list =>
-        { match list {
+let map = fn f: int =>
+        { fn l: int =>
+        { match l {
                 | nil -> nil
                 | v :: tail -> cons(f(v), map(f)(tail))
         }
 }};
 let myList = cons(1, cons(2, cons(3, cons(4, cons(5, nil)))));
-map (fn x => { x * 2 })(myList);;
+map (fn x: int => { x * 2 })(myList);;

@@ -1,17 +1,17 @@
 package L0.IValue;
 
 public class VInt implements IValue {
-  int v;
+  int value;
 
-  public VInt(int v0) {
-    this.v = v0;
+  public VInt(int value) {
+    this.value = value;
   }
 
   public int getVal() {
-    return this.v;
+    return this.value;
   }
 
   public String toStr() {
-    return Integer.toString(this.v);
+    return Integer.toString(this.value);
   }
 }

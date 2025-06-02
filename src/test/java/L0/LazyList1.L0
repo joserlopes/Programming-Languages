@@ -1,4 +1,4 @@
-let fibo = fn a, b => { lcons(a, fibo(b)(a + b)) };
+let fibo = fn a: int, b: int => { lcons(a, fibo(b)(a + b)) };
 let lv = box(fibo(0)(1));
 let count = box(10);
 while (*count ~= 0) {

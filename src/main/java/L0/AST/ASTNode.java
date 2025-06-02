@@ -7,5 +7,5 @@ import L0.IValue.IValue;
 public interface ASTNode {
   public IValue eval(Environment<IValue> e) throws InterpreterError;
 
-  // public TValue typecheck(Environment<TValue> e) throws TypeCheckError;
+  // public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError;
 }

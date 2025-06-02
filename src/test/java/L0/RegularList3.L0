@@ -1,6 +1,6 @@
-let filter = fn pred =>
-        { fn list =>
-        { match list {
+let filter = fn pred: int =>
+        { fn l: int =>
+        { match l {
                 | nil -> nil
                 | v :: tail -> if (pred(v)) {
                     cons(v, filter(pred)(tail))
@@ -10,4 +10,4 @@ let filter = fn pred =>
         }
 }};
 let myList = cons(1, cons(2, cons(3, cons(2, cons(2, nil)))));
-filter(fn x => { x == 2 })(myList);;
+filter(fn x: int => { x == 2 })(myList);;

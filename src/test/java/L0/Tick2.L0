@@ -1,7 +1,7 @@
 let tickgen = 
-fn step => {
+fn step: int => {
 let c = box(0); 
-fn x => { 
+fn x: int => { 
 let v = *c; 
 c := *c + step; 
 v } 
