@@ -16,9 +16,9 @@ public class ASTPlus implements ASTNode {
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.lhs.typecheck(e);
-    if (t1 instanceof ASTTInt) {
+    if (t1 instanceof ASTTInt || t1 instanceof ASTTString) {
       ASTType t2 = this.rhs.typecheck(e);
-      if (t2 instanceof ASTTInt) {
+      if (t2 instanceof ASTTInt || t2 instanceof ASTTString) {
         return t1;
       } else {
         throw new TypeCheckError("illegal type to + operator " + t2.toStr());
