@@ -5,13 +5,13 @@ import L0.Errors.InterpreterError;
 import L0.IValue.*;
 
 public class ASTString implements ASTNode {
-  String v;
+  String value;
 
-  public ASTString(String v) {
-    this.v = v;
+  public ASTString(String value) {
+    this.value = value;
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
-    return new VString(this.v);
+    return new VString(this.value);
   }
 }

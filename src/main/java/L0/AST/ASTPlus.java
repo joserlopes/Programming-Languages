@@ -29,13 +29,18 @@ public class ASTPlus implements ASTNode {
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
     IValue v1 = this.lhs.eval(e);
-    if (v1 instanceof VInt) {
-      IValue v2 = this.rhs.eval(e);
-      if (v2 instanceof VInt) {
-        int i1 = ((VInt) v1).getVal();
-        int i2 = ((VInt) v2).getVal();
-        return new VInt(i1 + i2);
-      }
+    IValue v2 = this.rhs.eval(e);
+    if (v1 instanceof VInt && v2 instanceof VInt) {
+      int i1 = ((VInt) v1).getVal();
+      int i2 = ((VInt) v2).getVal();
+      return new VInt(i1 + i2);
+    }
+
+    if (v1 instanceof VString || v2 instanceof VString) {
+      String res = v1.toStr() + v2.toStr();
+      res = res.replace("\"", "");
+      res = "\"" + res + "\"";
+      return new VString(res);
     }
 
     throw new InterpreterError("illegal types to + operator");
