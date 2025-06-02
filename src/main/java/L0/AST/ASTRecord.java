@@ -16,10 +16,16 @@ public class ASTRecord implements ASTNode {
     this.decls = decls;
   }
 
-  @Override
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-    // TODO: once the explicit types for records are defined come back here.
-    return new ASTTRecord(null);
+    HashMap<String, ASTType> tbl = new HashMap<>();
+
+    for (Bind p : this.decls) {
+      String id = p.getId();
+      ASTNode exp = p.getExp();
+      tbl.put(id, exp.typecheck(e));
+    }
+
+    return new ASTTRecord(new TypeBindList(tbl));
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {

@@ -9,6 +9,10 @@ public class TypeBindList {
     this.lbl = ll;
   }
 
+  public HashMap<String, ASTType> getTbl() {
+    return this.lbl;
+  }
+
   public ASTType getType(String label) {
     return this.lbl.get(label);
   }

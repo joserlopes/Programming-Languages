@@ -1,5 +1,7 @@
 package L0.ASTType;
 
+import java.util.Map;
+
 public class ASTTRecord implements ASTType {
   TypeBindList ll;
 
@@ -12,7 +14,12 @@ public class ASTTRecord implements ASTType {
   }
 
   public String toStr() {
-    // TODO: Add the names of bindings here.
-    return "struct { ... }";
+    String res = "record { ";
+    for (Map.Entry<String, ASTType> entry : this.ll.getTbl().entrySet()) {
+      res += entry.getKey() + ": " + entry.getValue().toStr() + ", ";
+    }
+    res = res.substring(0, res.length() - 2);
+    res += " }";
+    return res;
   }
 }
