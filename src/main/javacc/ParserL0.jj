@@ -50,6 +50,8 @@ TOKEN :
   |
   < EQUAL : "=" >
   |
+  < DOT : "." >
+  |
   < COLON : ":" >
   |
   < SEMIC : ";" >
@@ -263,11 +265,13 @@ ASTNode Term() :
   ASTNode t1, t2;}
 {
      t1 = Fact() (
-     	  	 op=<STAR> t2 = Fact()   { t1 = new ASTMult(t1,t2); }
-		 |
-		 op=<DIV> t2 = Fact()  { t1 = new ASTDiv(t1,t2); }
-		 |
-		 op = <LPAR> t2 = Exp() <RPAR>  { t1 = new ASTFunCall(t1, t2); } 
+        op=<STAR> t2 = Fact()   { t1 = new ASTMult(t1,t2); }
+		|
+		op=<DIV> t2 = Fact()  { t1 = new ASTDiv(t1,t2); }
+        |
+		op=<DOT> op = <Id>  { /* to be done field selection */ ; }
+		|
+		op = <LPAR> t2 = Exp() <RPAR>  { t1 = new ASTFunCall(t1, t2); } 
 		)*
      { return t1; } 
 }
@@ -287,6 +291,17 @@ ASTType at;
       { return t; } 
 }
 
+ASTNode Record():
+{
+Token n;
+ASTNode e1, t;
+List<Bind> fields = new ArrayList<Bind>();;
+}
+{
+    <LBRA> n=<Id> <EQUAL> e1= BA() <RBRA>
+    { fields.add(new Bind(n.image, e1)); t = new ASTRecord(fields); }
+    { return t; }
+}
 
 ASTNode Fact() :
 { Token n, n2; 
@@ -321,6 +336,7 @@ ASTNode Fact() :
         <PIPE> n=<Id> <COLON> <COLON> n2=<Id> <ARROW> e2 = Let()
       <RBRA>
      { t = new ASTMatch(t, e1, n.image, n2.image, e2); } 
+    | t = Record()
     )
    { return t; }
 }

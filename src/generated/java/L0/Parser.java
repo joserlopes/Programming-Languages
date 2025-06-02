@@ -21,6 +21,7 @@ public class Parser implements ParserConstants {
     case MINUS:
     case STAR:
     case LPAR:
+    case LBRA:
     case NOT:
     case BOX:
     case IF:
@@ -58,6 +59,7 @@ public class Parser implements ParserConstants {
     case MINUS:
     case STAR:
     case LPAR:
+    case LBRA:
     case NOT:
     case BOX:
     case IF:
@@ -319,6 +321,7 @@ public class Parser implements ParserConstants {
       case STAR:
       case DIV:
       case LPAR:
+      case DOT:
         ;
         break;
       default:
@@ -329,18 +332,23 @@ public class Parser implements ParserConstants {
       case STAR:
         op = jj_consume_token(STAR);
         t2 = Fact();
-                                           t1 = new ASTMult(t1,t2);
+                                  t1 = new ASTMult(t1,t2);
         break;
       case DIV:
         op = jj_consume_token(DIV);
         t2 = Fact();
-                                         t1 = new ASTDiv(t1,t2);
+                                        t1 = new ASTDiv(t1,t2);
+        break;
+      case DOT:
+        op = jj_consume_token(DOT);
+        op = jj_consume_token(Id);
+                                      /* to be done field selection */ ;
         break;
       case LPAR:
         op = jj_consume_token(LPAR);
         t2 = Exp();
         jj_consume_token(RPAR);
-                                                  t1 = new ASTFunCall(t1, t2);
+                                                 t1 = new ASTFunCall(t1, t2);
         break;
       default:
         jj_la1[13] = jj_gen;
@@ -384,6 +392,20 @@ ASTType at;
     jj_consume_token(RBRA);
                                                          ((ASTFunDecl)e1).setBody(e2);
         {if (true) return t;}
+    throw new Error("Missing return statement in function");
+  }
+
+  static final public ASTNode Record() throws ParseException {
+Token n;
+ASTNode e1, t;
+List<Bind> fields = new ArrayList<Bind>();;
+    jj_consume_token(LBRA);
+    n = jj_consume_token(Id);
+    jj_consume_token(EQUAL);
+    e1 = BA();
+    jj_consume_token(RBRA);
+      fields.add(new Bind(n.image, e1)); t = new ASTRecord(fields);
+      {if (true) return t;}
     throw new Error("Missing return statement in function");
   }
 
@@ -510,6 +532,9 @@ ASTType at;
       e2 = Let();
       jj_consume_token(RBRA);
        t = new ASTMatch(t, e1, n.image, n2.image, e2);
+      break;
+    case LBRA:
+      t = Record();
       break;
     default:
       jj_la1[15] = jj_gen;
@@ -646,10 +671,10 @@ ASTType at;
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x80004de1,0x20,0x40,0x80004de0,0x100000,0x0,0x1000000,0x800000,0x7e000000,0x7e000000,0x600,0x600,0x6800,0x6800,0x400000,0x80004d80,0x0,0x400000,0x0,0x0,};
+      jj_la1_0 = new int[] {0x14de1,0x20,0x40,0x14de0,0x200000,0x0,0x2000000,0x1000000,0xfc000000,0xfc000000,0x600,0x600,0x86800,0x86800,0x800000,0x14d80,0x0,0x800000,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x3801ef6,0x0,0x0,0x3801ef6,0x0,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3801ef6,0x4000,0x0,0x1000000,0x15f8000,};
+      jj_la1_1 = new int[] {0x7003ded,0x0,0x0,0x7003ded,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7003ded,0x8000,0x0,0x2000000,0x2bf0000,};
    }
 
   /** Constructor with InputStream. */
@@ -787,7 +812,7 @@ ASTType at;
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[58];
+    boolean[] la1tokens = new boolean[59];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -804,7 +829,7 @@ ASTType at;
         }
       }
     }
-    for (int i = 0; i < 58; i++) {
+    for (int i = 0; i < 59; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

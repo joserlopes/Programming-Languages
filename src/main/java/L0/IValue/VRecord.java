@@ -1,15 +1,24 @@
 package L0.IValue;
 
-import java.util.List;
+import L0.Environment;
+import java.util.HashMap;
 
 public class VRecord implements IValue {
-  List<IValue> fields;
+  HashMap<String, IValue> fields;
+  Environment<IValue> e;
 
-  public VRecord(List<IValue> fields) {
+  public VRecord(HashMap<String, IValue> fields, Environment<IValue> e) {
     this.fields = fields;
+    this.e = e;
   }
 
   public String toStr() {
-    return "";
+    String res = "record(";
+    System.out.println(this.fields);
+    this.fields.forEach(
+        (name, value) -> {
+          res.concat(name + "=" + value);
+        });
+    return res;
   }
 }

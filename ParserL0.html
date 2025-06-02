@@ -41,6 +41,7 @@
 | &lt;LBRA: "{"&gt;
 | &lt;RBRA: "}"&gt;
 | &lt;EQUAL: "="&gt;
+| &lt;DOT: "."&gt;
 | &lt;COLON: ":"&gt;
 | &lt;SEMIC: ";"&gt;
 | &lt;TERM: ";;"&gt;
@@ -84,6 +85,18 @@
 
    </pre
           >
+        </td>
+      </tr>
+      <!-- Token -->
+      <tr>
+        <td>
+          <pre></pre>
+        </td>
+      </tr>
+      <!-- Token -->
+      <tr>
+        <td>
+          <pre></pre>
         </td>
       </tr>
       <!-- Token -->
@@ -746,8 +759,8 @@
         <td align="CENTER" valign="BASELINE">::=</td>
         <td align="LEFT" valign="BASELINE">
           <a href="#prod11">Fact</a> ( &lt;STAR&gt; <a href="#prod11">Fact</a> |
-          &lt;DIV&gt; <a href="#prod11">Fact</a> | &lt;LPAR&gt;
-          <a href="#prod9">Exp</a> &lt;RPAR&gt; )*
+          &lt;DIV&gt; <a href="#prod11">Fact</a> | &lt;DOT&gt; &lt;Id&gt; |
+          &lt;LPAR&gt; <a href="#prod9">Exp</a> &lt;RPAR&gt; )*
         </td>
       </tr>
       <tr>
