@@ -20,6 +20,8 @@ public class ASTIf implements ASTNode {
     if (t1 instanceof ASTTBool) {
       ASTType t2 = this.trueBody.typecheck(e);
       ASTType t3 = this.falseBody.typecheck(e);
+      // NOTE: Here, the toStr's are compared because it's easier to compare the exact case for the
+      // if and the else case
       if (t2.toStr().equals(t3.toStr())) {
         return t2;
       } else {

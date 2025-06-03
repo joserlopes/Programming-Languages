@@ -22,10 +22,14 @@ public class ASTAssign implements ASTNode {
       if (t2.getClass() == b1.getType().getClass()) {
         return t2;
       } else {
-        throw new TypeCheckError("illegal type to := operator " + t1.toStr());
+        throw new TypeCheckError(
+            "illegal type to right := operator. Needed: "
+                + b1.getType().toStr()
+                + ", got: "
+                + t2.toStr());
       }
     } else {
-      throw new TypeCheckError("illegal type to := operator " + t1.toStr());
+      throw new TypeCheckError("illegal type to left := operator " + t1.toStr());
     }
   }
 

@@ -301,7 +301,14 @@ List<Bind> fields = new ArrayList<Bind>();;
     <LBRA> n=<Id> <EQUAL> e1= BA()
         { fields.add(new Bind(n.image, e1)); }
         (<COMMA> n=<Id> <EQUAL> e1 = BA()
-        { fields.add(new Bind(n.image, e1)); }
+        { 
+            for (Bind bind: fields) {
+                if (bind.getId().equals(n.image)) {
+                    throw new ParseException();
+                }
+            }
+            fields.add(new Bind(n.image, e1)); 
+        }
         )*
     <RBRA>
     { return new ASTRecord(fields); }
@@ -320,6 +327,7 @@ ASTNode Fact() :
     | n=<TRUE> { t = new ASTBool(Boolean.parseBoolean(n.image)); }
     | n=<FALSE> { t = new ASTBool(Boolean.parseBoolean(n.image)); }
     | n=<Id> { t = new ASTId(n.image); } 
+    | <UNIT> { t = new ASTUnit(); } 
     | <BOX> t=Fact() { t = new ASTBox(t); }
     | <STAR> t=Fact() { t = new ASTDeref(t); }
     | <MINUS> t=Fact() { t = new ASTNeg(t); }

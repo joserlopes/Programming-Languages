@@ -6,18 +6,14 @@ import L0.Errors.InterpreterError;
 import L0.Errors.TypeCheckError;
 import L0.IValue.*;
 
-public class ASTId implements ASTNode {
-  String id;
-
-  public ASTId(String id) {
-    this.id = id;
-  }
+public class ASTUnit implements ASTNode {
+  public ASTUnit() {}
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-    return e.find(this.id);
+    return new ASTTUnit();
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
-    return e.find(this.id);
+    return new VNil();
   }
 }

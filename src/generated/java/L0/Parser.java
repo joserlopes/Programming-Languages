@@ -33,6 +33,7 @@ public class Parser implements ParserConstants {
     case CONS:
     case LCONS:
     case MATCH:
+    case UNIT:
     case String:
     case Id:
     case Num:
@@ -71,6 +72,7 @@ public class Parser implements ParserConstants {
     case CONS:
     case LCONS:
     case MATCH:
+    case UNIT:
     case String:
     case Id:
     case Num:
@@ -418,7 +420,13 @@ List<Bind> fields = new ArrayList<Bind>();;
       n = jj_consume_token(Id);
       jj_consume_token(EQUAL);
       e1 = BA();
-          fields.add(new Bind(n.image, e1));
+            for (Bind bind: fields) {
+                if (bind.getId().equals(n.image)) {
+                    {if (true) throw new ParseException();}
+                }
+            }
+            System.out.println("Quantas vezes chegas aqui??");
+            fields.add(new Bind(n.image, e1));
     }
     jj_consume_token(RBRA);
       {if (true) return new ASTRecord(fields);}
@@ -450,6 +458,10 @@ List<Bind> fields = new ArrayList<Bind>();;
     case Id:
       n = jj_consume_token(Id);
                t = new ASTId(n.image);
+      break;
+    case UNIT:
+      jj_consume_token(UNIT);
+               t = new ASTUnit();
       break;
     case BOX:
       jj_consume_token(BOX);
@@ -690,7 +702,7 @@ List<Bind> fields = new ArrayList<Bind>();;
       jj_la1_0 = new int[] {0x14de1,0x20,0x40,0x14de0,0x200000,0x0,0x2000000,0x1000000,0xfc000000,0xfc000000,0x600,0x600,0x86800,0x86800,0x800000,0x800000,0x14d80,0x0,0x800000,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x7003ded,0x0,0x0,0x7003ded,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7003ded,0x8000,0x0,0x2000000,0x2bf0000,};
+      jj_la1_1 = new int[] {0x7023ded,0x0,0x0,0x7023ded,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7023ded,0x8000,0x0,0x2000000,0x2bf0000,};
    }
 
   /** Constructor with InputStream. */
