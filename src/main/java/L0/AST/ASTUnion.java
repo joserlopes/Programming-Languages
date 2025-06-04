@@ -16,7 +16,7 @@ public class ASTUnion implements ASTNode {
   }
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-    return new ASTTUnit();
+    return new ASTTUnion(this.lbl, this.exp.typecheck(e));
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
