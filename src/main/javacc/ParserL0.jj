@@ -54,6 +54,8 @@ TOKEN :
   |
   < COLON : ":" >
   |
+  < POUND : "#" >
+  |
   < DCOLON : "::" >
   |
   < SEMIC : ";" >
@@ -283,15 +285,21 @@ ASTNode Term() :
 ASTNode Fun() : 
 {
 Token n; 
-ASTNode t, e1=null, e2;
-ASTType at;
+ASTNode t, e1 = null, e2;
+ASTType at1, at2 = null;
 }
 {
-      <FN> n=<Id> <COLON> at = Type()
-      { t = new ASTFunDecl(n.image, at, null); e1 = t;}
-      ( <COMMA> n = <Id> <COLON> at = Type() { e2 = new ASTFunDecl(n.image, at, null);
-		  ((ASTFunDecl)e1).setBody(e2); e1 = e2; })*
-		  <FAT_ARROW> <LBRA> e2 = Let() <RBRA> { ((ASTFunDecl)e1).setBody(e2); }
+      <FN> n=<Id> <COLON> at1 = Type()
+      { t = new ASTFunDecl(n.image, at1, null, null); e1 = t;}
+      ( <COMMA> n = <Id> <COLON> at1 = Type() { e2 = new ASTFunDecl(n.image, at1, null, null);
+		  ((ASTFunDecl)e1).setBody(e2); 
+          ((ASTFunDecl)e1).setReturnType(at2); 
+          e1 = e2; 
+          })*
+		  <FAT_ARROW> (at2 = Type())? <LBRA> e2 = Let() <RBRA> { 
+              ((ASTFunDecl)e1).setBody(e2); 
+              ((ASTFunDecl)e1).setReturnType(at2); 
+              }
       { return t; } 
 }
 
@@ -330,11 +338,8 @@ ASTNode Fact() :
     | n=<String> { t = new ASTString(n.image); }
     | n=<TRUE> { t = new ASTBool(Boolean.parseBoolean(n.image)); }
     | n=<FALSE> { t = new ASTBool(Boolean.parseBoolean(n.image)); }
-    | n=<Id> (
-        <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); }
-        |
-        { t = new ASTId(n.image); }
-    ) 
+    | n=<Id> { t = new ASTId(n.image); }
+    | <POUND> n = <Id> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); } 
     | <UNIT> { t = new ASTUnit(); } 
     | <BOX> t=Fact() { t = new ASTBox(t); }
     | <STAR> t=Fact() { t = new ASTDeref(t); }

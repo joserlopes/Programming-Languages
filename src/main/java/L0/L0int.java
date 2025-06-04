@@ -22,13 +22,15 @@ public class L0int {
             file.close();
             System.exit(0);
           }
-          exp.typecheck(new Environment<ASTType>());
+          ASTType type = exp.typecheck(new Environment<ASTType>());
+          System.out.println(type.toStr());
           IValue v = exp.eval(new Environment<IValue>());
           System.out.println(v.toStr());
         } catch (FileNotFoundException e) {
           System.out.println("File " + args[0] + "not found");
         } catch (TypeCheckError e) {
-          System.out.println(e.getMessage());
+          e.printStackTrace();
+          System.out.println("Error: " + e.getMessage());
         } catch (ParseException e) {
           System.out.println("Syntax Error.");
         } catch (Exception e) {
@@ -53,6 +55,7 @@ public class L0int {
           System.out.println("Syntax Error.");
           parser.ReInit(System.in);
         } catch (TypeCheckError e) {
+          e.printStackTrace();
           System.out.println("Error: " + e.getMessage());
           parser.ReInit(System.in);
         } catch (Exception e) {

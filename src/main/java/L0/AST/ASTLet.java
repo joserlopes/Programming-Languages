@@ -23,7 +23,23 @@ public class ASTLet implements ASTNode {
     for (Bind p : this.decls) {
       String id = p.getId();
       ASTNode exp = p.getExp();
-      en.assoc(id, exp.typecheck(en));
+      if (exp instanceof ASTFunDecl) {
+        ASTFunDecl funDecl = (ASTFunDecl) exp;
+        ASTType paramType = funDecl.getParamType();
+        ASTType returnType = funDecl.getReturnType();
+        if (returnType != null) {
+          ASTTArrow funType = new ASTTArrow(funDecl.getParamType(), new ASTTUnit());
+          en.assoc(id, new ASTTArrow(paramType, returnType));
+          en.assoc(funDecl.getParam(), funDecl.getParamType());
+          return funType;
+        } else {
+          ASTType type = exp.typecheck(en);
+          en.assoc(id, type);
+        }
+      } else {
+        ASTType type = exp.typecheck(en);
+        en.assoc(id, type);
+      }
     }
 
     return this.body.typecheck(en);
