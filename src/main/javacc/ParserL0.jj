@@ -330,7 +330,11 @@ ASTNode Fact() :
     | n=<String> { t = new ASTString(n.image); }
     | n=<TRUE> { t = new ASTBool(Boolean.parseBoolean(n.image)); }
     | n=<FALSE> { t = new ASTBool(Boolean.parseBoolean(n.image)); }
-    | n=<Id> { t = new ASTId(n.image); } 
+    | n=<Id> (
+        <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); }
+        |
+        { t = new ASTId(n.image); }
+    ) 
     | <UNIT> { t = new ASTUnit(); } 
     | <BOX> t=Fact() { t = new ASTBox(t); }
     | <STAR> t=Fact() { t = new ASTDeref(t); }
@@ -356,6 +360,9 @@ ASTNode Fact() :
     )
    { return t; }
 }
+
+
+// NOTE: Create Id our union where 
 
 ASTType Type() : 
 {
