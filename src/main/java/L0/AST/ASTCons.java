@@ -21,7 +21,11 @@ public class ASTCons implements ASTNode {
 
     if (t2 instanceof ASTTList) {
       ASTTList l1 = (ASTTList) t2;
-      if (t1.getClass() == l1.getType().getClass()) {
+      if (l1.getType().getClass() == ASTTUnit.class) {
+        return new ASTTList(t1);
+      }
+
+      if (t1.toStr().equals(l1.getType().toStr())) {
         return l1;
       } else {
         throw new TypeCheckError("illegal list " + t1.toStr() + " " + l1.toStr());

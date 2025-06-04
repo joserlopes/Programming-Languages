@@ -11,7 +11,7 @@ public class ASTNil implements ASTNode {
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     // NOTE: Is this it??
-    return new ASTTList(null);
+    return new ASTTList(new ASTTUnit());
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
