@@ -29,7 +29,6 @@ public class ASTFunCall implements ASTNode {
               "a function that receives no arguments must have it's type as ()");
         }
       }
-      System.out.println(a1.getDomain());
 
       ASTType t2 = this.arg.typecheck(e);
       // TODO: Implement sub typing for this
@@ -52,7 +51,7 @@ public class ASTFunCall implements ASTNode {
     if (v1 instanceof VClos) {
       VClos c1 = (VClos) v1;
       if (this.arg == null) {
-        return c1.getBody().eval(e);
+        return c1.getBody().eval(new Environment<IValue>(c1.getEnvironment()));
       }
 
       IValue a1 = this.arg.eval(e);
