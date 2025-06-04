@@ -22,10 +22,11 @@ public class ASTFunDecl implements ASTNode {
   }
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
+    // NOTE: Using forward declaration in order to deal with recursive functions
     Environment<ASTType> en;
     en = e.beginScope();
     en.assoc(param, paramType);
-    ASTType tb = body.typecheck(en);
+    ASTType tb = this.body.typecheck(en);
     return new ASTTArrow(paramType, tb);
   }
 

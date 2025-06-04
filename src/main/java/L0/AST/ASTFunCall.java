@@ -16,10 +16,21 @@ public class ASTFunCall implements ASTNode {
 
   @Override
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
+
     ASTType t1 = this.func.typecheck(e);
 
     if (t1 instanceof ASTTArrow) {
       ASTTArrow a1 = (ASTTArrow) t1;
+      if (this.arg == null) {
+        if (a1.getDomain().toStr().equals("()")) {
+          return a1.getCoDomain();
+        } else {
+          throw new TypeCheckError(
+              "a function that receives no arguments must have it's type as ()");
+        }
+      }
+      System.out.println(a1.getDomain());
+
       ASTType t2 = this.arg.typecheck(e);
       // TODO: Implement sub typing for this
       // NOTE: Here, the toStr's are compared because it's easier to compare the exact domain and
@@ -40,6 +51,9 @@ public class ASTFunCall implements ASTNode {
 
     if (v1 instanceof VClos) {
       VClos c1 = (VClos) v1;
+      if (this.arg == null) {
+        return c1.getBody().eval(e);
+      }
 
       IValue a1 = this.arg.eval(e);
 
