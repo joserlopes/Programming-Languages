@@ -40,6 +40,14 @@ public class Environment<E> {
     this.bindings.replace(id, bind);
   }
 
+  public void printBindings() {
+    Environment<E> current_env = this;
+    while (current_env != null) {
+      System.out.println(current_env.bindings);
+      current_env = current_env.anc;
+    }
+  }
+
   public E find(String id) throws InterpreterError {
     Environment<E> current_env = this;
     while (current_env != null) {

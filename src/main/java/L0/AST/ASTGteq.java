@@ -35,7 +35,7 @@ public class ASTGteq implements ASTNode {
       if (v2 instanceof VInt) {
         int i1 = ((VInt) v1).getVal();
         int i2 = ((VInt) v2).getVal();
-        return new VBool(i1 < i2);
+        return new VBool(i1 >= i2);
       }
     }
     throw new InterpreterError("illegal types to >= operator");

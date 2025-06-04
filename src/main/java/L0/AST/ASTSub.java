@@ -18,7 +18,7 @@ public class ASTSub implements ASTNode {
     ASTType t1 = this.lhs.typecheck(e);
     if (t1 instanceof ASTTInt) {
       ASTType t2 = this.rhs.typecheck(e);
-      if (t2 instanceof ASTInt) {
+      if (t2 instanceof ASTTInt) {
         return t1;
       } else {
         throw new TypeCheckError("illegal type to - operator " + t2.toStr());
