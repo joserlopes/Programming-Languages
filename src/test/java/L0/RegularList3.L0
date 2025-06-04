@@ -1,5 +1,5 @@
-let filter = fn pred: int =>
-        { fn l: int =>
+let filter = fn pred: bool->bool => bool
+        { fn l: list<int> => list<int>
         { match l {
                 | nil -> nil
                 | v :: tail -> if (pred(v)) {

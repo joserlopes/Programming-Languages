@@ -20,7 +20,6 @@ public class ASTMatch implements ASTNode {
     this.tailName = tailName;
   }
 
-  @Override
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.matchedValue.typecheck(e);
 
@@ -34,7 +33,7 @@ public class ASTMatch implements ASTNode {
       en.assoc(this.headName, l1.getType());
       en.assoc(this.tailName, l1.getType());
 
-      ASTType t3 = this.consCase.typecheck(e);
+      ASTType t3 = this.consCase.typecheck(en);
 
       if (t2 == t3) {
         return t2;

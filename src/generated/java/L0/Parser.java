@@ -392,9 +392,8 @@ ASTType at1, at2 = null;
       n = jj_consume_token(Id);
       jj_consume_token(COLON);
       at1 = Type();
-                                                e2 = new ASTFunDecl(n.image, at1, null, null);
+          e2 = new ASTFunDecl(n.image, at1, null, null);
                   ((ASTFunDecl)e1).setBody(e2);
-          ((ASTFunDecl)e1).setReturnType(at2);
           e1 = e2;
     }
     jj_consume_token(FAT_ARROW);
@@ -417,7 +416,7 @@ ASTType at1, at2 = null;
     e2 = Let();
     jj_consume_token(RBRA);
               ((ASTFunDecl)e1).setBody(e2);
-              ((ASTFunDecl)e1).setReturnType(at2);
+              ((ASTFunDecl)t).setReturnType(at2);
         {if (true) return t;}
     throw new Error("Missing return statement in function");
   }

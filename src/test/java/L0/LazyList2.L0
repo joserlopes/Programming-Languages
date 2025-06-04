@@ -1,4 +1,4 @@
-let factorials = fn a: int, b: int => { lcons(a * b, factorials(a + 1)(a * b)) };
+let factorials = fn a: int, b: int => list<int> { lcons(a * b, factorials(a + 1)(a * b)) };
 let lv = box(factorials(1)(1));
 let count = box(10);
 while (*count ~= 0) {

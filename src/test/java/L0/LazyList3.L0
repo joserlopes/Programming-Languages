@@ -1,7 +1,7 @@
 let mod = fn x: int, p: int => {
     x - (p * (x / p))
 };
-let filter = fn p: int, l: int => {
+let filter = fn p: int, l: int => list<int> {
   match l {
     | nil -> nil
     | v :: tail -> 
@@ -12,10 +12,11 @@ let filter = fn p: int, l: int => {
       }
   }
 };
-let from = fn n: int => {
+let from = fn n: int => list<int> {
   lcons(n, from(n + 1))
 };
-let sieve = fn l: int => {
+
+let sieve = fn l: int => list<int> {
   match l {
     | nil -> nil
     | v :: tail -> lcons(v, sieve(filter(v)(tail)))

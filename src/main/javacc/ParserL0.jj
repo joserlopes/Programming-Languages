@@ -291,14 +291,14 @@ ASTType at1, at2 = null;
 {
       <FN> n=<Id> <COLON> at1 = Type()
       { t = new ASTFunDecl(n.image, at1, null, null); e1 = t;}
-      ( <COMMA> n = <Id> <COLON> at1 = Type() { e2 = new ASTFunDecl(n.image, at1, null, null);
+      ( <COMMA> n = <Id> <COLON> at1 = Type() { 
+          e2 = new ASTFunDecl(n.image, at1, null, null);
 		  ((ASTFunDecl)e1).setBody(e2); 
-          ((ASTFunDecl)e1).setReturnType(at2); 
           e1 = e2; 
           })*
 		  <FAT_ARROW> (at2 = Type())? <LBRA> e2 = Let() <RBRA> { 
               ((ASTFunDecl)e1).setBody(e2); 
-              ((ASTFunDecl)e1).setReturnType(at2); 
+              ((ASTFunDecl)t).setReturnType(at2); 
               }
       { return t; } 
 }
