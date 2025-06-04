@@ -1,5 +1,6 @@
 package L0;
 
+import L0.ASTType.*;
 import L0.Errors.InterpreterError;
 import java.util.*;
 
@@ -8,8 +9,8 @@ public class Environment<E> {
   public Map<String, E> bindings;
 
   public Environment() {
-    anc = null;
-    bindings = new HashMap<String, E>();
+    this.anc = null;
+    this.bindings = new HashMap<String, E>();
   }
 
   public Environment(Environment<E> ancestor) {

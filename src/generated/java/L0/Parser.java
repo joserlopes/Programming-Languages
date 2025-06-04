@@ -100,7 +100,7 @@ public class Parser implements ParserConstants {
                      t = new ASTLet(decls, e2);
       break;
     case TYPE:
-        HashMap<String,ASTType> lbl = new HashMap<String,ASTType>();
+        HashMap<String, ASTType> lbl = new HashMap<String, ASTType>();
       label_2:
       while (true) {
         jj_consume_token(TYPE);
@@ -324,6 +324,7 @@ public class Parser implements ParserConstants {
       case DIV:
       case LPAR:
       case DOT:
+      case UNIT:
         ;
         break;
       default:
@@ -351,6 +352,10 @@ public class Parser implements ParserConstants {
         t2 = Exp();
         jj_consume_token(RPAR);
                                                  t1 = new ASTFunCall(t1, t2);
+        break;
+      case UNIT:
+        op = jj_consume_token(UNIT);
+                              t1 = new ASTFunCall(t1, null);
         break;
       default:
         jj_la1[13] = jj_gen;
@@ -425,7 +430,6 @@ List<Bind> fields = new ArrayList<Bind>();;
                     {if (true) throw new ParseException();}
                 }
             }
-            System.out.println("Quantas vezes chegas aqui??");
             fields.add(new Bind(n.image, e1));
     }
     jj_consume_token(RBRA);
@@ -553,8 +557,7 @@ List<Bind> fields = new ArrayList<Bind>();;
       e1 = Let();
       jj_consume_token(PIPE);
       n = jj_consume_token(Id);
-      jj_consume_token(COLON);
-      jj_consume_token(COLON);
+      jj_consume_token(DCOLON);
       n2 = jj_consume_token(Id);
       jj_consume_token(ARROW);
       e2 = Let();
@@ -699,10 +702,10 @@ List<Bind> fields = new ArrayList<Bind>();;
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x14de1,0x20,0x40,0x14de0,0x200000,0x0,0x2000000,0x1000000,0xfc000000,0xfc000000,0x600,0x600,0x86800,0x86800,0x800000,0x800000,0x14d80,0x0,0x800000,0x0,0x0,};
+      jj_la1_0 = new int[] {0x14de1,0x20,0x40,0x14de0,0x400000,0x0,0x4000000,0x2000000,0xf8000000,0xf8000000,0x600,0x600,0x86800,0x86800,0x1000000,0x1000000,0x14d80,0x0,0x1000000,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x7023ded,0x0,0x0,0x7023ded,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7023ded,0x8000,0x0,0x2000000,0x2bf0000,};
+      jj_la1_1 = new int[] {0xe047bda,0x0,0x0,0xe047bda,0x0,0x4,0x0,0x0,0x1,0x1,0x0,0x0,0x40000,0x40000,0x0,0x0,0xe047bda,0x10000,0x0,0x4000000,0x57e0000,};
    }
 
   /** Constructor with InputStream. */
@@ -840,7 +843,7 @@ List<Bind> fields = new ArrayList<Bind>();;
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[59];
+    boolean[] la1tokens = new boolean[60];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -857,7 +860,7 @@ List<Bind> fields = new ArrayList<Bind>();;
         }
       }
     }
-    for (int i = 0; i < 59; i++) {
+    for (int i = 0; i < 60; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

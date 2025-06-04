@@ -45,7 +45,8 @@ public class L0int {
           System.out.print("# ");
           exp = parser.Start();
           if (exp == null) System.exit(0);
-          exp.typecheck(new Environment<ASTType>());
+          ASTType type = exp.typecheck(new Environment<ASTType>());
+          System.out.println(type.toStr());
           IValue v = exp.eval(new Environment<IValue>());
           System.out.println(v.toStr());
         } catch (ParseException e) {

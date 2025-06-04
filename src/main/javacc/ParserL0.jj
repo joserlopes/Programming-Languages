@@ -54,6 +54,8 @@ TOKEN :
   |
   < COLON : ":" >
   |
+  < DCOLON : "::" >
+  |
   < SEMIC : ";" >
   |
   < TERM : ";;" >
@@ -153,8 +155,8 @@ ASTNode Let() :
      )+
         e2 = Seq() { t = new ASTLet(decls, e2); })
     |
-     {  HashMap<String,ASTType> lbl = new HashMap<String,ASTType>(); }
-   ( (<TYPE>  n=<Id>  <EQUAL> t1 = Type() <SEMIC>
+     {  HashMap<String, ASTType> lbl = new HashMap<String, ASTType>(); }
+   ( (<TYPE>  n=<Id> <EQUAL> t1 = Type() <SEMIC>
       { lbl.put(n.image, t1); } )+
         e2 = Seq() { t = new ASTTypeDef(lbl, e2); }
     )
@@ -262,7 +264,7 @@ ASTNode Exp() :
 
 ASTNode Term() :
 {Token op;
-  ASTNode t1, t2;}
+  ASTNode t1, t2; }
 {
      t1 = Fact() (
         op=<STAR> t2 = Fact()   { t1 = new ASTMult(t1, t2); }
@@ -270,8 +272,10 @@ ASTNode Term() :
 		op=<DIV> t2 = Fact()  { t1 = new ASTDiv(t1, t2); }
         |
 		op=<DOT> op=<Id>  { t1 = new ASTDot(t1, op.image); }
-		|
+        |
 		op = <LPAR> t2 = Exp() <RPAR>  { t1 = new ASTFunCall(t1, t2); } 
+        |
+		op = <UNIT> { t1 = new ASTFunCall(t1, null); } 
 		)*
      { return t1; } 
 }
@@ -345,7 +349,7 @@ ASTNode Fact() :
     | <LCONS> <LPAR> t = BA() <COMMA> e1 = BA() <RPAR> { t = new ASTLCons(t, e1); }
     | <MATCH> t = Fact() <LBRA>
         <PIPE> <NIL> <ARROW> e1 = Let()
-        <PIPE> n=<Id> <COLON> <COLON> n2=<Id> <ARROW> e2 = Let()
+        <PIPE> n=<Id> <DCOLON> n2=<Id> <ARROW> e2 = Let()
       <RBRA>
      { t = new ASTMatch(t, e1, n.image, n2.image, e2); } 
     | t = Record()
