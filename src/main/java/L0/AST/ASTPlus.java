@@ -17,6 +17,7 @@ public class ASTPlus implements ASTNode {
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.lhs.typecheck(e);
     ASTType t2 = this.rhs.typecheck(e);
+
     if (t1 instanceof ASTTInt) {
       if (t2 instanceof ASTTInt || t2 instanceof ASTTString) {
         return t2;

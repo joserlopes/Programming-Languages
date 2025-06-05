@@ -1,6 +1,7 @@
 package L0.AST;
 
 import L0.ASTType.ASTTList;
+import L0.ASTType.ASTTUnit;
 import L0.ASTType.ASTType;
 import L0.Environment;
 import L0.Errors.InterpreterError;
@@ -31,14 +32,21 @@ public class ASTMatch implements ASTNode {
       Environment<ASTType> en = e.beginScope();
 
       en.assoc(this.headName, l1.getType());
-      en.assoc(this.tailName, l1.getType());
+      en.assoc(this.tailName, l1);
 
       ASTType t3 = this.consCase.typecheck(en);
 
-      if (t2 == t3) {
+      if (t2 instanceof ASTTList && t3 instanceof ASTTList) {
+        ASTTList l2 = (ASTTList) t2;
+        if (l2.getType().getClass() == ASTTUnit.class) {
+          return t3;
+        }
+      }
+
+      if (t2.toStr().equals(t3.toStr())) {
         return t2;
       } else {
-        throw new TypeCheckError("illegal type to match bodu " + t2.toStr() + ", " + t3.toStr());
+        throw new TypeCheckError("illegal type to match body " + t2.toStr() + ", " + t3.toStr());
       }
     } else {
       throw new TypeCheckError("illegal type to match operator " + t1.toStr());

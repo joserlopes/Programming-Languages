@@ -40,10 +40,18 @@ public class Environment<E> {
     this.bindings.replace(id, bind);
   }
 
+  // This is just a function for debugging purposes
   public void printBindings() {
     Environment<E> current_env = this;
     while (current_env != null) {
       System.out.println(current_env.bindings);
+      for (String bind : current_env.bindings.keySet()) {
+        E a = current_env.bindings.get(bind);
+        if (a instanceof ASTType) {
+          ASTType a1 = (ASTType) a;
+          System.out.println(bind + ": " + a1.toStr());
+        }
+      }
       current_env = current_env.anc;
     }
   }

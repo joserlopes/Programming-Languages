@@ -15,7 +15,6 @@ public class ASTFunCall implements ASTNode {
   }
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-
     ASTType t1 = this.func.typecheck(e);
 
     if (t1 instanceof ASTTArrow) {
@@ -31,9 +30,6 @@ public class ASTFunCall implements ASTNode {
 
       ASTType t2 = this.arg.typecheck(e);
       // TODO: Implement sub typing for this
-
-      // NOTE: Here, the toStr's are compared because it's easier to compare the exact domain and
-      // codomain.
       if (t2.toStr().equals(a1.getDomain().toStr())) {
         return a1.getCoDomain();
       } else {

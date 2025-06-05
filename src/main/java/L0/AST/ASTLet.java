@@ -29,9 +29,9 @@ public class ASTLet implements ASTNode {
         ASTType returnType = funDecl.getReturnType();
         if (returnType != null) {
           ASTTArrow funType = new ASTTArrow(paramType, returnType);
-          en.assoc(id, new ASTTArrow(paramType, funType));
+          en.assoc(id, funType);
           en.assoc(funDecl.getParam(), funDecl.getParamType());
-          return funType;
+          exp.typecheck(en);
         } else {
           ASTType type = exp.typecheck(en);
           en.assoc(id, type);

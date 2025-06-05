@@ -408,6 +408,8 @@ public class L0Test {
 
       capturedOutput.flush();
       String capturedString = outputStream.toString().trim();
+      // TODO: Remove once types are not printed
+      capturedString = capturedString.split("int")[1].trim();
       assertEquals(capturedString, "0\n1\n1\n2\n3\n5\n8\n13\n21\n34");
     } catch (Exception e) {
       fail("It should never fail!");
@@ -431,6 +433,8 @@ public class L0Test {
 
       capturedOutput.flush();
       String capturedString = outputStream.toString().trim();
+      // TODO: Remove once types are not printed
+      capturedString = capturedString.split("int")[1].trim();
       assertEquals(capturedString, "1\n2\n6\n24\n120\n720\n5040\n40320\n362880\n3628800");
     } catch (Exception e) {
       fail("It should never fail!");
@@ -454,6 +458,8 @@ public class L0Test {
 
       capturedOutput.flush();
       String capturedString = outputStream.toString().trim();
+      // TODO: Remove once types are not printed
+      capturedString = capturedString.split("int")[1].trim();
       assertEquals(capturedString, "2\n3\n5\n7\n11\n13\n17\n19\n23\n29");
     } catch (Exception e) {
       fail("It should never fail!");

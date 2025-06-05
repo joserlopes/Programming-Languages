@@ -1,4 +1,4 @@
-let filter = fn pred: bool->bool => bool
+let filter = fn pred: int->bool => list<int>->list<int>
         { fn l: list<int> => list<int>
         { match l {
                 | nil -> nil

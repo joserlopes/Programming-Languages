@@ -1,7 +1,8 @@
 let mod = fn x: int, p: int => {
     x - (p * (x / p))
 };
-let filter = fn p: int, l: int => list<int> {
+
+let filter = fn p: int, l: list<int> => list<int>->list<int> {
   match l {
     | nil -> nil
     | v :: tail -> 
@@ -12,21 +13,23 @@ let filter = fn p: int, l: int => list<int> {
       }
   }
 };
+
 let from = fn n: int => list<int> {
   lcons(n, from(n + 1))
 };
 
-let sieve = fn l: int => list<int> {
+let sieve = fn l: list<int> => list<int> {
   match l {
     | nil -> nil
     | v :: tail -> lcons(v, sieve(filter(v)(tail)))
   }
 };
+
 let primes = box(sieve(from(2)));
 let count = box(10);
 while (*count ~= 0) {
   match *primes {
-    | nil -> println("never happens")
+    | nil -> println("never happens"); nil
     | v :: tail -> println(v); primes := tail
   };
   count := *count - 1
