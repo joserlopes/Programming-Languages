@@ -424,7 +424,7 @@ ASTType at1, at2 = null;
   static final public ASTNode Record() throws ParseException {
 Token n;
 ASTNode e1;
-List<Bind> fields = new ArrayList<Bind>();;
+List<Bind> fields = new ArrayList<Bind>();
     jj_consume_token(LBRA);
     n = jj_consume_token(Id);
     jj_consume_token(EQUAL);
@@ -456,6 +456,20 @@ List<Bind> fields = new ArrayList<Bind>();;
     throw new Error("Missing return statement in function");
   }
 
+  static final public ASTNode Union() throws ParseException {
+Token n;
+ASTNode e1;
+List<Bind> fields = new ArrayList<Bind>();
+    jj_consume_token(POUND);
+    n = jj_consume_token(Id);
+    jj_consume_token(LPAR);
+    e1 = Let();
+    jj_consume_token(RPAR);
+        fields.add(new Bind(n.image, e1));
+      {if (true) return new ASTUnion(fields);}
+    throw new Error("Missing return statement in function");
+  }
+
   static final public ASTNode Fact() throws ParseException {
   Token n, n2;
   ASTNode t, e1, e2;
@@ -481,14 +495,6 @@ List<Bind> fields = new ArrayList<Bind>();;
     case Id:
       n = jj_consume_token(Id);
                t = new ASTId(n.image);
-      break;
-    case POUND:
-      jj_consume_token(POUND);
-      n = jj_consume_token(Id);
-      jj_consume_token(LPAR);
-      t = Let();
-      jj_consume_token(RPAR);
-                                                 t = new ASTUnion(n.image, t);
       break;
     case UNIT:
       jj_consume_token(UNIT);
@@ -593,6 +599,9 @@ List<Bind> fields = new ArrayList<Bind>();;
       break;
     case LBRA:
       t = Record();
+      break;
+    case POUND:
+      t = Union();
       break;
     default:
       jj_la1[17] = jj_gen;

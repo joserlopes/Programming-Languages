@@ -307,7 +307,7 @@ ASTNode Record():
 {
 Token n;
 ASTNode e1;
-List<Bind> fields = new ArrayList<Bind>();;
+List<Bind> fields = new ArrayList<Bind>();
 }
 {
     <LBRA> n=<Id> <EQUAL> e1= BA()
@@ -326,6 +326,21 @@ List<Bind> fields = new ArrayList<Bind>();;
     { return new ASTRecord(fields); }
 }
 
+ASTNode Union():
+{
+Token n;
+ASTNode e1;
+List<Bind> fields = new ArrayList<Bind>();
+}
+{
+    <POUND> n = <Id> <LPAR> e1 = Let() <RPAR> 
+    { 
+        fields.add(new Bind(n.image, e1)); 
+    } 
+
+    { return new ASTUnion(fields); }
+}
+
 ASTNode Fact() :
 { Token n, n2; 
   ASTNode t, e1, e2;
@@ -339,7 +354,6 @@ ASTNode Fact() :
     | n=<TRUE> { t = new ASTBool(Boolean.parseBoolean(n.image)); }
     | n=<FALSE> { t = new ASTBool(Boolean.parseBoolean(n.image)); }
     | n=<Id> { t = new ASTId(n.image); }
-    | <POUND> n = <Id> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); } 
     | <UNIT> { t = new ASTUnit(); } 
     | <BOX> t=Fact() { t = new ASTBox(t); }
     | <STAR> t=Fact() { t = new ASTDeref(t); }
@@ -362,6 +376,7 @@ ASTNode Fact() :
       <RBRA>
      { t = new ASTMatch(t, e1, n.image, n2.image, e2); } 
     | t = Record()
+    | t = Union()
     )
    { return t; }
 }

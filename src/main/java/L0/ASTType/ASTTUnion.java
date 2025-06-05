@@ -1,15 +1,21 @@
 package L0.ASTType;
 
-public class ASTTUnion implements ASTType {
-  String lbl;
-  ASTType type;
+import java.util.Map;
 
-  public ASTTUnion(String lbl, ASTType type) {
-    this.lbl = lbl;
-    this.type = type;
+public class ASTTUnion implements ASTType {
+  TypeBindList ll;
+
+  public ASTTUnion(TypeBindList ll) {
+    this.ll = ll;
   }
 
   public String toStr() {
-    return "union { " + this.lbl + ": " + this.type.toStr() + " }";
+    String res = "union [ ";
+    for (Map.Entry<String, ASTType> entry : this.ll.getTbl().entrySet()) {
+      res += entry.getKey() + ": " + entry.getValue().toStr() + "; ";
+    }
+    res = res.substring(0, res.length() - 2);
+    res += " ]";
+    return res;
   }
 }
