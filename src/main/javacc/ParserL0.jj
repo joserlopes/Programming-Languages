@@ -48,6 +48,10 @@ TOKEN :
   |
   < RBRA : "}" >
   |
+  < LSBRA : "[" >
+  |
+  < RSBRA : "]" >
+  |
   < EQUAL : "=" >
   |
   < DOT : "." >
@@ -109,6 +113,8 @@ TOKEN :
   < MATCH : "match">
   |
   < PIPE : "|">
+  |
+  < PIPENIL : "| nil">
   |
   < ARROW : "->">
   |
@@ -303,6 +309,31 @@ ASTType at1, at2 = null;
       { return t; } 
 }
 
+ASTNode Match():
+{
+Token n1, n2;
+ASTNode t, e1, e2;
+List<Bind> fields = new ArrayList<Bind>();
+}
+{
+    
+     <MATCH> t = Fact() <LBRA>
+        (<PIPENIL>
+        <ARROW> e1 = Let()
+        <PIPE> n1=<Id> <DCOLON> n2=<Id> <ARROW> e2 = Let()
+      <RBRA>
+        { return new ASTMatchList(t, e1, n1.image, n2.image, e2); }
+     |
+     // TODO: n is not an id in this case
+      (
+      <PIPE> <POUND> n1=<Id> <ARROW> e2 = Let() 
+      { fields.add(new Bind(n1.image, e2)); }
+      )*
+      <RBRA>
+     { return new ASTMatchUnion(t, fields); }
+     )
+}
+
 ASTNode Record():
 {
 Token n;
@@ -370,19 +401,12 @@ ASTNode Fact() :
     | <NIL> { t = new ASTNil(); }
     | <CONS> <LPAR> t = BA() <COMMA> e1 = BA() <RPAR> { t = new ASTCons(t, e1); }
     | <LCONS> <LPAR> t = BA() <COMMA> e1 = BA() <RPAR> { t = new ASTLCons(t, e1); }
-    | <MATCH> t = Fact() <LBRA>
-        <PIPE> <NIL> <ARROW> e1 = Let()
-        <PIPE> n=<Id> <DCOLON> n2=<Id> <ARROW> e2 = Let()
-      <RBRA>
-     { t = new ASTMatch(t, e1, n.image, n2.image, e2); } 
+    | t = Match()
     | t = Record()
     | t = Union()
     )
    { return t; }
 }
-
-
-// NOTE: Create Id our union where 
 
 ASTType Type() : 
 {
@@ -422,6 +446,7 @@ ASTType TypeF() :
         | <REF> <LT> t=Type() <GT> { t = new ASTTBox(t); }
         | <LIST> <LT> t=Type() <GT> { t = new ASTTList(t); }
         | <STRUCT> <LBRA> ll = LabelList() <RBRA> { t = new ASTTRecord(ll); return t; }
+        | <UNION> <LSBRA> ll = LabelList() <RSBRA> { t = new ASTTUnion(ll); return t; }
     )
     { return t; }
 }

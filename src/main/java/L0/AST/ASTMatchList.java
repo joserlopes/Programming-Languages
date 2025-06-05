@@ -8,11 +8,11 @@ import L0.Errors.InterpreterError;
 import L0.Errors.TypeCheckError;
 import L0.IValue.*;
 
-public class ASTMatch implements ASTNode {
+public class ASTMatchList implements ASTNode {
   ASTNode matchedValue, nilCase, consCase;
   String headName, tailName;
 
-  public ASTMatch(
+  public ASTMatchList(
       ASTNode matchedValue, ASTNode nilCase, String headName, String tailName, ASTNode consCase) {
     this.matchedValue = matchedValue;
     this.nilCase = nilCase;

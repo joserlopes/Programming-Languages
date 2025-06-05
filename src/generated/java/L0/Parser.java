@@ -404,6 +404,7 @@ ASTType at1, at2 = null;
     case STRING:
     case LIST:
     case REF:
+    case UNION:
     case STRUCT:
     case Id:
       at2 = Type();
@@ -421,6 +422,57 @@ ASTType at1, at2 = null;
     throw new Error("Missing return statement in function");
   }
 
+  static final public ASTNode Match() throws ParseException {
+Token n1, n2;
+ASTNode t, e1, e2;
+List<Bind> fields = new ArrayList<Bind>();
+    jj_consume_token(MATCH);
+    t = Fact();
+    jj_consume_token(LBRA);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case PIPENIL:
+      jj_consume_token(PIPENIL);
+      jj_consume_token(ARROW);
+      e1 = Let();
+      jj_consume_token(PIPE);
+      n1 = jj_consume_token(Id);
+      jj_consume_token(DCOLON);
+      n2 = jj_consume_token(Id);
+      jj_consume_token(ARROW);
+      e2 = Let();
+      jj_consume_token(RBRA);
+          {if (true) return new ASTMatchList(t, e1, n1.image, n2.image, e2);}
+      break;
+    case RBRA:
+    case PIPE:
+      label_9:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case PIPE:
+          ;
+          break;
+        default:
+          jj_la1[16] = jj_gen;
+          break label_9;
+        }
+        jj_consume_token(PIPE);
+        jj_consume_token(POUND);
+        n1 = jj_consume_token(Id);
+        jj_consume_token(ARROW);
+        e2 = Let();
+        fields.add(new Bind(n1.image, e2));
+      }
+      jj_consume_token(RBRA);
+       {if (true) return new ASTMatchUnion(t, fields);}
+      break;
+    default:
+      jj_la1[17] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    throw new Error("Missing return statement in function");
+  }
+
   static final public ASTNode Record() throws ParseException {
 Token n;
 ASTNode e1;
@@ -430,15 +482,15 @@ List<Bind> fields = new ArrayList<Bind>();
     jj_consume_token(EQUAL);
     e1 = BA();
           fields.add(new Bind(n.image, e1));
-    label_9:
+    label_10:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SEMIC:
         ;
         break;
       default:
-        jj_la1[16] = jj_gen;
-        break label_9;
+        jj_la1[18] = jj_gen;
+        break label_10;
       }
       jj_consume_token(SEMIC);
       n = jj_consume_token(Id);
@@ -581,21 +633,7 @@ List<Bind> fields = new ArrayList<Bind>();
                                                          t = new ASTLCons(t, e1);
       break;
     case MATCH:
-      jj_consume_token(MATCH);
-      t = Fact();
-      jj_consume_token(LBRA);
-      jj_consume_token(PIPE);
-      jj_consume_token(NIL);
-      jj_consume_token(ARROW);
-      e1 = Let();
-      jj_consume_token(PIPE);
-      n = jj_consume_token(Id);
-      jj_consume_token(DCOLON);
-      n2 = jj_consume_token(Id);
-      jj_consume_token(ARROW);
-      e2 = Let();
-      jj_consume_token(RBRA);
-       t = new ASTMatch(t, e1, n.image, n2.image, e2);
+      t = Match();
       break;
     case LBRA:
       t = Record();
@@ -604,7 +642,7 @@ List<Bind> fields = new ArrayList<Bind>();
       t = Union();
       break;
     default:
-      jj_la1[17] = jj_gen;
+      jj_la1[19] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -612,7 +650,6 @@ List<Bind> fields = new ArrayList<Bind>();
     throw new Error("Missing return statement in function");
   }
 
-// NOTE: Create Id our union where 
   static final public ASTType Type() throws ParseException {
   ASTType t1, t2;
     t1 = TypeF();
@@ -623,7 +660,7 @@ List<Bind> fields = new ArrayList<Bind>();
                                         t1 = new ASTTArrow(t1,t2);
       break;
     default:
-      jj_la1[18] = jj_gen;
+      jj_la1[20] = jj_gen;
       ;
     }
       {if (true) return t1;}
@@ -641,15 +678,15 @@ List<Bind> fields = new ArrayList<Bind>();
       jj_consume_token(COLON);
       t = Type();
                                    ll.put(n.image,t);
-      label_10:
+      label_11:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case COMMA:
           ;
           break;
         default:
-          jj_la1[19] = jj_gen;
-          break label_10;
+          jj_la1[21] = jj_gen;
+          break label_11;
         }
         jj_consume_token(COMMA);
         n = jj_consume_token(Id);
@@ -659,7 +696,7 @@ List<Bind> fields = new ArrayList<Bind>();
       }
       break;
     default:
-      jj_la1[20] = jj_gen;
+      jj_la1[22] = jj_gen;
       ;
     }
       {if (true) return new TypeBindList(ll);}
@@ -712,8 +749,15 @@ List<Bind> fields = new ArrayList<Bind>();
       jj_consume_token(RBRA);
                                                     t = new ASTTRecord(ll); {if (true) return t;}
       break;
+    case UNION:
+      jj_consume_token(UNION);
+      jj_consume_token(LSBRA);
+      ll = LabelList();
+      jj_consume_token(RSBRA);
+                                                     t = new ASTTUnion(ll); {if (true) return t;}
+      break;
     default:
-      jj_la1[21] = jj_gen;
+      jj_la1[23] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -731,7 +775,7 @@ List<Bind> fields = new ArrayList<Bind>();
   static public Token jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[22];
+  static final private int[] jj_la1 = new int[24];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -739,10 +783,10 @@ List<Bind> fields = new ArrayList<Bind>();
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x214de1,0x20,0x40,0x214de0,0x800000,0x0,0x8000000,0x4000000,0xf0000000,0xf0000000,0x600,0x600,0x86800,0x86800,0x2000000,0x0,0x800000,0x214d80,0x0,0x2000000,0x0,0x0,};
+      jj_la1_0 = new int[] {0x814de1,0x20,0x40,0x814de0,0x2000000,0x0,0x20000000,0x10000000,0xc0000000,0xc0000000,0x600,0x600,0x206800,0x206800,0x8000000,0x0,0x0,0x20000,0x2000000,0x814d80,0x0,0x8000000,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x1c08f7b4,0x0,0x0,0x1c08f7b4,0x0,0x8,0x0,0x0,0x3,0x3,0x0,0x0,0x80000,0x80000,0x0,0xafc0000,0x0,0x1c08f7b4,0x20000,0x0,0x8000000,0xafc0000,};
+      jj_la1_1 = new int[] {0xe043ded0,0x0,0x0,0xe043ded0,0x0,0x20,0x0,0x0,0xf,0xf,0x0,0x0,0x400000,0x400000,0x0,0x5fe00000,0x40000,0xc0000,0x0,0xe043ded0,0x100000,0x0,0x40000000,0x5fe00000,};
    }
 
   /** Constructor with InputStream. */
@@ -763,7 +807,7 @@ List<Bind> fields = new ArrayList<Bind>();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -777,7 +821,7 @@ List<Bind> fields = new ArrayList<Bind>();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -794,7 +838,7 @@ List<Bind> fields = new ArrayList<Bind>();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -804,7 +848,7 @@ List<Bind> fields = new ArrayList<Bind>();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -820,7 +864,7 @@ List<Bind> fields = new ArrayList<Bind>();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -829,7 +873,7 @@ List<Bind> fields = new ArrayList<Bind>();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -880,12 +924,12 @@ List<Bind> fields = new ArrayList<Bind>();
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[61];
+    boolean[] la1tokens = new boolean[64];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 22; i++) {
+    for (int i = 0; i < 24; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -897,7 +941,7 @@ List<Bind> fields = new ArrayList<Bind>();
         }
       }
     }
-    for (int i = 0; i < 61; i++) {
+    for (int i = 0; i < 64; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

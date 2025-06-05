@@ -29,7 +29,6 @@ public class ASTFunCall implements ASTNode {
       }
 
       ASTType t2 = this.arg.typecheck(e);
-      // TODO: Implement sub typing for this
       if (t2.toStr().equals(a1.getDomain().toStr())) {
         return a1.getCoDomain();
       } else {
