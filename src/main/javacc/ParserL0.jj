@@ -312,7 +312,7 @@ List<Bind> fields = new ArrayList<Bind>();;
 {
     <LBRA> n=<Id> <EQUAL> e1= BA()
         { fields.add(new Bind(n.image, e1)); }
-        (<COMMA> n=<Id> <EQUAL> e1 = BA()
+        (<SEMIC> n=<Id> <EQUAL> e1 = BA()
         { 
             for (Bind bind: fields) {
                 if (bind.getId().equals(n.image)) {

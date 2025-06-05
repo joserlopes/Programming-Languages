@@ -20,6 +20,7 @@ public class ASTAssign implements ASTNode {
       ASTTBox b1 = (ASTTBox) t1;
       ASTType t2 = this.rhs.typecheck(e);
       if (t2.getClass() == b1.getType().getClass()) {
+        b1.assign(t2);
         return t2;
       } else {
         throw new TypeCheckError(

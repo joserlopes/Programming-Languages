@@ -11,6 +11,10 @@ public class ASTTBox implements ASTType {
     return this.type;
   }
 
+  public void assign(ASTType type) {
+    this.type = type;
+  }
+
   public String toStr() {
     return "box<" + this.type.toStr() + ">";
   }

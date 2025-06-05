@@ -20,7 +20,7 @@ public class VRecord implements IValue {
   public String toStr() {
     String res = "record { ";
     for (Map.Entry<String, IValue> entry : this.fields.entrySet()) {
-      res += entry.getKey() + " = " + entry.getValue().toStr() + ", ";
+      res += entry.getKey() + " = " + entry.getValue().toStr() + "; ";
     }
     res = res.substring(0, res.length() - 2);
     res += " }";
