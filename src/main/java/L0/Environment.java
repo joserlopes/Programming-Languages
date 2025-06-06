@@ -49,6 +49,15 @@ public class Environment<E> {
         E a = current_env.bindings.get(bind);
         if (a instanceof ASTType) {
           ASTType a1 = (ASTType) a;
+          if (a1 instanceof ASTTArrow) {
+            ASTTArrow arrow1 = (ASTTArrow) a1;
+            System.out.println(
+                bind
+                    + " is a function with domain: "
+                    + arrow1.getDomain().toStr()
+                    + " and codomain: "
+                    + arrow1.getCoDomain().toStr());
+          }
           System.out.println(bind + ": " + a1.toStr());
         }
       }

@@ -37,7 +37,7 @@ public class ASTLCons implements ASTNode {
         //         + t1.toStr()
         //         + " "
         //         + (new ASTTList(t1)).toStr());
-        throw new TypeCheckError("illegal list type");
+        throw new TypeCheckError("illegal list type " + t1.toStr() + " " + l1.toStr());
       }
     } else {
       // throw new TypeCheckError(
@@ -49,7 +49,7 @@ public class ASTLCons implements ASTNode {
       //         + t1.toStr()
       //         + " "
       //         + (new ASTTList(t1)).toStr());
-      throw new TypeCheckError("illegal list type");
+      throw new TypeCheckError("illegal list type " + t1.toStr() + " " + t2.toStr());
     }
   }
 

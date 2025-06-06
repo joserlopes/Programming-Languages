@@ -1,4 +1,4 @@
-let fib = fn n: int => int {
+let fib: int->int = fn n: int => {
         if (n == 0) {
         0
         } else {

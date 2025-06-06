@@ -1,7 +1,7 @@
-let fibo = fn a: int, b: int => int->list<int> { lcons(a, fibo(b)(a + b)) };
+let fibo: int->int->list<int> = fn a: int, b: int => { lcons(a, fibo(b)(a + b)) };
 let lv = box(fibo(0)(1));
 let count = box(10);
-while (*count ~= 0) {
+while (*count != 0) {
         match *lv {
                 | nil -> println("never happens"); nil
                 | v :: tail -> println(v); lv := tail

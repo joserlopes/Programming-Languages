@@ -1,5 +1,5 @@
-let map = fn f: int->int => list<int>->list<int>
-        { fn l: list<int> => list<int>
+let map: (int->int)->list<int>->list<int> = fn f: int->int =>
+        { fn l: list<int> =>
         { match l {
                 | nil -> nil
                 | v :: tail -> cons(f(v), map(f)(tail))
