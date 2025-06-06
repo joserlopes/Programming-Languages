@@ -12,10 +12,10 @@ public class Bind {
   }
 
   public String getId() {
-    return id;
+    return this.id;
   }
 
   public ASTNode getExp() {
-    return exp;
+    return this.exp;
   }
 }

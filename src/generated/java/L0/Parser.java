@@ -423,9 +423,9 @@ ASTType at1, at2 = null;
   }
 
   static final public ASTNode Match() throws ParseException {
-Token n1, n2;
+Token n1, n2 = null;
 ASTNode t, e1, e2;
-List<Bind> fields = new ArrayList<Bind>();
+List<UnionBind> fields = new ArrayList<UnionBind>();
     jj_consume_token(MATCH);
     t = Fact();
     jj_consume_token(LBRA);
@@ -458,15 +458,29 @@ List<Bind> fields = new ArrayList<Bind>();
         jj_consume_token(PIPE);
         jj_consume_token(POUND);
         n1 = jj_consume_token(Id);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case LPAR:
+          jj_consume_token(LPAR);
+          n2 = jj_consume_token(Id);
+          jj_consume_token(RPAR);
+          break;
+        default:
+          jj_la1[17] = jj_gen;
+          ;
+        }
         jj_consume_token(ARROW);
         e2 = Let();
-        fields.add(new Bind(n1.image, e2));
+          if (n2 == null) {
+            fields.add(new UnionBind(n1.image, null, e2));
+          } else {
+            fields.add(new UnionBind(n1.image, n2.image, e2));
+          }
       }
       jj_consume_token(RBRA);
        {if (true) return new ASTMatchUnion(t, fields);}
       break;
     default:
-      jj_la1[17] = jj_gen;
+      jj_la1[18] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -489,7 +503,7 @@ List<Bind> fields = new ArrayList<Bind>();
         ;
         break;
       default:
-        jj_la1[18] = jj_gen;
+        jj_la1[19] = jj_gen;
         break label_10;
       }
       jj_consume_token(SEMIC);
@@ -642,7 +656,7 @@ List<Bind> fields = new ArrayList<Bind>();
       t = Union();
       break;
     default:
-      jj_la1[19] = jj_gen;
+      jj_la1[20] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -660,7 +674,7 @@ List<Bind> fields = new ArrayList<Bind>();
                                         t1 = new ASTTArrow(t1,t2);
       break;
     default:
-      jj_la1[20] = jj_gen;
+      jj_la1[21] = jj_gen;
       ;
     }
       {if (true) return t1;}
@@ -685,7 +699,7 @@ List<Bind> fields = new ArrayList<Bind>();
           ;
           break;
         default:
-          jj_la1[21] = jj_gen;
+          jj_la1[22] = jj_gen;
           break label_11;
         }
         jj_consume_token(COMMA);
@@ -696,7 +710,7 @@ List<Bind> fields = new ArrayList<Bind>();
       }
       break;
     default:
-      jj_la1[22] = jj_gen;
+      jj_la1[23] = jj_gen;
       ;
     }
       {if (true) return new TypeBindList(ll);}
@@ -757,7 +771,7 @@ List<Bind> fields = new ArrayList<Bind>();
                                                      t = new ASTTUnion(ll); {if (true) return t;}
       break;
     default:
-      jj_la1[23] = jj_gen;
+      jj_la1[24] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -775,7 +789,7 @@ List<Bind> fields = new ArrayList<Bind>();
   static public Token jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[24];
+  static final private int[] jj_la1 = new int[25];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -783,10 +797,10 @@ List<Bind> fields = new ArrayList<Bind>();
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x814de1,0x20,0x40,0x814de0,0x2000000,0x0,0x20000000,0x10000000,0xc0000000,0xc0000000,0x600,0x600,0x206800,0x206800,0x8000000,0x0,0x0,0x20000,0x2000000,0x814d80,0x0,0x8000000,0x0,0x0,};
+      jj_la1_0 = new int[] {0x814de1,0x20,0x40,0x814de0,0x2000000,0x0,0x20000000,0x10000000,0xc0000000,0xc0000000,0x600,0x600,0x206800,0x206800,0x8000000,0x0,0x0,0x4000,0x20000,0x2000000,0x814d80,0x0,0x8000000,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0xe043ded0,0x0,0x0,0xe043ded0,0x0,0x20,0x0,0x0,0xf,0xf,0x0,0x0,0x400000,0x400000,0x0,0x5fe00000,0x40000,0xc0000,0x0,0xe043ded0,0x100000,0x0,0x40000000,0x5fe00000,};
+      jj_la1_1 = new int[] {0xe043ded0,0x0,0x0,0xe043ded0,0x0,0x20,0x0,0x0,0xf,0xf,0x0,0x0,0x400000,0x400000,0x0,0x5fe00000,0x40000,0x0,0xc0000,0x0,0xe043ded0,0x100000,0x0,0x40000000,0x5fe00000,};
    }
 
   /** Constructor with InputStream. */
@@ -807,7 +821,7 @@ List<Bind> fields = new ArrayList<Bind>();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 25; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -821,7 +835,7 @@ List<Bind> fields = new ArrayList<Bind>();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 25; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -838,7 +852,7 @@ List<Bind> fields = new ArrayList<Bind>();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 25; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -848,7 +862,7 @@ List<Bind> fields = new ArrayList<Bind>();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 25; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -864,7 +878,7 @@ List<Bind> fields = new ArrayList<Bind>();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 25; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -873,7 +887,7 @@ List<Bind> fields = new ArrayList<Bind>();
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 25; i++) jj_la1[i] = -1;
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -929,7 +943,7 @@ List<Bind> fields = new ArrayList<Bind>();
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 24; i++) {
+    for (int i = 0; i < 25; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

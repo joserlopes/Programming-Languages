@@ -9,6 +9,14 @@ public class VUnion implements IValue {
     this.value = value;
   }
 
+  public String getLabel() {
+    return this.lbl;
+  }
+
+  public IValue getValue() {
+    return this.value;
+  }
+
   public String toStr() {
     return "union [ " + this.lbl + " = " + this.value.toStr() + " ]";
   }

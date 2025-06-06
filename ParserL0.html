@@ -40,6 +40,8 @@
 | &lt;RPAR: ")"&gt;
 | &lt;LBRA: "{"&gt;
 | &lt;RBRA: "}"&gt;
+| &lt;LSBRA: "["&gt;
+| &lt;RSBRA: "]"&gt;
 | &lt;EQUAL: "="&gt;
 | &lt;DOT: "."&gt;
 | &lt;COLON: ":"&gt;
@@ -71,6 +73,7 @@
 | &lt;LCONS: "lcons"&gt;
 | &lt;MATCH: "match"&gt;
 | &lt;PIPE: "|"&gt;
+| &lt;PIPENIL: "| nil"&gt;
 | &lt;ARROW: "-&gt;"&gt;
 | &lt;INT: "int"&gt;
 | &lt;UNIT: "()"&gt;
@@ -87,6 +90,66 @@
 
    </pre
           >
+        </td>
+      </tr>
+      <!-- Token -->
+      <tr>
+        <td>
+          <pre></pre>
+        </td>
+      </tr>
+      <!-- Token -->
+      <tr>
+        <td>
+          <pre></pre>
+        </td>
+      </tr>
+      <!-- Token -->
+      <tr>
+        <td>
+          <pre></pre>
+        </td>
+      </tr>
+      <!-- Token -->
+      <tr>
+        <td>
+          <pre></pre>
+        </td>
+      </tr>
+      <!-- Token -->
+      <tr>
+        <td>
+          <pre></pre>
+        </td>
+      </tr>
+      <!-- Token -->
+      <tr>
+        <td>
+          <pre></pre>
+        </td>
+      </tr>
+      <!-- Token -->
+      <tr>
+        <td>
+          <pre></pre>
+        </td>
+      </tr>
+      <!-- Token -->
+      <tr>
+        <td>
+          <pre></pre>
+        </td>
+      </tr>
+      <!-- Token -->
+      <tr>
+        <td>
+          <pre></pre>
+        </td>
+      </tr>
+      <!-- Token -->
+      <tr>
+        <td>
+          <pre></pre>
         </td>
       </tr>
       <!-- Token -->
@@ -848,7 +911,19 @@
         </td>
       </tr>
       <tr>
-        <td align="RIGHT" valign="BASELINE"><a name="prod13">Record</a></td>
+        <td align="RIGHT" valign="BASELINE"><a name="prod13">Match</a></td>
+        <td align="CENTER" valign="BASELINE">::=</td>
+        <td align="LEFT" valign="BASELINE">
+          &lt;MATCH&gt; <a href="#prod11">Fact</a> &lt;LBRA&gt; (
+          &lt;PIPENIL&gt; &lt;ARROW&gt; <a href="#prod2">Let</a> &lt;PIPE&gt;
+          &lt;Id&gt; &lt;DCOLON&gt; &lt;Id&gt; &lt;ARROW&gt;
+          <a href="#prod2">Let</a> &lt;RBRA&gt; | ( &lt;PIPE&gt; &lt;POUND&gt;
+          &lt;Id&gt; ( &lt;LPAR&gt; &lt;Id&gt; &lt;RPAR&gt; )? &lt;ARROW&gt;
+          <a href="#prod2">Let</a> )* &lt;RBRA&gt; )
+        </td>
+      </tr>
+      <tr>
+        <td align="RIGHT" valign="BASELINE"><a name="prod14">Record</a></td>
         <td align="CENTER" valign="BASELINE">::=</td>
         <td align="LEFT" valign="BASELINE">
           &lt;LBRA&gt; &lt;Id&gt; &lt;EQUAL&gt; <a href="#prod4">BA</a> (
@@ -857,7 +932,7 @@
         </td>
       </tr>
       <tr>
-        <td align="RIGHT" valign="BASELINE"><a name="prod14">Union</a></td>
+        <td align="RIGHT" valign="BASELINE"><a name="prod15">Union</a></td>
         <td align="CENTER" valign="BASELINE">::=</td>
         <td align="LEFT" valign="BASELINE">
           &lt;POUND&gt; &lt;Id&gt; &lt;LPAR&gt;
@@ -883,24 +958,20 @@
           &lt;LPAR&gt; <a href="#prod4">BA</a> &lt;COMMA&gt;
           <a href="#prod4">BA</a> &lt;RPAR&gt; | &lt;LCONS&gt; &lt;LPAR&gt;
           <a href="#prod4">BA</a> &lt;COMMA&gt;
-          <a href="#prod4">BA</a> &lt;RPAR&gt; | &lt;MATCH&gt;
-          <a href="#prod11">Fact</a> &lt;LBRA&gt; &lt;PIPE&gt; &lt;NIL&gt;
-          &lt;ARROW&gt; <a href="#prod2">Let</a> &lt;PIPE&gt; &lt;Id&gt;
-          &lt;DCOLON&gt; &lt;Id&gt; &lt;ARROW&gt;
-          <a href="#prod2">Let</a> &lt;RBRA&gt; | <a href="#prod13">Record</a> |
-          <a href="#prod14">Union</a> )
+          <a href="#prod4">BA</a> &lt;RPAR&gt; | <a href="#prod13">Match</a> |
+          <a href="#prod14">Record</a> | <a href="#prod15">Union</a> )
         </td>
       </tr>
       <tr>
         <td align="RIGHT" valign="BASELINE"><a name="prod5">Type</a></td>
         <td align="CENTER" valign="BASELINE">::=</td>
         <td align="LEFT" valign="BASELINE">
-          <a href="#prod15">TypeF</a> ( &lt;ARROW&gt;
+          <a href="#prod16">TypeF</a> ( &lt;ARROW&gt;
           <a href="#prod5">Type</a> )?
         </td>
       </tr>
       <tr>
-        <td align="RIGHT" valign="BASELINE"><a name="prod16">LabelList</a></td>
+        <td align="RIGHT" valign="BASELINE"><a name="prod17">LabelList</a></td>
         <td align="CENTER" valign="BASELINE">::=</td>
         <td align="LEFT" valign="BASELINE">
           ( &lt;Id&gt; &lt;COLON&gt; <a href="#prod5">Type</a> ( &lt;COMMA&gt;
@@ -908,14 +979,15 @@
         </td>
       </tr>
       <tr>
-        <td align="RIGHT" valign="BASELINE"><a name="prod15">TypeF</a></td>
+        <td align="RIGHT" valign="BASELINE"><a name="prod16">TypeF</a></td>
         <td align="CENTER" valign="BASELINE">::=</td>
         <td align="LEFT" valign="BASELINE">
           ( &lt;INT&gt; | &lt;Id&gt; | &lt;BOOL&gt; | &lt;UNIT&gt; |
           &lt;STRING&gt; | &lt;REF&gt; &lt;LT&gt;
           <a href="#prod5">Type</a> &lt;GT&gt; | &lt;LIST&gt; &lt;LT&gt;
           <a href="#prod5">Type</a> &lt;GT&gt; | &lt;STRUCT&gt; &lt;LBRA&gt;
-          <a href="#prod16">LabelList</a> &lt;RBRA&gt; )
+          <a href="#prod17">LabelList</a> &lt;RBRA&gt; | &lt;UNION&gt;
+          &lt;LSBRA&gt; <a href="#prod17">LabelList</a> &lt;RSBRA&gt; )
         </td>
       </tr>
     </table>

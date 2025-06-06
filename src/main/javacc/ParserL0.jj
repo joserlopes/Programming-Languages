@@ -311,9 +311,9 @@ ASTType at1, at2 = null;
 
 ASTNode Match():
 {
-Token n1, n2;
+Token n1, n2 = null;
 ASTNode t, e1, e2;
-List<Bind> fields = new ArrayList<Bind>();
+List<UnionBind> fields = new ArrayList<UnionBind>();
 }
 {
     
@@ -324,10 +324,15 @@ List<Bind> fields = new ArrayList<Bind>();
       <RBRA>
         { return new ASTMatchList(t, e1, n1.image, n2.image, e2); }
      |
-     // TODO: n is not an id in this case
       (
-      <PIPE> <POUND> n1=<Id> <ARROW> e2 = Let() 
-      { fields.add(new Bind(n1.image, e2)); }
+      <PIPE> <POUND> n1=<Id> (<LPAR> n2 = <Id> <RPAR>)? <ARROW> e2 = Let() 
+      { 
+          if (n2 == null) {
+            fields.add(new UnionBind(n1.image, null, e2)); 
+          } else {
+            fields.add(new UnionBind(n1.image, n2.image, e2)); 
+          }
+      }
       )*
       <RBRA>
      { return new ASTMatchUnion(t, fields); }

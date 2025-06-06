@@ -9,6 +9,10 @@ public class ASTTUnion implements ASTType {
     this.ll = ll;
   }
 
+  public TypeBindList getBindList() {
+    return this.ll;
+  }
+
   public String toStr() {
     String res = "union [ ";
     for (Map.Entry<String, ASTType> entry : this.ll.getTbl().entrySet()) {
