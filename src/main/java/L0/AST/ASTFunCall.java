@@ -5,6 +5,8 @@ import L0.Environment;
 import L0.Errors.InterpreterError;
 import L0.Errors.TypeCheckError;
 import L0.IValue.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ASTFunCall implements ASTNode {
   ASTNode func, arg;
@@ -24,11 +26,25 @@ public class ASTFunCall implements ASTNode {
           return a1.getCoDomain();
         } else {
           throw new TypeCheckError(
-              "a function that receives no arguments must have it's type as ()");
+              "a function that receives no arguments must have it's argument type as ()");
         }
       }
 
       ASTType t2 = this.arg.typecheck(e);
+
+      if (t2 instanceof ASTTUnion && a1.getDomain() instanceof ASTTUnion) {
+        ASTTUnion u1 = (ASTTUnion) a1.getDomain();
+        ASTTUnion u2 = (ASTTUnion) t2;
+        HashMap<String, ASTType> domainLbl = u1.getBindList().getTbl();
+        Map.Entry<String, ASTType> argEntry =
+            u2.getBindList().getTbl().entrySet().iterator().next();
+        for (Map.Entry<String, ASTType> entry : domainLbl.entrySet()) {
+          if (entry.getKey().equals(argEntry.getKey())
+              && entry.getValue().toStr().equals(argEntry.getValue().toStr())) {
+            return a1.getCoDomain();
+          }
+        }
+      }
       if (t2.toStr().equals(a1.getDomain().toStr())) {
         return a1.getCoDomain();
       } else {
