@@ -95,7 +95,8 @@ static private int jjMoveStringLiteralDfa0_0()
    switch(curChar)
    {
       case 33:
-         return jjStopAtPos(0, 12);
+         jjmatchedKind = 12;
+         return jjMoveStringLiteralDfa1_0(0x800000000L);
       case 35:
          return jjStopAtPos(0, 23);
       case 38:
@@ -173,8 +174,7 @@ static private int jjMoveStringLiteralDfa0_0()
       case 125:
          return jjStopAtPos(0, 17);
       case 126:
-         jjmatchedKind = 36;
-         return jjMoveStringLiteralDfa1_0(0x800000000L);
+         return jjStopAtPos(0, 36);
       default :
          return jjMoveNfa_0(0, 0);
    }
@@ -586,7 +586,7 @@ public static final String[] jjstrLiteralImages = {
 "", null, null, null, null, "\154\145\164", "\164\171\160\145", 
 "\164\162\165\145", "\146\141\154\163\145", "\53", "\55", "\52", "\41", "\57", "\50", "\51", 
 "\173", "\175", "\133", "\135", "\75", "\56", "\72", "\43", "\72\72", "\73", "\73\73", 
-"\54", "\46\46", "\174\174", "\75\75", "\76", "\74", "\76\75", "\74\75", "\176\75", 
+"\54", "\46\46", "\174\174", "\75\75", "\76", "\74", "\76\75", "\74\75", "\41\75", 
 "\176", "\72\75", "\142\157\170", "\151\146", "\145\154\163\145", 
 "\167\150\151\154\145", "\160\162\151\156\164", "\160\162\151\156\164\154\156", "\146\156", "\75\76", 
 "\156\151\154", "\143\157\156\163", "\154\143\157\156\163", "\155\141\164\143\150", "\174", 

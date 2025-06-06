@@ -1,18 +1,18 @@
 package L0.AST;
 
 import L0.ASTType.*;
-import L0.Bind;
 import L0.Environment;
 import L0.Errors.InterpreterError;
 import L0.Errors.TypeCheckError;
 import L0.IValue.*;
+import L0.TypedBind;
 import java.util.List;
 
 public class ASTLet implements ASTNode {
-  List<Bind> decls;
+  List<TypedBind> decls;
   ASTNode body;
 
-  public ASTLet(List<Bind> decls, ASTNode body) {
+  public ASTLet(List<TypedBind> decls, ASTNode body) {
     this.decls = decls;
     this.body = body;
   }
@@ -20,25 +20,37 @@ public class ASTLet implements ASTNode {
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     Environment<ASTType> en = e.beginScope();
 
-    for (Bind p : this.decls) {
+    // If it has a typed bound to it, after the evaluation, check if they are the same
+
+    // We need to do a first pass through in order to type check potentially mutually recursive
+    // functions
+
+    for (TypedBind p : this.decls) {
+      String id = p.getId();
+      ASTType type = p.getType();
+
+      if (type != null) {
+        en.assoc(id, type);
+      }
+    }
+
+    for (TypedBind p : this.decls) {
       String id = p.getId();
       ASTNode exp = p.getExp();
-      if (exp instanceof ASTFunDecl) {
-        ASTFunDecl funDecl = (ASTFunDecl) exp;
-        ASTType paramType = funDecl.getParamType();
-        ASTType returnType = funDecl.getReturnType();
-        if (returnType != null) {
-          ASTTArrow funType = new ASTTArrow(paramType, returnType);
-          en.assoc(id, funType);
-          en.assoc(funDecl.getParam(), funDecl.getParamType());
-          exp.typecheck(en);
-        } else {
-          ASTType type = exp.typecheck(en);
-          en.assoc(id, type);
+      ASTType type = p.getType();
+
+      ASTType expType = exp.typecheck(en);
+
+      if (type != null) {
+        if (!type.toStr().equals(expType.toStr())) {
+          throw new TypeCheckError(
+              "illegal type to variable declaration. Variable declared as: "
+                  + type.toStr()
+                  + ", got: "
+                  + expType.toStr());
         }
       } else {
-        ASTType type = exp.typecheck(en);
-        en.assoc(id, type);
+        en.assoc(id, expType);
       }
     }
 
@@ -48,7 +60,7 @@ public class ASTLet implements ASTNode {
   public IValue eval(Environment<IValue> e) throws InterpreterError {
     Environment<IValue> en = e.beginScope();
 
-    for (Bind p : this.decls) {
+    for (TypedBind p : this.decls) {
       String id = p.getId();
       ASTNode exp = p.getExp();
       en.assoc(id, exp.eval(en));

@@ -82,7 +82,7 @@ TOKEN :
   |
   < LTEQ : "<=" >
   |
-  < DIF : "~=" >
+  < DIF : "!=" >
   |
   < NOT : "~" >
   |
@@ -151,24 +151,22 @@ ASTNode Start():
 ASTNode Let() :
 { Token n; 
   ASTNode t, e1, e2;
-  ASTType t1;
-  List<Bind> decls  = new ArrayList<Bind>();;
+  ASTType t1 = null;
+  List<TypedBind> decls  = new ArrayList<TypedBind>();;
+  HashMap<String, ASTType> lbl = new HashMap<String, ASTType>();
 }
 { 
     (
     t = Seq()
     |
-    ((<LET>  n=<Id>  <EQUAL> e1 = BA() <SEMIC>
-      { decls.add(new Bind(n.image, e1)); }
+    ((<LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC>
+      { decls.add(new TypedBind(n.image, e1, t1)); t1 = null; }
      )+
         e2 = Seq() { t = new ASTLet(decls, e2); })
     |
-     {  HashMap<String, ASTType> lbl = new HashMap<String, ASTType>(); }
-   ( (<TYPE>  n=<Id> <EQUAL> t1 = Type() <SEMIC>
+    (<TYPE>  n=<Id> <EQUAL> t1 = Type() <SEMIC>
       { lbl.put(n.image, t1); } )+
         e2 = Seq() { t = new ASTTypeDef(lbl, e2); }
-    )
-
    )
    { return t; }
 }
@@ -292,20 +290,18 @@ ASTNode Fun() :
 {
 Token n; 
 ASTNode t, e1 = null, e2;
-ASTType at1, at2 = null;
+ASTType at1;
 }
 {
       <FN> n=<Id> <COLON> at1 = Type()
-      { t = new ASTFunDecl(n.image, at1, null, null); e1 = t;}
+      { t = new ASTFunDecl(n.image, at1, null); e1 = t;}
       ( <COMMA> n = <Id> <COLON> at1 = Type() { 
-          e2 = new ASTFunDecl(n.image, at1, null, null);
+          e2 = new ASTFunDecl(n.image, at1, null);
 		  ((ASTFunDecl)e1).setBody(e2); 
           e1 = e2; 
           })*
-		  <FAT_ARROW> (at2 = Type())? <LBRA> e2 = Let() <RBRA> { 
-              ((ASTFunDecl)e1).setBody(e2); 
-              ((ASTFunDecl)t).setReturnType(at2); 
-              }
+		  <FAT_ARROW> <LBRA> e2 = Let() <RBRA> 
+          { ((ASTFunDecl)e1).setBody(e2); }
       { return t; } 
 }
 
@@ -448,6 +444,7 @@ ASTType TypeF() :
         | <BOOL> { t = new ASTTBool(); } 
         | <UNIT> { t = new ASTTUnit(); } 
         | <STRING> { t = new ASTTString(); } 
+        | <LPAR> t = Type() <RPAR>
         | <REF> <LT> t=Type() <GT> { t = new ASTTBox(t); }
         | <LIST> <LT> t=Type() <GT> { t = new ASTTList(t); }
         | <STRUCT> <LBRA> ll = LabelList() <RBRA> { t = new ASTTRecord(ll); return t; }
