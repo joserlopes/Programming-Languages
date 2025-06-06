@@ -32,6 +32,6 @@ public class ASTPrint implements ASTNode {
     } else {
       System.out.print(v1.toStr());
     }
-    return new VBool(true);
+    return v1;
   }
 }
