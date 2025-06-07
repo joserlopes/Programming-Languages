@@ -22,13 +22,24 @@ public class ASTUnion implements ASTNode {
     for (Bind p : this.decls) {
       String id = p.getId();
       ASTNode exp = p.getExp();
-      tbl.put(id, exp.typecheck(e));
+      if (exp == null) {
+        tbl.put(id, new ASTTUnit());
+      } else {
+        tbl.put(id, exp.typecheck(e));
+      }
     }
 
     return new ASTTUnion(new TypeBindList(tbl));
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
-    return new VUnion(this.decls.get(0).getId(), this.decls.get(0).getExp().eval(e));
+    Bind bind = this.decls.get(0);
+    String id = bind.getId();
+    ASTNode exp = bind.getExp();
+    if (exp == null) {
+      return new VUnion(id, new VUnit());
+    } else {
+      return new VUnion(id, exp.eval(e));
+    }
   }
 }
