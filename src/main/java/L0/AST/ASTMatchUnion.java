@@ -22,11 +22,10 @@ public class ASTMatchUnion implements ASTNode {
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.matchedValue.typecheck(e);
     if (t1 instanceof ASTTUnion) {
+      int matched = 0;
+
       ASTTUnion u1 = (ASTTUnion) t1;
-      HashMap<String, ASTType> matchableLabels = u1.getBindList().getTbl();
-      if (matchableLabels.size() != this.decls.size()) {
-        throw new TypeCheckError("matching on unions needs to be exhaustive");
-      }
+      HashMap<String, ASTType> matchableLabels = u1.getBinds().getTbl();
 
       List<ASTType> foundTypes = new ArrayList<ASTType>();
 
@@ -35,14 +34,21 @@ public class ASTMatchUnion implements ASTNode {
       for (UnionBind bind : this.decls) {
         String label = bind.getLabel();
         if (matchableLabels.containsKey(label)) {
+          matched++;
+
           ASTType labelType = matchableLabels.get(label);
           String name = bind.getName();
 
           if (name != null) {
             en.assoc(name, labelType);
+          } else {
+            if (!(labelType instanceof ASTTUnit)) {
+              throw new TypeCheckError("Only unit types can be ignored inside match branches.");
+            }
           }
 
           ASTType foundType = bind.getExp().typecheck(en);
+
           for (ASTType type : foundTypes) {
             if (!type.toStr().equals(foundType.toStr())) {
               throw new TypeCheckError(
@@ -55,7 +61,12 @@ public class ASTMatchUnion implements ASTNode {
           }
 
           foundTypes.add(bind.getExp().typecheck(en));
+          en = en.endScope();
         }
+      }
+
+      if (matched != matchableLabels.size()) {
+        throw new TypeCheckError("matching on unions needs to be exhaustive on possible labels.");
       }
 
       if (foundTypes.size() == 0) {
