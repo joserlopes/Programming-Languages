@@ -1,8 +1,9 @@
-type my_type = union [ foo: int, bar: string ];
+type my_union = union [ #first: int, #second: string ];
 (
-let f = fn x: my_type => {
-    match x {
-
+let f = fn a: my_union => {
+    match a {
+        | #first(b) -> b
+        | #second(c) -> 123
     }
-}
+}; f(#second("123"))
 );;

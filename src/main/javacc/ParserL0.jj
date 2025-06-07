@@ -313,7 +313,7 @@ List<UnionBind> fields = new ArrayList<UnionBind>();
 }
 {
     
-     <MATCH> t = Fact() <LBRA>
+     <MATCH> t = Term() <LBRA>
         (<PIPENIL>
         <ARROW> e1 = Let()
         <PIPE> n1=<Id> <DCOLON> n2=<Id> <ARROW> e2 = Let()
@@ -361,11 +361,16 @@ List<Bind> fields = new ArrayList<Bind>();
 ASTNode Union():
 {
 Token n;
-ASTNode e1;
+ASTNode e1 = null;
 List<Bind> fields = new ArrayList<Bind>();
 }
 {
-    <POUND> n = <Id> <LPAR> e1 = Let() <RPAR> 
+    <POUND> n = <Id> 
+    (
+        <UNIT>
+        |
+        <LPAR> e1 = Let() <RPAR>
+    )
     { 
         fields.add(new Bind(n.image, e1)); 
     } 
@@ -418,15 +423,28 @@ ASTType Type() :
     { return t1; }
 }
 
-TypeBindList LabelList() :
+TypeBindList RecordLabelList() :
+{
+  ASTType t;
+  HashMap<String, ASTType> ll;
+  Token n;
+}
+{   { ll = new HashMap<String, ASTType>() ; }
+    ( n=<Id> <COLON> t = Type() { ll.put(n.image,t); } 
+              (<COMMA> n=<Id> <COLON> t = Type() { ll.put(n.image,t);} )*
+    )?
+    { return new TypeBindList(ll); }
+}
+
+TypeBindList UnionLabelList() :
 {
   ASTType t;
   HashMap<String,ASTType> ll;
   Token n;
 }
-{   { ll = new HashMap<String,ASTType>() ; }
-    ( n=<Id>  <COLON> t = Type() { ll.put(n.image,t); } 
-              (<COMMA> n=<Id>  <COLON> t = Type() { ll.put(n.image,t);} )*
+{   { ll = new HashMap<String, ASTType>() ; }
+    ( <POUND> n=<Id> <COLON> t = Type() { ll.put(n.image, t); } 
+              (<COMMA> <POUND> n=<Id> <COLON> t = Type() { ll.put(n.image, t);} )*
     )?
     { return new TypeBindList(ll); }
 }
@@ -447,8 +465,8 @@ ASTType TypeF() :
         | <LPAR> t = Type() <RPAR>
         | <REF> <LT> t=Type() <GT> { t = new ASTTBox(t); }
         | <LIST> <LT> t=Type() <GT> { t = new ASTTList(t); }
-        | <STRUCT> <LBRA> ll = LabelList() <RBRA> { t = new ASTTRecord(ll); return t; }
-        | <UNION> <LSBRA> ll = LabelList() <RSBRA> { t = new ASTTUnion(ll); return t; }
+        | <STRUCT> <LBRA> ll = RecordLabelList() <RBRA> { t = new ASTTRecord(ll); return t; }
+        | <UNION> <LSBRA> ll = UnionLabelList() <RSBRA> { t = new ASTTUnion(ll); return t; }
     )
     { return t; }
 }

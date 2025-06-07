@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Environment<E> {
   Environment<E> anc;
-  public Map<String, E> bindings;
+  Map<String, E> bindings;
 
   public Environment() {
     this.anc = null;

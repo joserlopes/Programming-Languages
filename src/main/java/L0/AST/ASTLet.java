@@ -42,6 +42,7 @@ public class ASTLet implements ASTNode {
       ASTType expType = exp.typecheck(en);
 
       if (type != null) {
+        // TODO: If this is an ASTTId, find it!!
         if (!type.toStr().equals(expType.toStr())) {
           throw new TypeCheckError(
               "illegal type to variable declaration. Variable declared as: "

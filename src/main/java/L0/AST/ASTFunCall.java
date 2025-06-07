@@ -35,9 +35,8 @@ public class ASTFunCall implements ASTNode {
       if (t2 instanceof ASTTUnion && a1.getDomain() instanceof ASTTUnion) {
         ASTTUnion u1 = (ASTTUnion) a1.getDomain();
         ASTTUnion u2 = (ASTTUnion) t2;
-        HashMap<String, ASTType> domainLbl = u1.getBindList().getTbl();
-        Map.Entry<String, ASTType> argEntry =
-            u2.getBindList().getTbl().entrySet().iterator().next();
+        HashMap<String, ASTType> domainLbl = u1.getBinds().getTbl();
+        Map.Entry<String, ASTType> argEntry = u2.getBinds().getTbl().entrySet().iterator().next();
         for (Map.Entry<String, ASTType> entry : domainLbl.entrySet()) {
           if (entry.getKey().equals(argEntry.getKey())
               && entry.getValue().toStr().equals(argEntry.getValue().toStr())) {

@@ -9,7 +9,7 @@ public class ASTTUnion implements ASTType {
     this.ll = ll;
   }
 
-  public TypeBindList getBindList() {
+  public TypeBindList getBinds() {
     return this.ll;
   }
 
