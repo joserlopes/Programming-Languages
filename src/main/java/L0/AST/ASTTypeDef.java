@@ -28,47 +28,11 @@ public class ASTTypeDef implements ASTNode {
     for (Map.Entry<String, ASTType> entry : this.ltd.entrySet()) {
       String name = entry.getKey();
       ASTType type = entry.getValue();
-      ASTType unrolledType = this.unrollTypes(en, type);
+      ASTType unrolledType = en.unrollTypes(type);
       en.update(name, unrolledType);
     }
 
     return this.body.typecheck(en);
-  }
-
-  // BUG: This produces a stack overflow when analysing recursive types!!!!!
-  private ASTType unrollTypes(Environment<ASTType> e, ASTType type) throws InterpreterError {
-    if (type instanceof ASTTId) {
-      return this.unrollId(e, (ASTTId) type);
-    } else if (type instanceof ASTTRecord) {
-      return this.unrollRecord(e, (ASTTRecord) type);
-    } else if (type instanceof ASTTUnion) {
-      return this.unrollUnion(e, (ASTTUnion) type);
-    }
-
-    return type;
-  }
-
-  // TODO: This is where it can stack overflow!!
-  private ASTType unrollId(Environment<ASTType> e, ASTTId type) throws InterpreterError {
-    return unrollTypes(e, e.find(type.toStr()));
-  }
-
-  private ASTType unrollRecord(Environment<ASTType> e, ASTTRecord type) throws InterpreterError {
-    HashMap<String, ASTType> lbl = new HashMap<String, ASTType>();
-    for (Map.Entry<String, ASTType> entry : type.getBinds().getTbl().entrySet()) {
-      lbl.put(entry.getKey(), unrollTypes(e, entry.getValue()));
-    }
-
-    return new ASTTRecord(new TypeBindList(lbl));
-  }
-
-  private ASTType unrollUnion(Environment<ASTType> e, ASTTUnion type) throws InterpreterError {
-    HashMap<String, ASTType> lbl = new HashMap<String, ASTType>();
-    for (Map.Entry<String, ASTType> entry : type.getBinds().getTbl().entrySet()) {
-      lbl.put(entry.getKey(), unrollTypes(e, entry.getValue()));
-    }
-
-    return new ASTTUnion(new TypeBindList(lbl));
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {

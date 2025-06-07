@@ -35,11 +35,7 @@ public class ASTFunDecl implements ASTNode {
     ASTType actualParamType = null;
 
     if (this.paramType instanceof ASTTId) {
-      actualParamType = this.paramType;
-      while (actualParamType instanceof ASTTId) {
-        ASTType foundType = en.find(actualParamType.toStr());
-        actualParamType = foundType;
-      }
+      actualParamType = en.unrollTypes(this.paramType);
       en.assoc(this.param, actualParamType);
     } else {
       en.assoc(this.param, this.paramType);

@@ -77,4 +77,40 @@ public class Environment<E> {
 
     throw new InterpreterError("Binding for " + "\"" + id + "\"" + " not found");
   }
+
+  // BUG: This produces a stack overflow when analysing recursive types!!!!!
+  public ASTType unrollTypes(ASTType type) throws InterpreterError {
+    if (type instanceof ASTTId) {
+      return this.unrollId((ASTTId) type);
+    } else if (type instanceof ASTTRecord) {
+      return this.unrollRecord((ASTTRecord) type);
+    } else if (type instanceof ASTTUnion) {
+      return this.unrollUnion((ASTTUnion) type);
+    }
+
+    return type;
+  }
+
+  // TODO: This is where it can stack overflow!!
+  private ASTType unrollId(ASTTId type) throws InterpreterError {
+    return this.unrollTypes((ASTType) this.find(type.toStr()));
+  }
+
+  private ASTType unrollRecord(ASTTRecord type) throws InterpreterError {
+    HashMap<String, ASTType> lbl = new HashMap<String, ASTType>();
+    for (Map.Entry<String, ASTType> entry : type.getBinds().getTbl().entrySet()) {
+      lbl.put(entry.getKey(), (ASTType) this.unrollTypes(entry.getValue()));
+    }
+
+    return new ASTTRecord(new TypeBindList(lbl));
+  }
+
+  private ASTType unrollUnion(ASTTUnion type) throws InterpreterError {
+    HashMap<String, ASTType> lbl = new HashMap<String, ASTType>();
+    for (Map.Entry<String, ASTType> entry : type.getBinds().getTbl().entrySet()) {
+      lbl.put(entry.getKey(), (ASTType) this.unrollTypes(entry.getValue()));
+    }
+
+    return new ASTTUnion(new TypeBindList(lbl));
+  }
 }
