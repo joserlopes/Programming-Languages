@@ -159,14 +159,14 @@ ASTNode Let() :
     (
     t = Seq()
     |
-    ((<LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC>
+    (( LOOKAHEAD(2) <LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC>
       { decls.add(new TypedBind(n.image, e1, t1)); t1 = null; }
      )+
         e2 = Seq() { t = new ASTLet(decls, e2); })
     |
-    (<TYPE>  n=<Id> <EQUAL> t1 = Type() <SEMIC>
+    (( LOOKAHEAD(2) <TYPE>  n=<Id> <EQUAL> t1 = Type() <SEMIC>
       { lbl.put(n.image, t1); } )+
-        e2 = Seq() { t = new ASTTypeDef(lbl, e2); }
+        e2 = Seq() { t = new ASTTypeDef(lbl, e2); })
    )
    { return t; }
 }

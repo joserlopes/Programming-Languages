@@ -21,10 +21,10 @@ public class ASTMult implements ASTNode {
       if (t2 instanceof ASTTInt) {
         return t1;
       } else {
-        throw new TypeCheckError("illegal type to + operator " + t2.toStr());
+        throw new TypeCheckError("illegal type to * operator " + t2.toStr());
       }
     } else {
-      throw new TypeCheckError("illegal type to + operator " + t1.toStr());
+      throw new TypeCheckError("illegal type to * operator " + t1.toStr());
     }
   }
 
