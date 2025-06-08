@@ -7,6 +7,8 @@ import java.util.*;
 public class Environment<E> {
   Environment<E> anc;
   Map<String, E> bindings;
+  Set<String> currentlyUnrolling = new HashSet<String>();
+  Map<String, ASTType> actualTypes = new HashMap<String, ASTType>();
 
   public Environment() {
     this.anc = null;
@@ -82,6 +84,10 @@ public class Environment<E> {
   public ASTType unrollTypes(ASTType type) throws InterpreterError {
     if (type instanceof ASTTId) {
       return this.unrollId((ASTTId) type);
+    } else if (type instanceof ASTTArrow) {
+      return this.unrollArrow((ASTTArrow) type);
+    } else if (type instanceof ASTTBox) {
+      return this.unrollBox((ASTTBox) type);
     } else if (type instanceof ASTTRecord) {
       return this.unrollRecord((ASTTRecord) type);
     } else if (type instanceof ASTTUnion) {
@@ -93,7 +99,41 @@ public class Environment<E> {
 
   // TODO: This is where it can stack overflow!!
   private ASTType unrollId(ASTTId type) throws InterpreterError {
+    // String typeName = ((ASTType) this.find(type.toStr())).toStr();
+    // String typeName = type.toStr();
+    //
+    // if (currentlyUnrolling.contains(typeName)) {
+    //   return new ASTTBox(type);
+    // }
+    //
+    // if (actualTypes.containsKey(typeName)) {
+    //   return actualTypes.get(typeName);
+    // }
+    //
+    // ASTType foundType = (ASTType) this.find(type.toStr());
+    //
+    // currentlyUnrolling.add(typeName);
+    //
+    // ASTType unrolled = this.unrollTypes(unrollTypes(foundType));
+    //
+    // actualTypes.put(typeName, unrolled);
+    //
+    // currentlyUnrolling.remove(typeName);
+    //
     return this.unrollTypes((ASTType) this.find(type.toStr()));
+  }
+
+  private ASTType unrollArrow(ASTTArrow type) throws InterpreterError {
+    ASTType newDom = this.unrollTypes(type.getDomain());
+    ASTType newCoDom = this.unrollTypes(type.getCoDomain());
+
+    return new ASTTArrow(newDom, newCoDom);
+  }
+
+  private ASTType unrollBox(ASTTBox type) throws InterpreterError {
+    ASTType newType = this.unrollTypes(type.getType());
+
+    return new ASTTBox(newType);
   }
 
   private ASTType unrollRecord(ASTTRecord type) throws InterpreterError {
