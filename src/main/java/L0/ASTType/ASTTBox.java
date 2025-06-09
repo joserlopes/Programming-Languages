@@ -15,6 +15,15 @@ public class ASTTBox implements ASTType {
     this.type = type;
   }
 
+  public boolean isSubtype(ASTType other) {
+    if (other instanceof ASTTBox) {
+      ASTTBox b1 = (ASTTBox) other;
+      return this.type.isSubtype(b1.getType()) && b1.getType().isSubtype(this.type);
+    }
+
+    return false;
+  }
+
   public String toStr() {
     return "box<" + this.type.toStr() + ">";
   }

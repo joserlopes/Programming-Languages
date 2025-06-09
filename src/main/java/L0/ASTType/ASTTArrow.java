@@ -17,6 +17,14 @@ public class ASTTArrow implements ASTType {
     return this.codom;
   }
 
+  public boolean isSubtype(ASTType other) {
+    if (other instanceof ASTTArrow) {
+      ASTTArrow a1 = (ASTTArrow) other;
+      return a1.getDomain().isSubtype(this.dom) && this.codom.isSubtype(a1.getCoDomain());
+    }
+    return false;
+  }
+
   public String toStr() {
     return this.dom.toStr() + "->" + this.codom.toStr();
   }
