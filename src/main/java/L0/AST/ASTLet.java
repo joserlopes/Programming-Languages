@@ -53,13 +53,6 @@ public class ASTLet implements ASTNode {
                   + ", got: "
                   + expType.toStr());
         }
-        // if (!type.toStr().equals(expType.toStr())) {
-        //   throw new TypeCheckError(
-        //       "illegal type to variable declaration. Variable declared as: "
-        //           + type.toStr()
-        //           + ", got: "
-        //           + expType.toStr());
-        // }
       } else {
         en.assoc(id, expType);
       }

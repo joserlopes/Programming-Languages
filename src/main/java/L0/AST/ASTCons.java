@@ -14,7 +14,6 @@ public class ASTCons implements ASTNode {
     this.tail = tail;
   }
 
-  @Override
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.head.typecheck(e);
     ASTType t2 = this.tail.typecheck(e);
@@ -28,11 +27,9 @@ public class ASTCons implements ASTNode {
       if (t1.toStr().equals(l1.getType().toStr())) {
         return l1;
       } else {
-        System.out.println("Este?");
         throw new TypeCheckError("illegal list type " + t1.toStr() + " " + l1.toStr());
       }
     } else {
-      System.out.println("Ou Aquele?");
       throw new TypeCheckError("illegal list type " + t1.toStr() + " " + t2.toStr());
     }
   }

@@ -30,7 +30,6 @@ public class ASTTStruct implements ASTType {
           }
         }
       }
-      System.out.println("Matched labels: " + matched);
       return matched == otherMatchableLabels.size();
     }
     return false;

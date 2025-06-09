@@ -6,6 +6,6 @@ public interface ASTType {
 
   // TODO: Maybe change this!!
   default boolean isSubtype(ASTType other) {
-    return true;
+    return this.toStr().equals(other.toStr());
   }
 }

@@ -1,4 +1,4 @@
-type my_union = union [ #first: int, #second: string ];
+type my_union = union { #first: int, #second: string };
 (
 let f = fn a: my_union => {
     match a {

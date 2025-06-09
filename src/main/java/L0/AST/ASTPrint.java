@@ -20,9 +20,7 @@ public class ASTPrint implements ASTNode {
   }
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-    ASTType type = this.exp.typecheck(e);
-    System.out.println(type.toStr());
-    return type;
+    return this.exp.typecheck(e);
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
