@@ -7,8 +7,7 @@ import java.util.*;
 public class Environment<E> {
   Environment<E> anc;
   Map<String, E> bindings;
-  Set<String> currentlyUnrolling = new HashSet<String>();
-  Map<String, ASTType> actualTypes = new HashMap<String, ASTType>();
+  Set<String> unrolled = new HashSet<String>();
 
   public Environment() {
     this.anc = null;
@@ -88,8 +87,8 @@ public class Environment<E> {
       return this.unrollArrow((ASTTArrow) type);
     } else if (type instanceof ASTTBox) {
       return this.unrollBox((ASTTBox) type);
-    } else if (type instanceof ASTTRecord) {
-      return this.unrollRecord((ASTTRecord) type);
+    } else if (type instanceof ASTTStruct) {
+      return this.unrollRecord((ASTTStruct) type);
     } else if (type instanceof ASTTUnion) {
       return this.unrollUnion((ASTTUnion) type);
     }
@@ -99,27 +98,13 @@ public class Environment<E> {
 
   // TODO: This is where it can stack overflow!!
   private ASTType unrollId(ASTTId type) throws InterpreterError {
-    // String typeName = ((ASTType) this.find(type.toStr())).toStr();
     // String typeName = type.toStr();
     //
-    // if (currentlyUnrolling.contains(typeName)) {
+    // if (unrolled.contains(typeName)) {
     //   return new ASTTBox(type);
     // }
     //
-    // if (actualTypes.containsKey(typeName)) {
-    //   return actualTypes.get(typeName);
-    // }
-    //
-    // ASTType foundType = (ASTType) this.find(type.toStr());
-    //
-    // currentlyUnrolling.add(typeName);
-    //
-    // ASTType unrolled = this.unrollTypes(unrollTypes(foundType));
-    //
-    // actualTypes.put(typeName, unrolled);
-    //
-    // currentlyUnrolling.remove(typeName);
-    //
+    // unrolled.add(typeName);
     return this.unrollTypes((ASTType) this.find(type.toStr()));
   }
 
@@ -136,13 +121,13 @@ public class Environment<E> {
     return new ASTTBox(newType);
   }
 
-  private ASTType unrollRecord(ASTTRecord type) throws InterpreterError {
+  private ASTType unrollRecord(ASTTStruct type) throws InterpreterError {
     HashMap<String, ASTType> lbl = new HashMap<String, ASTType>();
     for (Map.Entry<String, ASTType> entry : type.getBinds().getTbl().entrySet()) {
       lbl.put(entry.getKey(), (ASTType) this.unrollTypes(entry.getValue()));
     }
 
-    return new ASTTRecord(new TypeBindList(lbl));
+    return new ASTTStruct(new TypeBindList(lbl));
   }
 
   private ASTType unrollUnion(ASTTUnion type) throws InterpreterError {

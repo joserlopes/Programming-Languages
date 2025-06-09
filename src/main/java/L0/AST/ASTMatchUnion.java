@@ -55,7 +55,7 @@ public class ASTMatchUnion implements ASTNode {
                   "illegal type to match branch. All branches need to have the same type. Expected:"
                       + " "
                       + type.toStr()
-                      + ". Got: "
+                      + ", got: "
                       + foundType.toStr());
             }
           }

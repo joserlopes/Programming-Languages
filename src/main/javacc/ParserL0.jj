@@ -48,10 +48,6 @@ TOKEN :
   |
   < RBRA : "}" >
   |
-  < LSBRA : "[" >
-  |
-  < RSBRA : "]" >
-  |
   < EQUAL : "=" >
   |
   < DOT : "." >
@@ -356,7 +352,7 @@ List<Bind> fields = new ArrayList<Bind>();
         n=<Label> <EQUAL> e1= BA()
         { 
             if (n == null && e1 == null) {
-                return new ASTRecord(fields); 
+                return new ASTStruct(fields); 
             } else {
                 fields.add(new Bind(n.image, e1));
             }
@@ -374,7 +370,7 @@ List<Bind> fields = new ArrayList<Bind>();
         )*
     )?
     <RBRA>
-    { return new ASTRecord(fields); }
+    { return new ASTStruct(fields); }
 }
 
 ASTNode Union():
@@ -484,8 +480,8 @@ ASTType TypeF() :
         | <LPAR> t = Type() <RPAR>
         | <REF> <LT> t=Type() <GT> { t = new ASTTBox(t); }
         | <LIST> <LT> t=Type() <GT> { t = new ASTTList(t); }
-        | <STRUCT> <LBRA> ll = RecordLabelList() <RBRA> { t = new ASTTRecord(ll); return t; }
-        | <UNION> <LSBRA> ll = UnionLabelList() <RSBRA> { t = new ASTTUnion(ll); return t; }
+        | <STRUCT> <LBRA> ll = RecordLabelList() <RBRA> { t = new ASTTStruct(ll); return t; }
+        | <UNION> <LBRA> ll = UnionLabelList() <RBRA> { t = new ASTTUnion(ll); return t; }
     )
     { return t; }
 }

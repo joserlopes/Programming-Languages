@@ -499,7 +499,7 @@ List<Bind> fields = new ArrayList<Bind>();
       jj_consume_token(EQUAL);
       e1 = BA();
             if (n == null && e1 == null) {
-                {if (true) return new ASTRecord(fields);}
+                {if (true) return new ASTStruct(fields);}
             } else {
                 fields.add(new Bind(n.image, e1));
             }
@@ -530,7 +530,7 @@ List<Bind> fields = new ArrayList<Bind>();
       ;
     }
     jj_consume_token(RBRA);
-      {if (true) return new ASTRecord(fields);}
+      {if (true) return new ASTStruct(fields);}
     throw new Error("Missing return statement in function");
   }
 
@@ -824,14 +824,14 @@ List<Bind> fields = new ArrayList<Bind>();
       jj_consume_token(LBRA);
       ll = RecordLabelList();
       jj_consume_token(RBRA);
-                                                          t = new ASTTRecord(ll); {if (true) return t;}
+                                                          t = new ASTTStruct(ll); {if (true) return t;}
       break;
     case UNION:
       jj_consume_token(UNION);
-      jj_consume_token(LSBRA);
+      jj_consume_token(LBRA);
       ll = UnionLabelList();
-      jj_consume_token(RSBRA);
-                                                          t = new ASTTUnion(ll); {if (true) return t;}
+      jj_consume_token(RBRA);
+                                                        t = new ASTTUnion(ll); {if (true) return t;}
       break;
     default:
       jj_la1[27] = jj_gen;
@@ -856,14 +856,14 @@ List<Bind> fields = new ArrayList<Bind>();
     finally { jj_save(1, xla); }
   }
 
-  static private boolean jj_3_1() {
-    if (jj_scan_token(LET)) return true;
+  static private boolean jj_3_2() {
+    if (jj_scan_token(TYPE)) return true;
     if (jj_scan_token(Id)) return true;
     return false;
   }
 
-  static private boolean jj_3_2() {
-    if (jj_scan_token(TYPE)) return true;
+  static private boolean jj_3_1() {
+    if (jj_scan_token(LET)) return true;
     if (jj_scan_token(Id)) return true;
     return false;
   }
@@ -883,20 +883,15 @@ List<Bind> fields = new ArrayList<Bind>();
   static final private int[] jj_la1 = new int[28];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
-  static private int[] jj_la1_2;
   static {
       jj_la1_init_0();
       jj_la1_init_1();
-      jj_la1_init_2();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x14de1,0x400000,0x14de0,0x2000000,0x0,0x20000000,0x10000000,0xc0000000,0xc0000000,0x600,0x600,0x6800,0x6800,0x200000,0x8000000,0x0,0x4000,0x20000,0x8000000,0x0,0x4000,0x14d80,0x0,0x8000000,0x0,0x8000000,0x0,0x4000,};
+      jj_la1_0 = new int[] {0x14de1,0x100000,0x14de0,0x800000,0x0,0x8000000,0x4000000,0xf0000000,0xf0000000,0x600,0x600,0x6800,0x6800,0x80000,0x2000000,0x0,0x4000,0x20000,0x2000000,0x0,0x4000,0x14d80,0x0,0x2000000,0x0,0x2000000,0x0,0x4000,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0xe043ded0,0x0,0xe043ded0,0x0,0x20,0x0,0x0,0xf,0xf,0x0,0x0,0x400000,0x400000,0x0,0x0,0x40000,0x0,0xc0000,0x0,0x80000000,0x400000,0xe043ded0,0x100000,0x0,0x80000000,0x0,0x80000000,0x5fe00000,};
-   }
-   private static void jj_la1_init_2() {
-      jj_la1_2 = new int[] {0x1,0x0,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_1 = new int[] {0x7810f7b4,0x0,0x7810f7b4,0x0,0x8,0x0,0x0,0x3,0x3,0x0,0x0,0x100000,0x100000,0x0,0x0,0x10000,0x0,0x30000,0x0,0x20000000,0x100000,0x7810f7b4,0x40000,0x0,0x20000000,0x0,0x20000000,0x17f80000,};
    }
   static final private JJCalls[] jj_2_rtns = new JJCalls[2];
   static private boolean jj_rescan = false;
@@ -1103,7 +1098,7 @@ List<Bind> fields = new ArrayList<Bind>();
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[65];
+    boolean[] la1tokens = new boolean[63];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -1117,13 +1112,10 @@ List<Bind> fields = new ArrayList<Bind>();
           if ((jj_la1_1[i] & (1<<j)) != 0) {
             la1tokens[32+j] = true;
           }
-          if ((jj_la1_2[i] & (1<<j)) != 0) {
-            la1tokens[64+j] = true;
-          }
         }
       }
     }
-    for (int i = 0; i < 65; i++) {
+    for (int i = 0; i < 63; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

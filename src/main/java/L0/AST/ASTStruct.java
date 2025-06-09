@@ -9,10 +9,10 @@ import L0.IValue.*;
 import java.util.HashMap;
 import java.util.List;
 
-public class ASTRecord implements ASTNode {
+public class ASTStruct implements ASTNode {
   List<Bind> decls;
 
-  public ASTRecord(List<Bind> decls) {
+  public ASTStruct(List<Bind> decls) {
     this.decls = decls;
   }
 
@@ -25,7 +25,7 @@ public class ASTRecord implements ASTNode {
       tbl.put(id, exp.typecheck(e));
     }
 
-    return new ASTTRecord(new TypeBindList(tbl));
+    return new ASTTStruct(new TypeBindList(tbl));
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
@@ -39,6 +39,6 @@ public class ASTRecord implements ASTNode {
       fields.put(id, expVal);
     }
 
-    return new VRecord(fields, en);
+    return new VStruct(fields, en);
   }
 }

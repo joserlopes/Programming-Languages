@@ -4,11 +4,11 @@ import L0.Environment;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VRecord implements IValue {
+public class VStruct implements IValue {
   HashMap<String, IValue> fields;
   Environment<IValue> e;
 
-  public VRecord(HashMap<String, IValue> fields, Environment<IValue> e) {
+  public VStruct(HashMap<String, IValue> fields, Environment<IValue> e) {
     this.fields = fields;
     this.e = e;
   }

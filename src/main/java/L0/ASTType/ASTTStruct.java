@@ -3,10 +3,10 @@ package L0.ASTType;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ASTTRecord implements ASTType {
+public class ASTTStruct implements ASTType {
   TypeBindList ll;
 
-  public ASTTRecord(TypeBindList llp) {
+  public ASTTStruct(TypeBindList llp) {
     this.ll = llp;
   }
 
@@ -15,10 +15,10 @@ public class ASTTRecord implements ASTType {
   }
 
   public boolean isSubtype(ASTType other) {
-    if (other instanceof ASTTRecord) {
-      ASTTRecord r1 = (ASTTRecord) other;
+    if (other instanceof ASTTStruct) {
+      ASTTStruct s1 = (ASTTStruct) other;
       HashMap<String, ASTType> matchableLabels = this.ll.getTbl();
-      HashMap<String, ASTType> otherMatchableLabels = r1.getBinds().getTbl();
+      HashMap<String, ASTType> otherMatchableLabels = s1.getBinds().getTbl();
       int matched = 0;
       for (Map.Entry<String, ASTType> entry : matchableLabels.entrySet()) {
         String name = entry.getKey();
@@ -42,7 +42,7 @@ public class ASTTRecord implements ASTType {
     }
     String res = "record { ";
     for (Map.Entry<String, ASTType> entry : this.ll.getTbl().entrySet()) {
-      res += "#" + entry.getKey() + ": " + entry.getValue().toStr() + "; ";
+      res += entry.getKey() + ": " + entry.getValue().toStr() + "; ";
     }
     res = res.substring(0, res.length() - 2);
     res += " }";
