@@ -32,17 +32,12 @@ public class ASTFunDecl implements ASTNode {
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     Environment<ASTType> en;
     en = e.beginScope();
-    ASTType actualParamType = null;
+    ASTType actualParamType = en.unrollTypes(this.paramType);
 
-    if (this.paramType instanceof ASTTId) {
-      actualParamType = en.unrollTypes(this.paramType);
-      en.assoc(this.param, actualParamType);
-    } else {
-      en.assoc(this.param, this.paramType);
-      actualParamType = this.paramType;
-    }
+    en.assoc(this.param, actualParamType);
 
     ASTType tb = this.body.typecheck(en);
+
     return new ASTTArrow(actualParamType, tb);
   }
 
