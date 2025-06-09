@@ -138,13 +138,15 @@ TOKEN :
   |
   < Id: ["a"-"z","A"-"Z", "_"] ( ["_", "a"-"z","A"-"Z","0"-"9"] )* >
   |
+  < PoundId: "#" ["a"-"z","A"-"Z", "_"] ( ["_", "a"-"z","A"-"Z","0"-"9"] )* >
+  |
   < Num: (["0"-"9"]) + >
 }
 
 ASTNode Start():
 { ASTNode t; }
 {
-    <EOF> {return null;}
+    <EOF> { return null; }
   | t = Let() <TERM> { return t; }
 }
 
@@ -152,22 +154,23 @@ ASTNode Let() :
 { Token n; 
   ASTNode t, e1, e2;
   ASTType t1 = null;
-  List<TypedBind> decls  = new ArrayList<TypedBind>();;
-  HashMap<String, ASTType> lbl = new HashMap<String, ASTType>();
 }
-{ 
+{  
     (
-    t = Seq()
-    |
-    (( LOOKAHEAD(2) <LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC>
-      { decls.add(new TypedBind(n.image, e1, t1)); t1 = null; }
-     )+
-        e2 = Seq() { t = new ASTLet(decls, e2); })
-    |
-    (( LOOKAHEAD(2) <TYPE>  n=<Id> <EQUAL> t1 = Type() <SEMIC>
-      { lbl.put(n.image, t1); } )+
-        e2 = Seq() { t = new ASTTypeDef(lbl, e2); })
-   )
+      t = Seq()
+    | 
+    {  List<TypedBind> decls  = new ArrayList<TypedBind>(); }
+    ( ( LOOKAHEAD(2) <LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC> 
+      { decls.add(new TypedBind(n.image, e1, t1)); t1 = null;} )+
+        e2 = Let() { t = new ASTLet(decls, e2); }
+    )
+| 
+     {  HashMap<String,ASTType> lbl = new HashMap<String,ASTType>(); }
+   ( (LOOKAHEAD(2) <TYPE>  n=<Id>  <EQUAL> t1 = Type()  <SEMIC>
+      { lbl.put(n.image, t1); } )+ 
+        e2 = Let() { t = new ASTTypeDef(lbl, e2); }
+    )
+    )
    { return t; }
 }
 
@@ -277,7 +280,7 @@ ASTNode Term() :
 		|
 		op=<DIV> t2 = Fact()  { t1 = new ASTDiv(t1, t2); }
         |
-		op=<DOT> op=<Id>  { t1 = new ASTDot(t1, op.image); }
+		op=<DOT> op=<PoundId>  { t1 = new ASTDot(t1, op.image); }
         |
 		op = <LPAR> t2 = Exp() <RPAR>  { t1 = new ASTFunCall(t1, t2); } 
         |
@@ -321,7 +324,7 @@ List<UnionBind> fields = new ArrayList<UnionBind>();
         { return new ASTMatchList(t, e1, n1.image, n2.image, e2); }
      |
       (
-      <PIPE> <POUND> n1=<Id> (<LPAR> n2 = <Id> <RPAR>)? <ARROW> e2 = Let() 
+      <PIPE> n1=<PoundId> (<LPAR> n2 = <Id> <RPAR>)? <ARROW> e2 = Let() 
       { 
           if (n2 == null) {
             fields.add(new UnionBind(n1.image, null, e2)); 
@@ -337,14 +340,23 @@ List<UnionBind> fields = new ArrayList<UnionBind>();
 
 ASTNode Record():
 {
-Token n;
-ASTNode e1;
+Token n = null;
+ASTNode e1 = null;
 List<Bind> fields = new ArrayList<Bind>();
 }
 {
-    <LBRA> n=<Id> <EQUAL> e1= BA()
-        { fields.add(new Bind(n.image, e1)); }
-        (<SEMIC> n=<Id> <EQUAL> e1 = BA()
+    <LBRA> 
+    (
+        n=<PoundId> <EQUAL> e1= BA()
+        { 
+            if (n == null && e1 == null) {
+                return new ASTRecord(fields); 
+            } else {
+                fields.add(new Bind(n.image, e1));
+            }
+        }
+        (
+        <COMMA> n=<PoundId> <EQUAL> e1 = BA()
         { 
             for (Bind bind: fields) {
                 if (bind.getId().equals(n.image)) {
@@ -354,6 +366,7 @@ List<Bind> fields = new ArrayList<Bind>();
             fields.add(new Bind(n.image, e1)); 
         }
         )*
+    )?
     <RBRA>
     { return new ASTRecord(fields); }
 }
@@ -365,7 +378,7 @@ ASTNode e1 = null;
 List<Bind> fields = new ArrayList<Bind>();
 }
 {
-    <POUND> n = <Id> 
+    n = <PoundId> 
     (
         <UNIT>
         |
@@ -430,8 +443,8 @@ TypeBindList RecordLabelList() :
   Token n;
 }
 {   { ll = new HashMap<String, ASTType>() ; }
-    ( n=<Id> <COLON> t = Type() { ll.put(n.image,t); } 
-              (<COMMA> n=<Id> <COLON> t = Type() { ll.put(n.image,t);} )*
+    ( n=<PoundId> <COLON> t = Type() { ll.put(n.image,t); } 
+              (<COMMA> n=<PoundId> <COLON> t = Type() { ll.put(n.image,t);} )*
     )?
     { return new TypeBindList(ll); }
 }
@@ -443,8 +456,8 @@ TypeBindList UnionLabelList() :
   Token n;
 }
 {   { ll = new HashMap<String, ASTType>() ; }
-    ( <POUND> n=<Id> <COLON> t = Type() { ll.put(n.image, t); } 
-              (<COMMA> <POUND> n=<Id> <COLON> t = Type() { ll.put(n.image, t);} )*
+    ( n=<PoundId> <COLON> t = Type() { ll.put(n.image, t); } 
+              (<COMMA> n=<PoundId> <COLON> t = Type() { ll.put(n.image, t);} )*
     )?
     { return new TypeBindList(ll); }
 }
