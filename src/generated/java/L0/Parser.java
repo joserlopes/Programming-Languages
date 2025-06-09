@@ -348,9 +348,9 @@ public class Parser implements ParserConstants {
         break;
       case LPAR:
         op = jj_consume_token(LPAR);
-        t2 = BA();
+        t2 = Let();
         jj_consume_token(RPAR);
-                                                t1 = new ASTFunCall(t1, t2);
+                                                 t1 = new ASTFunCall(t1, t2);
         break;
       case UNIT:
         op = jj_consume_token(UNIT);

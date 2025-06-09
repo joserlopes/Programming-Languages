@@ -280,7 +280,7 @@ ASTNode Term() :
 		|
 		op=<DIV> t2 = Field()  { t1 = new ASTDiv(t1, t2); }
         |
-		op = <LPAR> t2 = BA() <RPAR>  { t1 = new ASTFunCall(t1, t2); } 
+		op = <LPAR> t2 = Let() <RPAR>  { t1 = new ASTFunCall(t1, t2); } 
         |
 		op = <UNIT> { t1 = new ASTFunCall(t1, null); } 
 		)*
