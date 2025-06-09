@@ -138,7 +138,7 @@ TOKEN :
   |
   < Id: ["a"-"z","A"-"Z", "_"] ( ["_", "a"-"z","A"-"Z","0"-"9"] )* >
   |
-  < PoundId: "#" ["a"-"z","A"-"Z", "_"] ( ["_", "a"-"z","A"-"Z","0"-"9"] )* >
+  < Label: "#" ["a"-"z","A"-"Z", "_"] ( ["_", "a"-"z","A"-"Z","0"-"9"] )* >
   |
   < Num: (["0"-"9"]) + >
 }
@@ -275,18 +275,24 @@ ASTNode Term() :
 {Token op;
   ASTNode t1, t2; }
 {
-     t1 = Fact() (
-        op=<STAR> t2 = Fact()   { t1 = new ASTMult(t1, t2); }
+     t1 = Field() (
+        op=<STAR> t2 = Field()   { t1 = new ASTMult(t1, t2); }
 		|
-		op=<DIV> t2 = Fact()  { t1 = new ASTDiv(t1, t2); }
+		op=<DIV> t2 = Field()  { t1 = new ASTDiv(t1, t2); }
         |
-		op=<DOT> op=<PoundId>  { t1 = new ASTDot(t1, op.image); }
-        |
-		op = <LPAR> t2 = Exp() <RPAR>  { t1 = new ASTFunCall(t1, t2); } 
+		op = <LPAR> t2 = BA() <RPAR>  { t1 = new ASTFunCall(t1, t2); } 
         |
 		op = <UNIT> { t1 = new ASTFunCall(t1, null); } 
 		)*
      { return t1; } 
+}
+
+ASTNode Field():
+{ Token op; 
+  ASTNode t;
+}
+{
+     t = Fact() ( op=<DOT> op = <Label>  { t = new ASTDot(t, op.image); })* { return t; }
 }
 
 ASTNode Fun() : 
@@ -324,7 +330,7 @@ List<UnionBind> fields = new ArrayList<UnionBind>();
         { return new ASTMatchList(t, e1, n1.image, n2.image, e2); }
      |
       (
-      <PIPE> n1=<PoundId> (<LPAR> n2 = <Id> <RPAR>)? <ARROW> e2 = Let() 
+      <PIPE> n1=<Label> (<LPAR> n2 = <Id> <RPAR>)? <ARROW> e2 = Let() 
       { 
           if (n2 == null) {
             fields.add(new UnionBind(n1.image, null, e2)); 
@@ -347,7 +353,7 @@ List<Bind> fields = new ArrayList<Bind>();
 {
     <LBRA> 
     (
-        n=<PoundId> <EQUAL> e1= BA()
+        n=<Label> <EQUAL> e1= BA()
         { 
             if (n == null && e1 == null) {
                 return new ASTRecord(fields); 
@@ -356,7 +362,7 @@ List<Bind> fields = new ArrayList<Bind>();
             }
         }
         (
-        <COMMA> n=<PoundId> <EQUAL> e1 = BA()
+        <COMMA> n=<Label> <EQUAL> e1 = BA()
         { 
             for (Bind bind: fields) {
                 if (bind.getId().equals(n.image)) {
@@ -378,7 +384,7 @@ ASTNode e1 = null;
 List<Bind> fields = new ArrayList<Bind>();
 }
 {
-    n = <PoundId> 
+    n = <Label> 
     (
         <UNIT>
         |
@@ -443,8 +449,8 @@ TypeBindList RecordLabelList() :
   Token n;
 }
 {   { ll = new HashMap<String, ASTType>() ; }
-    ( n=<PoundId> <COLON> t = Type() { ll.put(n.image,t); } 
-              (<COMMA> n=<PoundId> <COLON> t = Type() { ll.put(n.image,t);} )*
+    ( n=<Label> <COLON> t = Type() { ll.put(n.image,t); } 
+              (<COMMA> n=<Label> <COLON> t = Type() { ll.put(n.image,t);} )*
     )?
     { return new TypeBindList(ll); }
 }
@@ -456,8 +462,8 @@ TypeBindList UnionLabelList() :
   Token n;
 }
 {   { ll = new HashMap<String, ASTType>() ; }
-    ( n=<PoundId> <COLON> t = Type() { ll.put(n.image, t); } 
-              (<COMMA> n=<PoundId> <COLON> t = Type() { ll.put(n.image, t);} )*
+    ( n=<Label> <COLON> t = Type() { ll.put(n.image, t); } 
+              (<COMMA> n=<Label> <COLON> t = Type() { ll.put(n.image, t);} )*
     )?
     { return new TypeBindList(ll); }
 }

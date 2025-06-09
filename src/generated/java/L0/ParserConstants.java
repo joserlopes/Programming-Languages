@@ -127,7 +127,7 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int Id = 62;
   /** RegularExpression Id. */
-  int PoundId = 63;
+  int Label = 63;
   /** RegularExpression Id. */
   int Num = 64;
 
@@ -199,7 +199,7 @@ public interface ParserConstants {
     "\"struct\"",
     "<String>",
     "<Id>",
-    "<PoundId>",
+    "<Label>",
     "<Num>",
   };
 
