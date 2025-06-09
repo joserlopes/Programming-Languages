@@ -19,6 +19,10 @@ public class ASTDot implements ASTNode {
     ASTType t1 = this.record.typecheck(e);
     if (t1 instanceof ASTTRecord) {
       ASTTRecord r1 = (ASTTRecord) t1;
+      ASTType foundType = r1.getBinds().getType(this.field);
+      if (foundType == null) {
+        throw new TypeCheckError("variant " + this.field + " not found on struct " + r1.toStr());
+      }
       return r1.getBinds().getType(this.field);
     } else {
       throw new TypeCheckError("illegal type to . operator " + t1.toStr());
@@ -32,6 +36,6 @@ public class ASTDot implements ASTNode {
       return r1.getValue(this.field);
     }
 
-    throw new InterpreterError("illegal types to && operator");
+    throw new InterpreterError("illegal type to . operator");
   }
 }
