@@ -1,5 +1,6 @@
 package L0.ASTType;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ASTTUnion implements ASTType {
@@ -11,6 +12,27 @@ public class ASTTUnion implements ASTType {
 
   public TypeBindList getBinds() {
     return this.ll;
+  }
+
+  public boolean isSubtype(ASTType other) {
+    if (other instanceof ASTTUnion) {
+      ASTTUnion u1 = (ASTTUnion) other;
+      HashMap<String, ASTType> matchableLabels = this.ll.getTbl();
+      HashMap<String, ASTType> otherMatchableLabels = u1.getBinds().getTbl();
+      int matched = 0;
+      for (Map.Entry<String, ASTType> entry : matchableLabels.entrySet()) {
+        String name = entry.getKey();
+        ASTType type = entry.getValue();
+        if (otherMatchableLabels.containsKey(name)) {
+          ASTType otherType = otherMatchableLabels.get(name);
+          if (type.isSubtype(otherType)) {
+            matched++;
+          }
+        }
+      }
+      return matched == matchableLabels.size();
+    }
+    return false;
   }
 
   public String toStr() {
