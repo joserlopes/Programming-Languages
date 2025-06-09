@@ -488,7 +488,7 @@ List<UnionBind> fields = new ArrayList<UnionBind>();
     throw new Error("Missing return statement in function");
   }
 
-  static final public ASTNode Record() throws ParseException {
+  static final public ASTNode Struct() throws ParseException {
 Token n = null;
 ASTNode e1 = null;
 List<Bind> fields = new ArrayList<Bind>();
@@ -672,7 +672,7 @@ List<Bind> fields = new ArrayList<Bind>();
       t = Match();
       break;
     case LBRA:
-      t = Record();
+      t = Struct();
       break;
     case Label:
       t = Union();
@@ -703,7 +703,7 @@ List<Bind> fields = new ArrayList<Bind>();
     throw new Error("Missing return statement in function");
   }
 
-  static final public TypeBindList RecordLabelList() throws ParseException {
+  static final public TypeBindList StructLabelList() throws ParseException {
   ASTType t;
   HashMap<String, ASTType> ll;
   Token n;
@@ -822,7 +822,7 @@ List<Bind> fields = new ArrayList<Bind>();
     case STRUCT:
       jj_consume_token(STRUCT);
       jj_consume_token(LBRA);
-      ll = RecordLabelList();
+      ll = StructLabelList();
       jj_consume_token(RBRA);
                                                           t = new ASTTStruct(ll); {if (true) return t;}
       break;

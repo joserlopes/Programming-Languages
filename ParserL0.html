@@ -40,8 +40,6 @@
 | &lt;RPAR: ")"&gt;
 | &lt;LBRA: "{"&gt;
 | &lt;RBRA: "}"&gt;
-| &lt;LSBRA: "["&gt;
-| &lt;RSBRA: "]"&gt;
 | &lt;EQUAL: "="&gt;
 | &lt;DOT: "."&gt;
 | &lt;COLON: ":"&gt;
@@ -942,7 +940,7 @@
           <a href="#prod11">Field</a> ( &lt;STAR&gt;
           <a href="#prod11">Field</a> | &lt;DIV&gt;
           <a href="#prod11">Field</a> | &lt;LPAR&gt;
-          <a href="#prod5">BA</a> &lt;RPAR&gt; | &lt;UNIT&gt; )*
+          <a href="#prod2">Let</a> &lt;RPAR&gt; | &lt;UNIT&gt; )*
         </td>
       </tr>
       <tr>
@@ -974,7 +972,7 @@
         </td>
       </tr>
       <tr>
-        <td align="RIGHT" valign="BASELINE"><a name="prod15">Record</a></td>
+        <td align="RIGHT" valign="BASELINE"><a name="prod15">Struct</a></td>
         <td align="CENTER" valign="BASELINE">::=</td>
         <td align="LEFT" valign="BASELINE">
           &lt;LBRA&gt; ( &lt;Label&gt; &lt;EQUAL&gt; <a href="#prod5">BA</a> (
@@ -1010,7 +1008,7 @@
           <a href="#prod5">BA</a> &lt;RPAR&gt; | &lt;LCONS&gt; &lt;LPAR&gt;
           <a href="#prod5">BA</a> &lt;COMMA&gt;
           <a href="#prod5">BA</a> &lt;RPAR&gt; | <a href="#prod14">Match</a> |
-          <a href="#prod15">Record</a> | <a href="#prod16">Union</a> )
+          <a href="#prod15">Struct</a> | <a href="#prod16">Union</a> )
         </td>
       </tr>
       <tr>
@@ -1023,7 +1021,7 @@
       </tr>
       <tr>
         <td align="RIGHT" valign="BASELINE">
-          <a name="prod18">RecordLabelList</a>
+          <a name="prod18">StructLabelList</a>
         </td>
         <td align="CENTER" valign="BASELINE">::=</td>
         <td align="LEFT" valign="BASELINE">
@@ -1052,8 +1050,8 @@
           &lt;REF&gt; &lt;LT&gt; <a href="#prod4">Type</a> &lt;GT&gt; |
           &lt;LIST&gt; &lt;LT&gt; <a href="#prod4">Type</a> &lt;GT&gt; |
           &lt;STRUCT&gt; &lt;LBRA&gt;
-          <a href="#prod18">RecordLabelList</a> &lt;RBRA&gt; | &lt;UNION&gt;
-          &lt;LSBRA&gt; <a href="#prod19">UnionLabelList</a> &lt;RSBRA&gt; )
+          <a href="#prod18">StructLabelList</a> &lt;RBRA&gt; | &lt;UNION&gt;
+          &lt;LBRA&gt; <a href="#prod19">UnionLabelList</a> &lt;RBRA&gt; )
         </td>
       </tr>
     </table>

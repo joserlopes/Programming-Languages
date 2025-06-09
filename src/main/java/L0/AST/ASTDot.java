@@ -7,16 +7,16 @@ import L0.Errors.TypeCheckError;
 import L0.IValue.*;
 
 public class ASTDot implements ASTNode {
-  ASTNode record;
+  ASTNode struct;
   String field;
 
-  public ASTDot(ASTNode record, String field) {
-    this.record = record;
+  public ASTDot(ASTNode struct, String field) {
+    this.struct = struct;
     this.field = field;
   }
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-    ASTType t1 = this.record.typecheck(e);
+    ASTType t1 = this.struct.typecheck(e);
     if (t1 instanceof ASTTStruct) {
       ASTTStruct s1 = (ASTTStruct) t1;
       ASTType foundType = s1.getBinds().getType(this.field);
@@ -30,7 +30,7 @@ public class ASTDot implements ASTNode {
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
-    IValue v1 = this.record.eval(e);
+    IValue v1 = this.struct.eval(e);
     if (v1 instanceof VStruct) {
       VStruct s1 = (VStruct) v1;
       return s1.getValue(this.field);

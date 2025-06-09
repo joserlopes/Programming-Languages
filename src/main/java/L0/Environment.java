@@ -88,7 +88,7 @@ public class Environment<E> {
     } else if (type instanceof ASTTBox) {
       return this.unrollBox((ASTTBox) type);
     } else if (type instanceof ASTTStruct) {
-      return this.unrollRecord((ASTTStruct) type);
+      return this.unrollStruct((ASTTStruct) type);
     } else if (type instanceof ASTTUnion) {
       return this.unrollUnion((ASTTUnion) type);
     }
@@ -121,7 +121,7 @@ public class Environment<E> {
     return new ASTTBox(newType);
   }
 
-  private ASTType unrollRecord(ASTTStruct type) throws InterpreterError {
+  private ASTType unrollStruct(ASTTStruct type) throws InterpreterError {
     HashMap<String, ASTType> lbl = new HashMap<String, ASTType>();
     for (Map.Entry<String, ASTType> entry : type.getBinds().getTbl().entrySet()) {
       lbl.put(entry.getKey(), (ASTType) this.unrollTypes(entry.getValue()));

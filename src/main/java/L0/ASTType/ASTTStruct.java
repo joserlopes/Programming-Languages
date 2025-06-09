@@ -38,9 +38,9 @@ public class ASTTStruct implements ASTType {
 
   public String toStr() {
     if (this.ll.getTbl().isEmpty()) {
-      return "record { }";
+      return "struct { }";
     }
-    String res = "record { ";
+    String res = "struct { ";
     for (Map.Entry<String, ASTType> entry : this.ll.getTbl().entrySet()) {
       res += entry.getKey() + ": " + entry.getValue().toStr() + "; ";
     }

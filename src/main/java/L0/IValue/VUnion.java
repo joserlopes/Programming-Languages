@@ -18,6 +18,6 @@ public class VUnion implements IValue {
   }
 
   public String toStr() {
-    return "union [ " + this.lbl + " = " + this.value.toStr() + " ]";
+    return "union { " + this.lbl + " = " + this.value.toStr() + " }";
   }
 }

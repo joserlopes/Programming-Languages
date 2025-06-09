@@ -19,9 +19,9 @@ public class VStruct implements IValue {
 
   public String toStr() {
     if (this.fields.isEmpty()) {
-      return "record { }";
+      return "struct { }";
     }
-    String res = "record { ";
+    String res = "struct { ";
     for (Map.Entry<String, IValue> entry : this.fields.entrySet()) {
       res += entry.getKey() + " = " + entry.getValue().toStr() + "; ";
     }

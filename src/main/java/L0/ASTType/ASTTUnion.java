@@ -14,12 +14,12 @@ public class ASTTUnion implements ASTType {
   }
 
   public String toStr() {
-    String res = "union [ ";
+    String res = "union { ";
     for (Map.Entry<String, ASTType> entry : this.ll.getTbl().entrySet()) {
-      res += "#" + entry.getKey() + ": " + entry.getValue().toStr() + "; ";
+      res += entry.getKey() + ": " + entry.getValue().toStr() + "; ";
     }
     res = res.substring(0, res.length() - 2);
-    res += " ]";
+    res += " }";
     return res;
   }
 }

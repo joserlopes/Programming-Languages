@@ -340,7 +340,7 @@ List<UnionBind> fields = new ArrayList<UnionBind>();
      )
 }
 
-ASTNode Record():
+ASTNode Struct():
 {
 Token n = null;
 ASTNode e1 = null;
@@ -423,7 +423,7 @@ ASTNode Fact() :
     | <CONS> <LPAR> t = BA() <COMMA> e1 = BA() <RPAR> { t = new ASTCons(t, e1); }
     | <LCONS> <LPAR> t = BA() <COMMA> e1 = BA() <RPAR> { t = new ASTLCons(t, e1); }
     | t = Match()
-    | t = Record()
+    | t = Struct()
     | t = Union()
     )
    { return t; }
@@ -438,7 +438,7 @@ ASTType Type() :
     { return t1; }
 }
 
-TypeBindList RecordLabelList() :
+TypeBindList StructLabelList() :
 {
   ASTType t;
   HashMap<String, ASTType> ll;
@@ -480,7 +480,7 @@ ASTType TypeF() :
         | <LPAR> t = Type() <RPAR>
         | <REF> <LT> t=Type() <GT> { t = new ASTTBox(t); }
         | <LIST> <LT> t=Type() <GT> { t = new ASTTList(t); }
-        | <STRUCT> <LBRA> ll = RecordLabelList() <RBRA> { t = new ASTTStruct(ll); return t; }
+        | <STRUCT> <LBRA> ll = StructLabelList() <RBRA> { t = new ASTTStruct(ll); return t; }
         | <UNION> <LBRA> ll = UnionLabelList() <RBRA> { t = new ASTTUnion(ll); return t; }
     )
     { return t; }
