@@ -18,6 +18,9 @@ public class VRecord implements IValue {
   }
 
   public String toStr() {
+    if (this.fields.isEmpty()) {
+      return "record { }";
+    }
     String res = "record { ";
     for (Map.Entry<String, IValue> entry : this.fields.entrySet()) {
       res += entry.getKey() + " = " + entry.getValue().toStr() + "; ";

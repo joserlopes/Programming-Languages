@@ -45,13 +45,21 @@ public class ASTLet implements ASTNode {
       expType = en.unrollTypes(expType);
 
       if (type != null) {
-        if (!type.toStr().equals(expType.toStr())) {
+        if (!expType.isSubtype(type)) {
           throw new TypeCheckError(
               "illegal type to variable declaration. Variable declared as: "
                   + type.toStr()
+                  + " or any of this subtypes"
                   + ", got: "
                   + expType.toStr());
         }
+        // if (!type.toStr().equals(expType.toStr())) {
+        //   throw new TypeCheckError(
+        //       "illegal type to variable declaration. Variable declared as: "
+        //           + type.toStr()
+        //           + ", got: "
+        //           + expType.toStr());
+        // }
       } else {
         en.assoc(id, expType);
       }
