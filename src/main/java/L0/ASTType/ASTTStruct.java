@@ -41,7 +41,7 @@ public class ASTTStruct implements ASTType {
     }
     String res = "struct { ";
     for (Map.Entry<String, ASTType> entry : this.ll.getTbl().entrySet()) {
-      res += entry.getKey() + ": " + entry.getValue().toStr() + "; ";
+      res += entry.getKey() + ": " + entry.getValue().toStr() + ", ";
     }
     res = res.substring(0, res.length() - 2);
     res += " }";

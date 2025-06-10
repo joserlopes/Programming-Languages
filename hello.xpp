@@ -1,9 +1,0 @@
-type my_union = union { #first: int, #second: string };
-(
-let f = fn a: my_union => {
-    match a {
-        | #first(b) -> b
-        | #second(c) -> 123
-    }
-}; f(#second("123"))
-);;

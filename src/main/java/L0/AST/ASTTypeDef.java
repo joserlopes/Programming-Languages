@@ -24,7 +24,7 @@ public class ASTTypeDef implements ASTNode {
       en.assoc(entry.getKey(), entry.getValue());
     }
 
-    // Pass again through all the types to check for ASTTId's
+    // Pass again through all the types to unroll them
     for (Map.Entry<String, ASTType> entry : this.ltd.entrySet()) {
       String name = entry.getKey();
       ASTType type = entry.getValue();
@@ -32,6 +32,7 @@ public class ASTTypeDef implements ASTNode {
       en.update(name, unrolledType);
     }
 
+    en.printBindings();
     return this.body.typecheck(en);
   }
 

@@ -2,12 +2,13 @@ package L0;
 
 import L0.ASTType.*;
 import L0.Errors.InterpreterError;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Environment<E> {
   Environment<E> anc;
   Map<String, E> bindings;
-  Set<String> unrolled = new HashSet<String>();
+  Map<String, ASTType> alreadyUnrolled = new HashMap<String, ASTType>();
 
   public Environment() {
     this.anc = null;
@@ -50,15 +51,15 @@ public class Environment<E> {
         E a = current_env.bindings.get(bind);
         if (a instanceof ASTType) {
           ASTType a1 = (ASTType) a;
-          if (a1 instanceof ASTTArrow) {
-            ASTTArrow arrow1 = (ASTTArrow) a1;
-            System.out.println(
-                bind
-                    + " is a function with domain: "
-                    + arrow1.getDomain().toStr()
-                    + " and codomain: "
-                    + arrow1.getCoDomain().toStr());
-          }
+          // if (a1 instanceof ASTTArrow) {
+          //   ASTTArrow arrow1 = (ASTTArrow) a1;
+          //   System.out.println(
+          //       bind
+          //           + " is a function with domain: "
+          //           + arrow1.getDomain().toStr()
+          //           + " and codomain: "
+          //           + arrow1.getCoDomain().toStr());
+          // }
           System.out.println(bind + ": " + a1.toStr());
         }
       }
@@ -79,7 +80,6 @@ public class Environment<E> {
     throw new InterpreterError("Binding for " + "\"" + id + "\"" + " not found");
   }
 
-  // BUG: This produces a stack overflow when analysing recursive types!!!!!
   public ASTType unrollTypes(ASTType type) throws InterpreterError {
     if (type instanceof ASTTId) {
       return this.unrollId((ASTTId) type);
@@ -96,15 +96,15 @@ public class Environment<E> {
     return type;
   }
 
-  // TODO: This is where it can stack overflow!!
   private ASTType unrollId(ASTTId type) throws InterpreterError {
-    // String typeName = type.toStr();
-    //
-    // if (unrolled.contains(typeName)) {
-    //   return new ASTTBox(type);
-    // }
-    //
-    // unrolled.add(typeName);
+    String typeName = type.toStr();
+
+    if (this.alreadyUnrolled.containsKey(typeName)) {
+      return this.alreadyUnrolled.get(typeName);
+    }
+
+    this.alreadyUnrolled.put(typeName, type);
+
     return this.unrollTypes((ASTType) this.find(type.toStr()));
   }
 
