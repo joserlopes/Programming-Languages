@@ -1,5 +1,8 @@
 package L0.ASTType;
 
+import L0.Environment;
+import L0.Errors.InterpreterError;
+
 public class ASTTArrow implements ASTType {
   ASTType dom;
   ASTType codom;
@@ -17,10 +20,13 @@ public class ASTTArrow implements ASTType {
     return this.codom;
   }
 
-  public boolean isSubtype(ASTType other) {
+  public boolean isSubtype(ASTType other, Environment<ASTType> e) throws InterpreterError {
     if (other instanceof ASTTArrow) {
       ASTTArrow a1 = (ASTTArrow) other;
-      return a1.getDomain().isSubtype(this.dom) && this.codom.isSubtype(a1.getCoDomain());
+      return a1.getDomain().isSubtype(this.dom, e) && this.codom.isSubtype(a1.getCoDomain(), e);
+    } else if (other instanceof ASTTId) {
+      other = e.unfoldTypes(other);
+      return this.isSubtype(other, e);
     }
     return false;
   }

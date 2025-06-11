@@ -16,7 +16,6 @@ public class ASTFunCall implements ASTNode {
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.func.typecheck(e);
-    // t1 = e.unrollTypes(t1);
 
     if (t1 instanceof ASTTArrow) {
       ASTTArrow a1 = (ASTTArrow) t1;
@@ -30,10 +29,9 @@ public class ASTFunCall implements ASTNode {
       }
 
       ASTType t2 = this.arg.typecheck(e);
-      // t2 = e.unrollTypes(t2);
 
-      if (t2.isSubtype(a1.getDomain())) {
-        return a1.getCoDomain();
+      if (t2.isSubtype(a1.getDomain(), e)) {
+        return e.unfoldTypes(a1.getCoDomain());
       } else {
         throw new TypeCheckError(
             "illegal type to argument. Got " + t2.toStr() + ", expected " + a1.getDomain().toStr());

@@ -1,5 +1,8 @@
 package L0.ASTType;
 
+import L0.Environment;
+import L0.Errors.InterpreterError;
+
 public class ASTTList implements ASTType {
   ASTType type;
 
@@ -9,6 +12,16 @@ public class ASTTList implements ASTType {
 
   public ASTType getType() {
     return this.type;
+  }
+
+  public boolean isSubtype(ASTType other, Environment<ASTType> e) throws InterpreterError {
+    if (other instanceof ASTTList) {
+      return this.isSubtype(other, e);
+    } else if (other instanceof ASTTId) {
+      other = e.unfoldTypes(other);
+      return this.isSubtype(other, e);
+    }
+    return false;
   }
 
   public String toStr() {

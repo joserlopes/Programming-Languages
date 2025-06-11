@@ -80,62 +80,15 @@ public class Environment<E> {
     throw new InterpreterError("Binding for " + "\"" + id + "\"" + " not found");
   }
 
-  public ASTType unrollTypes(ASTType type) throws InterpreterError {
+  public ASTType unfoldTypes(ASTType type) throws InterpreterError {
     if (type instanceof ASTTId) {
-      return this.unrollId((ASTTId) type);
-    } else if (type instanceof ASTTArrow) {
-      return this.unrollArrow((ASTTArrow) type);
-    } else if (type instanceof ASTTBox) {
-      return this.unrollBox((ASTTBox) type);
-    } else if (type instanceof ASTTStruct) {
-      return this.unrollStruct((ASTTStruct) type);
-    } else if (type instanceof ASTTUnion) {
-      return this.unrollUnion((ASTTUnion) type);
+      return this.unfoldId((ASTTId) type);
     }
 
     return type;
   }
 
-  private ASTType unrollId(ASTTId type) throws InterpreterError {
-    String typeName = type.toStr();
-
-    if (this.alreadyUnrolled.containsKey(typeName)) {
-      return this.alreadyUnrolled.get(typeName);
-    }
-
-    this.alreadyUnrolled.put(typeName, type);
-
-    return this.unrollTypes((ASTType) this.find(type.toStr()));
-  }
-
-  private ASTType unrollArrow(ASTTArrow type) throws InterpreterError {
-    ASTType newDom = this.unrollTypes(type.getDomain());
-    ASTType newCoDom = this.unrollTypes(type.getCoDomain());
-
-    return new ASTTArrow(newDom, newCoDom);
-  }
-
-  private ASTType unrollBox(ASTTBox type) throws InterpreterError {
-    ASTType newType = this.unrollTypes(type.getType());
-
-    return new ASTTBox(newType);
-  }
-
-  private ASTType unrollStruct(ASTTStruct type) throws InterpreterError {
-    HashMap<String, ASTType> lbl = new HashMap<String, ASTType>();
-    for (Map.Entry<String, ASTType> entry : type.getBinds().getTbl().entrySet()) {
-      lbl.put(entry.getKey(), (ASTType) this.unrollTypes(entry.getValue()));
-    }
-
-    return new ASTTStruct(new TypeBindList(lbl));
-  }
-
-  private ASTType unrollUnion(ASTTUnion type) throws InterpreterError {
-    HashMap<String, ASTType> lbl = new HashMap<String, ASTType>();
-    for (Map.Entry<String, ASTType> entry : type.getBinds().getTbl().entrySet()) {
-      lbl.put(entry.getKey(), (ASTType) this.unrollTypes(entry.getValue()));
-    }
-
-    return new ASTTUnion(new TypeBindList(lbl));
+  private ASTType unfoldId(ASTTId type) throws InterpreterError {
+    return this.unfoldTypes((ASTType) this.find(type.toStr()));
   }
 }

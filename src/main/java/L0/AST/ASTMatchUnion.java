@@ -40,6 +40,7 @@ public class ASTMatchUnion implements ASTNode {
           String name = bind.getName();
 
           if (name != null) {
+            labelType = en.unfoldTypes(labelType);
             en.assoc(name, labelType);
           } else {
             if (!(labelType instanceof ASTTUnit)) {
@@ -50,7 +51,8 @@ public class ASTMatchUnion implements ASTNode {
           ASTType foundType = bind.getExp().typecheck(en);
 
           for (ASTType type : foundTypes) {
-            if (!type.toStr().equals(foundType.toStr())) {
+            // if (!type.toStr().equals(foundType.toStr())) {
+            if (!type.isSubtype(foundType, en)) {
               throw new TypeCheckError(
                   "illegal type to match branch. All branches need to have the same type. Expected:"
                       + " "

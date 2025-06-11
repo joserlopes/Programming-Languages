@@ -1,5 +1,7 @@
 package L0.ASTType;
 
+import L0.Environment;
+import L0.Errors.InterpreterError;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +16,7 @@ public class ASTTUnion implements ASTType {
     return this.ll;
   }
 
-  public boolean isSubtype(ASTType other) {
+  public boolean isSubtype(ASTType other, Environment<ASTType> e) throws InterpreterError {
     if (other instanceof ASTTUnion) {
       ASTTUnion u1 = (ASTTUnion) other;
       HashMap<String, ASTType> matchableLabels = this.ll.getTbl();
@@ -23,14 +25,19 @@ public class ASTTUnion implements ASTType {
       for (Map.Entry<String, ASTType> entry : matchableLabels.entrySet()) {
         String name = entry.getKey();
         ASTType type = entry.getValue();
+        System.out.println("Matchable name: " + name);
+        System.out.println("Matchable type: " + type);
         if (otherMatchableLabels.containsKey(name)) {
           ASTType otherType = otherMatchableLabels.get(name);
-          if (type.isSubtype(otherType)) {
+          if (type.isSubtype(otherType, e)) {
             matched++;
           }
         }
       }
       return matched == matchableLabels.size();
+    } else if (other instanceof ASTTId) {
+      other = e.unfoldTypes(other);
+      return this.isSubtype(other, e);
     }
     return false;
   }

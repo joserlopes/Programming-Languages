@@ -24,15 +24,16 @@ public class ASTTypeDef implements ASTNode {
       en.assoc(entry.getKey(), entry.getValue());
     }
 
-    // Pass again through all the types to unroll them
-    for (Map.Entry<String, ASTType> entry : this.ltd.entrySet()) {
-      String name = entry.getKey();
-      ASTType type = entry.getValue();
-      ASTType unrolledType = en.unrollTypes(type);
-      en.update(name, unrolledType);
-    }
+    // BUG: We actually don't unfold here, we do it only when needed
 
-    en.printBindings();
+    // Pass again through all the types to unfold them
+    // for (Map.Entry<String, ASTType> entry : this.ltd.entrySet()) {
+    //   String name = entry.getKey();
+    //   ASTType type = entry.getValue();
+    //   ASTType unfoldedType = en.unfoldTypes(type);
+    //   en.update(name, unfoldedType);
+    // }
+
     return this.body.typecheck(en);
   }
 
