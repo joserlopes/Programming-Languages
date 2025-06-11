@@ -35,7 +35,6 @@ public class ASTFunDecl implements ASTNode {
     ASTType actualParamType = en.unfoldTypes(this.paramType);
 
     en.assoc(this.param, actualParamType);
-    en.printBindings();
 
     ASTType tb = this.body.typecheck(en);
 

@@ -41,8 +41,10 @@ public class ASTLet implements ASTNode {
       ASTType type = p.getType();
 
       ASTType expType = exp.typecheck(en);
+      expType = en.unfoldTypes(expType);
 
       if (type != null) {
+        type = en.unfoldTypes(type);
         if (!expType.isSubtype(type, en)) {
           throw new TypeCheckError(
               "illegal type to variable declaration. Variable declared as: "
@@ -52,7 +54,6 @@ public class ASTLet implements ASTNode {
                   + expType.toStr());
         }
       } else {
-        en.unfoldTypes(expType);
         en.assoc(id, expType);
       }
     }

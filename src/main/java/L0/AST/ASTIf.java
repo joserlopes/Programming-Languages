@@ -22,7 +22,8 @@ public class ASTIf implements ASTNode {
       ASTType t3 = this.falseBody.typecheck(e);
       // NOTE: Here, the toStr's are compared because it's easier to compare the exact case for the
       // if and the else case
-      if (t2.toStr().equals(t3.toStr())) {
+      if (t2.isSubtype(t3, e)) {
+        // if (t2.toStr().equals(t3.toStr())) {
         return t2;
       } else {
         throw new TypeCheckError("illegal type to if body " + t2.toStr() + " " + t3.toStr());

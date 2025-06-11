@@ -156,7 +156,7 @@ ASTNode Let() :
       t = Seq()
     | 
     {  List<TypedBind> decls  = new ArrayList<TypedBind>(); }
-    ( ( LOOKAHEAD(2) <LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC> 
+    ( ( LOOKAHEAD(2) <LET> n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC> 
       { decls.add(new TypedBind(n.image, e1, t1)); t1 = null;} )+
         e2 = Let() { t = new ASTLet(decls, e2); }
     )
@@ -349,7 +349,7 @@ List<Bind> fields = new ArrayList<Bind>();
 {
     <LBRA> 
     (
-        n=<Label> <EQUAL> e1= BA()
+        n=<Label> <EQUAL> e1= Let()
         { 
             if (n == null && e1 == null) {
                 return new ASTStruct(fields); 
@@ -358,7 +358,7 @@ List<Bind> fields = new ArrayList<Bind>();
             }
         }
         (
-        <COMMA> n=<Label> <EQUAL> e1 = BA()
+        <COMMA> n=<Label> <EQUAL> e1 = Let()
         { 
             for (Bind bind: fields) {
                 if (bind.getId().equals(n.image)) {

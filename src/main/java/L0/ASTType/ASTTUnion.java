@@ -25,8 +25,6 @@ public class ASTTUnion implements ASTType {
       for (Map.Entry<String, ASTType> entry : matchableLabels.entrySet()) {
         String name = entry.getKey();
         ASTType type = entry.getValue();
-        System.out.println("Matchable name: " + name);
-        System.out.println("Matchable type: " + type);
         if (otherMatchableLabels.containsKey(name)) {
           ASTType otherType = otherMatchableLabels.get(name);
           if (type.isSubtype(otherType, e)) {

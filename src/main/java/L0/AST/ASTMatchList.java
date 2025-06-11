@@ -1,8 +1,6 @@
 package L0.AST;
 
-import L0.ASTType.ASTTList;
-import L0.ASTType.ASTTUnit;
-import L0.ASTType.ASTType;
+import L0.ASTType.*;
 import L0.Environment;
 import L0.Errors.InterpreterError;
 import L0.Errors.TypeCheckError;
@@ -23,6 +21,10 @@ public class ASTMatchList implements ASTNode {
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.matchedValue.typecheck(e);
+
+    if (t1 instanceof ASTTId) {
+      t1 = e.unfoldTypes(t1);
+    }
 
     if (t1 instanceof ASTTList) {
       ASTTList l1 = (ASTTList) t1;

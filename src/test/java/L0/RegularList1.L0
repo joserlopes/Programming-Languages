@@ -1,8 +1,8 @@
 let sum: list<int>->int = fn l: list<int> => {
-match l {
-| nil -> 0
-| v :: tail -> v + sum(tail)
-}
+    match l {
+    | nil -> 0
+    | v :: tail -> v + sum(tail)
+    }
 };
 let myList = cons(1, cons(2, cons(3, cons(4, cons(5, nil)))));
 sum(myList);;

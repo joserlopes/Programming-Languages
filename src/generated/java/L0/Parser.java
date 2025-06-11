@@ -497,7 +497,7 @@ List<Bind> fields = new ArrayList<Bind>();
     case Label:
       n = jj_consume_token(Label);
       jj_consume_token(EQUAL);
-      e1 = BA();
+      e1 = Let();
             if (n == null && e1 == null) {
                 {if (true) return new ASTStruct(fields);}
             } else {
@@ -516,7 +516,7 @@ List<Bind> fields = new ArrayList<Bind>();
         jj_consume_token(COMMA);
         n = jj_consume_token(Label);
         jj_consume_token(EQUAL);
-        e1 = BA();
+        e1 = Let();
             for (Bind bind: fields) {
                 if (bind.getId().equals(n.image)) {
                     {if (true) throw new ParseException();}
