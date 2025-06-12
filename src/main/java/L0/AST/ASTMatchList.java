@@ -33,8 +33,8 @@ public class ASTMatchList implements ASTNode {
 
       Environment<ASTType> en = e.beginScope();
 
-      en.assoc(this.headName, l1.getType());
-      en.assoc(this.tailName, l1);
+      en.assoc(this.headName, en.unfoldTypes(l1.getType()));
+      en.assoc(this.tailName, en.unfoldTypes(l1));
 
       ASTType t3 = this.consCase.typecheck(en);
 
