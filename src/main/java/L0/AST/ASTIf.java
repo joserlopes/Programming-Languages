@@ -20,10 +20,7 @@ public class ASTIf implements ASTNode {
     if (t1 instanceof ASTTBool) {
       ASTType t2 = this.trueBody.typecheck(e);
       ASTType t3 = this.falseBody.typecheck(e);
-      // NOTE: Here, the toStr's are compared because it's easier to compare the exact case for the
-      // if and the else case
       if (t2.isSubtype(t3, e)) {
-        // if (t2.toStr().equals(t3.toStr())) {
         return t2;
       } else {
         throw new TypeCheckError("illegal type to if body " + t2.toStr() + " " + t3.toStr());
@@ -34,14 +31,11 @@ public class ASTIf implements ASTNode {
   }
 
   public IValue eval(Environment<IValue> e) throws InterpreterError {
-    // Evaluate the condition
     IValue v1 = this.cond.eval(e);
     if (v1 instanceof VBool) {
       boolean b1 = ((VBool) v1).getVal();
-      // If it is true evaluate the trueBody
       if (b1) {
         return this.trueBody.eval(e);
-        // otherwise, evaluate the falseBody
       } else {
         return this.falseBody.eval(e);
       }

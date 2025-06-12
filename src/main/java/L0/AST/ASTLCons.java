@@ -28,27 +28,9 @@ public class ASTLCons implements ASTNode {
       if (t1.toStr().equals(l1.getType().toStr())) {
         return l1;
       } else {
-        // throw new TypeCheckError(
-        //     "illegal list. Got "
-        //         + t1.toStr()
-        //         + " "
-        //         + l1.toStr()
-        //         + ". Expected "
-        //         + t1.toStr()
-        //         + " "
-        //         + (new ASTTList(t1)).toStr());
         throw new TypeCheckError("illegal list type " + t1.toStr() + " " + l1.toStr());
       }
     } else {
-      // throw new TypeCheckError(
-      //     "illegal list. Got "
-      //         + t1.toStr()
-      //         + " "
-      //         + t2.toStr()
-      //         + ". Expected "
-      //         + t1.toStr()
-      //         + " "
-      //         + (new ASTTList(t1)).toStr());
       throw new TypeCheckError("illegal list type " + t1.toStr() + " " + t2.toStr());
     }
   }

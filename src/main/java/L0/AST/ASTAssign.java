@@ -37,12 +37,10 @@ public class ASTAssign implements ASTNode {
   public IValue eval(Environment<IValue> e) throws InterpreterError {
     IValue v1 = this.lhs.eval(e);
     if (v1 instanceof VBox) {
-      // v2 is the new value that is to be assigned to the left-hand side.
       IValue v2 = this.rhs.eval(e);
       VBox b1 = (VBox) v1;
       b1.assign(v2);
 
-      // Do we return the boxed value, or the inner value?
       return v2;
     }
 
