@@ -100,7 +100,6 @@ Gamma |- e2 : tau1
 ------------------------- t-app
 Gamma |- e1 e2 : tau
 
-
 // Pair typing rules
 
 Gamma |- e1: tau
@@ -213,5 +212,30 @@ is
 	end case analysis
 
 end case
+
+case rule
+	d1 : e1 -> e1'
+	----------------------- r-pair-fst
+	d2 : <e1, e2> -> <e1', e2>
+is
+
+	dt' : * |- e' : tau by case analysis on dt :
+
+	case rule
+
+		d3 : * |- e1: tau'
+		d4 : * |- e2: tau''
+		---------------- t-pair
+		d5 : * |- <e1, e2> : tau' * tau''
+
+	is
+		d6 : * |- e1' : tau' by induction hypothesis on d3, d1
+		dt' : * |- <e1', e2> : tau' * tau'' by rule t-pair on d6, d4
+
+	end case
+	end case analysis
+
+end case
+
 end induction
 end theorem
