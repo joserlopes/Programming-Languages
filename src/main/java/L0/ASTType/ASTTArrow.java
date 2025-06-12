@@ -21,13 +21,14 @@ public class ASTTArrow implements ASTType {
   }
 
   public boolean isSubtype(ASTType other, Environment<ASTType> e) throws InterpreterError {
-    if (other instanceof ASTTArrow) {
-      ASTTArrow a1 = (ASTTArrow) other;
-      return a1.getDomain().isSubtype(this.dom, e) && this.codom.isSubtype(a1.getCoDomain(), e);
-    } else if (other instanceof ASTTId) {
+    if (other instanceof ASTTId) {
       other = e.unfoldTypes(other);
       return this.isSubtype(other, e);
+    } else if (other instanceof ASTTArrow) {
+      ASTTArrow a1 = (ASTTArrow) other;
+      return a1.getDomain().isSubtype(this.dom, e) && this.codom.isSubtype(a1.getCoDomain(), e);
     }
+
     return false;
   }
 

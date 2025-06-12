@@ -19,12 +19,12 @@ public class ASTTBox implements ASTType {
   }
 
   public boolean isSubtype(ASTType other, Environment<ASTType> e) throws InterpreterError {
-    if (other instanceof ASTTBox) {
-      ASTTBox b1 = (ASTTBox) other;
-      return this.type.isSubtype(b1.getType(), e) && b1.getType().isSubtype(this.type, e);
-    } else if (other instanceof ASTTId) {
+    if (other instanceof ASTTId) {
       other = e.unfoldTypes(other);
       return this.isSubtype(other, e);
+    } else if (other instanceof ASTTBox) {
+      ASTTBox b1 = (ASTTBox) other;
+      return this.type.isSubtype(b1.getType(), e) && b1.getType().isSubtype(this.type, e);
     }
 
     return false;

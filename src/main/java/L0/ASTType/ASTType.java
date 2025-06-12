@@ -11,6 +11,7 @@ public interface ASTType {
       other = e.unfoldTypes(other);
       return this.isSubtype(other, e);
     }
+
     return this.toStr().equals(other.toStr());
   }
 }

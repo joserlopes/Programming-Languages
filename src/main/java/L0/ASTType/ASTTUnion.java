@@ -17,7 +17,10 @@ public class ASTTUnion implements ASTType {
   }
 
   public boolean isSubtype(ASTType other, Environment<ASTType> e) throws InterpreterError {
-    if (other instanceof ASTTUnion) {
+    if (other instanceof ASTTId) {
+      other = e.unfoldTypes(other);
+      return this.isSubtype(other, e);
+    } else if (other instanceof ASTTUnion) {
       ASTTUnion u1 = (ASTTUnion) other;
       HashMap<String, ASTType> matchableLabels = this.ll.getTbl();
       HashMap<String, ASTType> otherMatchableLabels = u1.getBinds().getTbl();
@@ -33,10 +36,8 @@ public class ASTTUnion implements ASTType {
         }
       }
       return matched == matchableLabels.size();
-    } else if (other instanceof ASTTId) {
-      other = e.unfoldTypes(other);
-      return this.isSubtype(other, e);
     }
+
     return false;
   }
 

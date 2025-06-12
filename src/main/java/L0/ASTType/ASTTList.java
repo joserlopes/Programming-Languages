@@ -15,11 +15,11 @@ public class ASTTList implements ASTType {
   }
 
   public boolean isSubtype(ASTType other, Environment<ASTType> e) throws InterpreterError {
-    if (other instanceof ASTTList) {
-      return this.type.isSubtype(((ASTTList) other).getType(), e);
-    } else if (other instanceof ASTTId) {
+    if (other instanceof ASTTId) {
       other = e.unfoldTypes(other);
       return this.isSubtype(other, e);
+    } else if (other instanceof ASTTList) {
+      return this.type.isSubtype(((ASTTList) other).getType(), e);
     }
     return false;
   }

@@ -17,7 +17,10 @@ public class ASTTStruct implements ASTType {
   }
 
   public boolean isSubtype(ASTType other, Environment<ASTType> e) throws InterpreterError {
-    if (other instanceof ASTTStruct) {
+    if (other instanceof ASTTId) {
+      other = e.unfoldTypes(other);
+      return this.isSubtype(other, e);
+    } else if (other instanceof ASTTStruct) {
       ASTTStruct s1 = (ASTTStruct) other;
       HashMap<String, ASTType> matchableLabels = this.ll.getTbl();
       HashMap<String, ASTType> otherMatchableLabels = s1.getBinds().getTbl();
@@ -33,9 +36,6 @@ public class ASTTStruct implements ASTType {
         }
       }
       return matched == otherMatchableLabels.size();
-    } else if (other instanceof ASTTId) {
-      other = e.unfoldTypes(other);
-      return this.isSubtype(other, e);
     }
     return false;
   }
