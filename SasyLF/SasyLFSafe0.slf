@@ -49,8 +49,29 @@ e2 value
 ---------------------------------- r-app
 (fn x : tau => e[x]) e2 -> e[e2]
 
+// Pair reduce rules
+
+------------------ r-fst
+fst <e1, e2> -> e1
+
 e1 -> e1'
---------------------- c-pair-fst
+------------------ c-fst
+fst e1 -> fst e1'
+
+------------------ r-snd
+snd <e1, e2> -> e2
+
+e1 -> e1'
+------------------ c-snd
+snd e1 -> snd e1'
+
+e1 -> e1'
+--------------------- r-pair-fst
+<e1, e2> -> <e1', e2>
+
+e2 -> e2'
+--------------------- r-pair-snd
+<e1, e2> -> <e1, e2'>
 
 judgment stype: tau <: tau'
 
@@ -79,11 +100,21 @@ Gamma |- e2 : tau1
 ------------------------- t-app
 Gamma |- e1 e2 : tau
 
-/*
 
-Add the type rules for the pairs constructs
+// Pair typing rules
 
-*/
+Gamma |- e1: tau
+Gamma |- e2: tau'
+----------------------------- t-pair
+Gamma |- <e1, e2> : tau * tau'
+
+Gamma |- e1: tau * tau'
+---------------------- t-fst
+Gamma |- fst e1 : tau
+
+Gamma |- e1: tau * tau'
+----------------------- t-snd
+Gamma |- fst e1 : tau'
 
 
 theorem preservation: forall dt: * |- e : tau forall ds: e -> e' exists * |- e' : tau.
