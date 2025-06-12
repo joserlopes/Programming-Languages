@@ -31,7 +31,7 @@ public class ASTFunCall implements ASTNode {
       ASTType t2 = this.arg.typecheck(e);
 
       if (t2.isSubtype(a1.getDomain(), e)) {
-        return e.unfoldTypes(a1.getCoDomain());
+        return a1.getCoDomain();
       } else {
         throw new TypeCheckError(
             "illegal type to argument. Got " + t2.toStr() + ", expected " + a1.getDomain().toStr());
