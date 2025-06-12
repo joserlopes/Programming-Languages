@@ -7,24 +7,14 @@ e ::= fn x : tau => e[x]
  | x
  | e e
  | 0		
-
-/* add these constructors
-
  | <e,e>
  | fst e
  | snd e
 
-*/
-
 tau ::= unit
  | tau -> tau 
  | unit
-
-/* add
-
  | tau * tau 
-
-*/
 
 Gamma ::= *
       |   Gamma, x : tau
@@ -59,11 +49,8 @@ e2 value
 ---------------------------------- r-app
 (fn x : tau => e[x]) e2 -> e[e2]
 
-/* 
-
-Add small step rules for the pairs constructs
-
-*/
+e1 -> e1'
+--------------------- c-pair-fst
 
 judgment stype: tau <: tau'
 
