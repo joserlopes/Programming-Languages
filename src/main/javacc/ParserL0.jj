@@ -350,19 +350,13 @@ List<Bind> fields = new ArrayList<Bind>();
     <LBRA> 
     (
         n=<Label> <EQUAL> e1= Let()
-        { 
-            if (n == null && e1 == null) {
-                return new ASTStruct(fields); 
-            } else {
-                fields.add(new Bind(n.image, e1));
-            }
-        }
+        { fields.add(new Bind(n.image, e1)); }
         (
         <COMMA> n=<Label> <EQUAL> e1 = Let()
         { 
             for (Bind bind: fields) {
                 if (bind.getId().equals(n.image)) {
-                    throw new ParseException();
+                    throw new ParseException("Struct Creation");
                 }
             }
             fields.add(new Bind(n.image, e1)); 
@@ -438,20 +432,7 @@ ASTType Type() :
     { return t1; }
 }
 
-TypeBindList StructLabelList() :
-{
-  ASTType t;
-  HashMap<String, ASTType> ll;
-  Token n;
-}
-{   { ll = new HashMap<String, ASTType>() ; }
-    ( n=<Label> <COLON> t = Type() { ll.put(n.image,t); } 
-              (<COMMA> n=<Label> <COLON> t = Type() { ll.put(n.image,t);} )*
-    )?
-    { return new TypeBindList(ll); }
-}
-
-TypeBindList UnionLabelList() :
+TypeBindList LabelList() :
 {
   ASTType t;
   HashMap<String,ASTType> ll;
@@ -459,7 +440,12 @@ TypeBindList UnionLabelList() :
 }
 {   { ll = new HashMap<String, ASTType>() ; }
     ( n=<Label> <COLON> t = Type() { ll.put(n.image, t); } 
-              (<COMMA> n=<Label> <COLON> t = Type() { ll.put(n.image, t);} )*
+              (<COMMA> n=<Label> <COLON> t = Type() {
+                  if (ll.containsKey(n.image)) {
+                      throw new ParseException("Type Creation");
+                  }
+                  ll.put(n.image, t);
+                })*
     )?
     { return new TypeBindList(ll); }
 }
@@ -480,8 +466,8 @@ ASTType TypeF() :
         | <LPAR> t = Type() <RPAR>
         | <REF> <LT> t=Type() <GT> { t = new ASTTBox(t); }
         | <LIST> <LT> t=Type() <GT> { t = new ASTTList(t); }
-        | <STRUCT> <LBRA> ll = StructLabelList() <RBRA> { t = new ASTTStruct(ll); return t; }
-        | <UNION> <LBRA> ll = UnionLabelList() <RBRA> { t = new ASTTUnion(ll); return t; }
+        | <STRUCT> <LBRA> ll = LabelList() <RBRA> { t = new ASTTStruct(ll); return t; }
+        | <UNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll); return t; }
     )
     { return t; }
 }

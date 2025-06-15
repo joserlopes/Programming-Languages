@@ -34,7 +34,11 @@ public class ASTFunCall implements ASTNode {
         return a1.getCoDomain();
       } else {
         throw new TypeCheckError(
-            "illegal type to argument. Got " + t2.toStr() + ", expected " + a1.getDomain().toStr());
+            "illegal type to argument. Got "
+                + t2.toStr()
+                + ", expected "
+                + a1.getDomain().toStr()
+                + " or any of it's subtypes");
       }
     } else {
       throw new TypeCheckError("illegal type for function call " + t1.toStr());

@@ -32,7 +32,14 @@ public class L0int {
           e.printStackTrace();
           System.out.println("Error: " + e.getMessage());
         } catch (ParseException e) {
-          System.out.println("Syntax Error.");
+          if (e.getMessage().equals("Struct Creation")) {
+            System.out.println("Error: A struct cannot have fields with repeated names.");
+          } else if (e.getMessage().equals("Type Creation")) {
+            System.out.println(
+                "Error: A struct or union type definition cannot have fields with repeated names.");
+          } else {
+            System.out.println("Syntax Error.");
+          }
         } catch (Exception e) {
           e.printStackTrace();
         }
@@ -52,7 +59,14 @@ public class L0int {
           IValue v = exp.eval(new Environment<IValue>());
           System.out.println(v.toStr());
         } catch (ParseException e) {
-          System.out.println("Syntax Error.");
+          if (e.getMessage().equals("Struct Creation")) {
+            System.out.println("Error: A struct cannot have fields with repeated names.");
+          } else if (e.getMessage().equals("Type Creation")) {
+            System.out.println(
+                "Error: A struct or union type definition cannot have fields with repeated names.");
+          } else {
+            System.out.println("Syntax Error.");
+          }
           parser.ReInit(System.in);
         } catch (TypeCheckError e) {
           e.printStackTrace();
