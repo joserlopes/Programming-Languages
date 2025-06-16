@@ -56,7 +56,6 @@ public class ASTMatchUnion implements ASTNode {
           ASTType foundType = bind.getExp().typecheck(en);
 
           for (ASTType type : foundTypes) {
-            // NOTE: Do this two types have to be equal?
             if (!(type.isSubtype(foundType, en) && foundType.isSubtype(type, en))) {
               throw new TypeCheckError(
                   "illegal type to match branch. All branches need to have the same type. Expected:"

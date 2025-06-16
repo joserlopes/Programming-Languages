@@ -23,4 +23,5 @@
 
 ## Second Phase
 
-Everything that is applied in the first phase also applies here.
+- Everything that is applied in the first phase also applies here.
+- Alongside the test cases present at `src/test/java/L0/`, a more extensive test suite can be viewed at [XPP-Test-Cases](https://github.com/joserlopes/XPP-Test-Cases)
