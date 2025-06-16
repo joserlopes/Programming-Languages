@@ -29,7 +29,6 @@ public class L0int {
         } catch (FileNotFoundException e) {
           System.out.println("File " + args[0] + "not found");
         } catch (TypeCheckError e) {
-          e.printStackTrace();
           System.out.println("Error: " + e.getMessage());
         } catch (ParseException e) {
           if (e.getMessage().equals("Struct Creation")) {
@@ -69,7 +68,6 @@ public class L0int {
           }
           parser.ReInit(System.in);
         } catch (TypeCheckError e) {
-          e.printStackTrace();
           System.out.println("Error: " + e.getMessage());
           parser.ReInit(System.in);
         } catch (Exception e) {
