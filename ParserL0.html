@@ -829,36 +829,6 @@
           <pre></pre>
         </td>
       </tr>
-      <!-- Token -->
-      <tr>
-        <td>
-          <pre></pre>
-        </td>
-      </tr>
-      <!-- Token -->
-      <tr>
-        <td>
-          <pre></pre>
-        </td>
-      </tr>
-      <!-- Token -->
-      <tr>
-        <td>
-          <pre></pre>
-        </td>
-      </tr>
-      <!-- Token -->
-      <tr>
-        <td>
-          <pre></pre>
-        </td>
-      </tr>
-      <!-- Token -->
-      <tr>
-        <td>
-          <pre></pre>
-        </td>
-      </tr>
     </table>
     <h2 align="CENTER">NON-TERMINALS</h2>
     <table>
@@ -1020,20 +990,7 @@
         </td>
       </tr>
       <tr>
-        <td align="RIGHT" valign="BASELINE">
-          <a name="prod18">StructLabelList</a>
-        </td>
-        <td align="CENTER" valign="BASELINE">::=</td>
-        <td align="LEFT" valign="BASELINE">
-          ( &lt;Label&gt; &lt;COLON&gt; <a href="#prod4">Type</a> (
-          &lt;COMMA&gt; &lt;Label&gt; &lt;COLON&gt; <a href="#prod4">Type</a> )*
-          )?
-        </td>
-      </tr>
-      <tr>
-        <td align="RIGHT" valign="BASELINE">
-          <a name="prod19">UnionLabelList</a>
-        </td>
+        <td align="RIGHT" valign="BASELINE"><a name="prod18">LabelList</a></td>
         <td align="CENTER" valign="BASELINE">::=</td>
         <td align="LEFT" valign="BASELINE">
           ( &lt;Label&gt; &lt;COLON&gt; <a href="#prod4">Type</a> (
@@ -1050,8 +1007,8 @@
           &lt;REF&gt; &lt;LT&gt; <a href="#prod4">Type</a> &lt;GT&gt; |
           &lt;LIST&gt; &lt;LT&gt; <a href="#prod4">Type</a> &lt;GT&gt; |
           &lt;STRUCT&gt; &lt;LBRA&gt;
-          <a href="#prod18">StructLabelList</a> &lt;RBRA&gt; | &lt;UNION&gt;
-          &lt;LBRA&gt; <a href="#prod19">UnionLabelList</a> &lt;RBRA&gt; )
+          <a href="#prod18">LabelList</a> &lt;RBRA&gt; | &lt;UNION&gt;
+          &lt;LBRA&gt; <a href="#prod18">LabelList</a> &lt;RBRA&gt; )
         </td>
       </tr>
     </table>
