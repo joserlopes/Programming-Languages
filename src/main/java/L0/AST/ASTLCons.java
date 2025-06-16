@@ -28,7 +28,7 @@ public class ASTLCons implements ASTNode {
         return new ASTTList(t1);
       }
 
-      if (t1.toStr().equals(l1.getType().toStr())) {
+      if (t1.isSubtype(l1.getType(), e)) {
         return l1;
       } else {
         throw new TypeCheckError("illegal list type " + t1.toStr() + " " + l1.toStr());
