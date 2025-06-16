@@ -5,7 +5,7 @@
 ### Structure
 
 - All the source code is at `src/main/java/L0/`
-- All the test code is at `src/test/java/L0/`. The majority of the test cases belong to files ending in `.L0`.
+- All the test code is at `src/test/java/L0/`. The majority of the test cases belong to files ending in `.L0`
 - The code for the parser is at `src/main/javacc/ParserL0.jj`
 
 ### Commands
@@ -19,9 +19,10 @@
 - The syntax for dereferencing boxed values is `*`
 - The syntax for building regular lists is `cons(N, M)`
 - The syntax for building lazy lists is `lcons(N, M)`
-- The syntax for the match construct is `match M { | nil -> N | y :: z -> K }`.
+- The syntax for the match construct is `match M { | nil -> N | y :: z -> K }`
 
 ## Second Phase
 
-- Everything that is applied in the first phase also applies here.
+- Everything that is applied in the first phase also applies here
 - Alongside the test cases present at `src/test/java/L0/`, a more extensive test suite can be viewed at [XPP-Test-Cases](https://github.com/joserlopes/XPP-Test-Cases)
+- The SasyLF proof for pairs is at `SasyLF/SasyLFSafe.slf`
