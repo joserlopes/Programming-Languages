@@ -21,10 +21,7 @@ public class ASTMatchUnion implements ASTNode {
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.matchedValue.typecheck(e);
-
-    if (t1 instanceof ASTTId) {
-      t1 = e.unfoldTypes(t1);
-    }
+    t1 = e.unfoldTypes(t1);
 
     if (t1 instanceof ASTTUnion) {
       int matched = 0;

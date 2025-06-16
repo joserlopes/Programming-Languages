@@ -18,6 +18,9 @@ public class ASTCons implements ASTNode {
     ASTType t1 = this.head.typecheck(e);
     ASTType t2 = this.tail.typecheck(e);
 
+    t1 = e.unfoldTypes(t1);
+    t2 = e.unfoldTypes(t2);
+
     if (t2 instanceof ASTTList) {
       ASTTList l1 = (ASTTList) t2;
       if (l1.getType().getClass() == ASTTUnit.class) {

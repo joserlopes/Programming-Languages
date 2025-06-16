@@ -17,6 +17,8 @@ public class ASTFunCall implements ASTNode {
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.func.typecheck(e);
 
+    t1 = e.unfoldTypes(t1);
+
     if (t1 instanceof ASTTArrow) {
       ASTTArrow a1 = (ASTTArrow) t1;
       if (this.arg == null) {

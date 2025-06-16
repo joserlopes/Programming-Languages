@@ -18,6 +18,9 @@ public class ASTPlus implements ASTNode {
     ASTType t1 = this.lhs.typecheck(e);
     ASTType t2 = this.rhs.typecheck(e);
 
+    t1 = e.unfoldTypes(t1);
+    t2 = e.unfoldTypes(t2);
+
     if (t1 instanceof ASTTInt) {
       if (t2 instanceof ASTTInt || t2 instanceof ASTTString) {
         return t2;

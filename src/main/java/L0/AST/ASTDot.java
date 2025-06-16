@@ -17,6 +17,8 @@ public class ASTDot implements ASTNode {
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.struct.typecheck(e);
+    t1 = e.unfoldTypes(t1);
+
     if (t1 instanceof ASTTStruct) {
       ASTTStruct s1 = (ASTTStruct) t1;
       ASTType foundType = s1.getBinds().getType(this.field);

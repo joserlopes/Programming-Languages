@@ -14,11 +14,14 @@ public class ASTDif implements ASTNode {
     this.rhs = rhs;
   }
 
-  @Override
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.lhs.typecheck(e);
+    t1 = e.unfoldTypes(t1);
+
     if (t1 instanceof ASTTInt) {
       ASTType t2 = this.rhs.typecheck(e);
+      t2 = e.unfoldTypes(t2);
+
       if (t2 instanceof ASTTInt) {
         return new ASTTBool();
       } else {

@@ -16,6 +16,8 @@ public class ASTAssign implements ASTNode {
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.lhs.typecheck(e);
+    t1 = e.unfoldTypes(t1);
+
     if (t1 instanceof ASTTBox) {
       ASTTBox b1 = (ASTTBox) t1;
       ASTType t2 = this.rhs.typecheck(e);

@@ -15,6 +15,8 @@ public class ASTDeref implements ASTNode {
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.exp.typecheck(e);
+    e.unfoldTypes(t1);
+
     if (t1 instanceof ASTTBox) {
       ASTTBox b1 = (ASTTBox) t1;
       return b1.getType();

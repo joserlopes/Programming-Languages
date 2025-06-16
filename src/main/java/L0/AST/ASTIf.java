@@ -17,6 +17,8 @@ public class ASTIf implements ASTNode {
 
   public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
     ASTType t1 = this.cond.typecheck(e);
+    t1 = e.unfoldTypes(t1);
+
     if (t1 instanceof ASTTBool) {
       ASTType t2 = this.trueBody.typecheck(e);
       ASTType t3 = this.falseBody.typecheck(e);
